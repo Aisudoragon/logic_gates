@@ -2,31 +2,31 @@ class_name HighlightLayer extends TileMapLayer
 
 @export var wire_layer: WireLayer
 
-var _wire_buffer_position: Array[Vector2i]
+var _wire_position_buffer: Array[Vector2i]
 var _gate_rotation: int = 0
 
 
 func add_checkpoint() -> void:
 	var grid_mouse_position: Vector2i = _mouse_to_grid()
-	if _wire_buffer_position.is_empty():
-		_wire_buffer_position.append(grid_mouse_position)
-	_wire_buffer_position.append(grid_mouse_position)
-	_wire_buffer_position.append(grid_mouse_position)
+	if _wire_position_buffer.is_empty():
+		_wire_position_buffer.append(grid_mouse_position)
+	_wire_position_buffer.append(grid_mouse_position)
+	_wire_position_buffer.append(grid_mouse_position)
 
 
 func wire_highlight() -> void:
 	clear()
 
-	_wire_buffer_position[-1] = _mouse_to_grid()
-	if _wire_buffer_position[-2].x == _wire_buffer_position[-3].x:
-		_wire_buffer_position[-2].y = _wire_buffer_position[-1].y
+	_wire_position_buffer[-1] = _mouse_to_grid()
+	if _wire_position_buffer[-2].x == _wire_position_buffer[-3].x:
+		_wire_position_buffer[-2].y = _wire_position_buffer[-1].y
 	else:
-		_wire_buffer_position[-2].x = _wire_buffer_position[-1].x
+		_wire_position_buffer[-2].x = _wire_position_buffer[-1].x
 
-	for index in range(0, _wire_buffer_position.size() - 2, 2):
-		var start: Vector2i = _wire_buffer_position[index]
-		var middle: Vector2i = _wire_buffer_position[index + 1]
-		var end: Vector2i = _wire_buffer_position[index + 2]
+	for index in range(0, _wire_position_buffer.size() - 2, 2):
+		var start: Vector2i = _wire_position_buffer[index]
+		var middle: Vector2i = _wire_position_buffer[index + 1]
+		var end: Vector2i = _wire_position_buffer[index + 2]
 		var direction: Vector2i = (middle - start).sign()
 		_wire_highlight_line(start, middle, direction)
 		direction = (end - middle).sign()
@@ -34,12 +34,12 @@ func wire_highlight() -> void:
 
 
 func change_direction_line() -> void:
-	var start: Vector2i = _wire_buffer_position[-3]
-	var end: Vector2i = _wire_buffer_position[-1]
-	if start.x == _wire_buffer_position[-2].x:
-		_wire_buffer_position[-2] = Vector2i(end.x, start.y)
+	var start: Vector2i = _wire_position_buffer[-3]
+	var end: Vector2i = _wire_position_buffer[-1]
+	if start.x == _wire_position_buffer[-2].x:
+		_wire_position_buffer[-2] = Vector2i(end.x, start.y)
 	else:
-		_wire_buffer_position[-2] = Vector2i(start.x, end.y)
+		_wire_position_buffer[-2] = Vector2i(start.x, end.y)
 
 
 func point_highlight() -> void:
@@ -47,22 +47,8 @@ func point_highlight() -> void:
 	set_cell(_mouse_to_grid(), 0, Vector2i(0, 0))
 
 
-func place_wire() -> void:
-	#if (
-			#_wire_buffer_position.size() == 3
-			#and _wire_buffer_position[0] == _wire_buffer_position[2]
-			#and wire_layer.get_cell_atlas_coords(_wire_buffer_position[0]) == Vector2i(0b1111, 0)
-	#):
-		#wire_layer.set_cell(_wire_buffer_position[0], 0, get_cell_atlas_coords(),
-				#get_cell_alternative_tile(_wire_buffer_position[0]))
-		#return
-
-	var all_wire_tiles: Array[Vector2i] = get_used_cells()
-	for tile in all_wire_tiles:
-		wire_layer.set_cell(tile, get_cell_source_id(tile), get_cell_atlas_coords(tile),
-				get_cell_alternative_tile(tile))
-
-	_wire_buffer_position.clear()
+func clear_position_buffer() -> void:
+	_wire_position_buffer.clear()
 
 
 func rotate_gate() -> void:

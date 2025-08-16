@@ -25,25 +25,25 @@ func _unhandled_input(event: InputEvent) -> void:
 				highlight_layer.change_direction_line()
 				highlight_layer.wire_highlight()
 			if event.is_action_released(&"place"):
-				highlight_layer.place_wire()
-			#if event.is_action_pressed(&"destroy"):
-				#wires.delete_wire()
+				$Wires.place_on_grid()
+			if event.is_action_pressed(&"destroy"):
+				wire_layer.delete_stuff()
 			if event is InputEventMouseMotion:
 				if Input.is_action_pressed(&"place"):
 					highlight_layer.wire_highlight()
 				else:
 					highlight_layer.point_highlight()
-				#if Input.is_action_pressed(&"destroy"):
-					#wires.delete_wire()
+				if Input.is_action_pressed(&"destroy"):
+					wire_layer.delete_stuff()
 		# gate behavior
 		_:
 			if event.is_action_pressed(&"place"):
-				highlight_layer.place_wire()
+				$Wires.place_on_grid()
 			if event.is_action_pressed(&"rotate"):
 				highlight_layer.rotate_gate()
 				highlight_layer.gate_highlight(gate_selected)
-			#if event.is_action_pressed(&"destroy"):
-				#wires.destroy_gate()
+			if event.is_action_pressed(&"destroy"):
+				wire_layer.delete_stuff()
 			if event is InputEventMouseMotion:
 				highlight_layer.gate_highlight(gate_selected)
 

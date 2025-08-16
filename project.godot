@@ -16,7 +16,7 @@ config/version="0.1.0"
 config/tags=PackedStringArray("inżynierska", "uniwersytet")
 run/main_scene="res://scenes/levels/playground/playground.tscn"
 config/features=PackedStringArray("4.4", "Mobile")
-config/icon="res://icon.svg"
+config/icon="uid://mlshv5b0su4p"
 
 [debug]
 
