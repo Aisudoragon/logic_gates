@@ -4,50 +4,28 @@ class_name Wires extends Node2D
 @export var highlight_layer: HighlightLayer
 
 
-func place_on_grid() -> void:
-	var all_tiles_coords: Array[Vector2i] = highlight_layer.get_used_cells()
-	for tile in all_tiles_coords:
-		wire_layer.set_cell(tile, highlight_layer.get_cell_source_id(tile),
-				highlight_layer.get_cell_atlas_coords(tile),
-				highlight_layer.get_cell_alternative_tile(tile))
+func place_wire() -> void:
+	var wire_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
+	if wire_tiles.size() == 1:
+		wire_layer.change_wire_crossing()
+		highlight_layer.clear_position_buffer()
+		return
+
+	var wire_types: Dictionary[Vector2i, Vector2i]
+	for tile in wire_tiles:
+		wire_types[tile] = highlight_layer.get_cell_atlas_coords(tile)
+	wire_layer.create_wire(wire_types)
 	highlight_layer.clear_position_buffer()
 
 
-#func destroy_gate(mouse_pos: Vector2i = get_mouse_pos()) -> void:
-	#var delete_position: Vector2i
-	#var source := 2
-	#match gate_layer.get_cell_atlas_coords(mouse_pos):
-		#Vector2i(0, 0):
-			#delete_position = mouse_pos + Vector2i.RIGHT
-			#if gate_layer.get_cell_source_id(mouse_pos) == 1:
-				#source = 1
-			#else:
-				#delete_position += Vector2i.DOWN
-		#Vector2i(1, 0):
-			#delete_position = mouse_pos
-			#if gate_layer.get_cell_source_id(mouse_pos) == 1:
-				#source = 1
-			#else:
-				#delete_position += Vector2i.DOWN
-		#Vector2i(2, 0):
-			#delete_position = mouse_pos + Vector2i.LEFT
-			#if gate_layer.get_cell_source_id(mouse_pos) == 1:
-				#source = 1
-			#else:
-				#delete_position += Vector2i.DOWN
-		#Vector2i(0, 1):
-			#delete_position = mouse_pos + Vector2i.RIGHT
-		#Vector2i(1, 1):
-			#delete_position = mouse_pos
-		#Vector2i(2, 1):
-			#delete_position = mouse_pos + Vector2i.LEFT
-		#Vector2i(0, 2):
-			#delete_position = mouse_pos + Vector2i.RIGHT + Vector2i.UP
-		#Vector2i(1, 2):
-			#delete_position = mouse_pos + Vector2i.UP
-		#Vector2i(2, 2):
-			#delete_position = mouse_pos + Vector2i.LEFT + Vector2i.UP
-		#_:
-			#print("NOTHING")
-			#return
-	#place_gate_on_layer(source, delete_position)
+func place_gate() -> void:
+	var gate_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
+	var gate_data_cells: Dictionary[Vector2i, Dictionary]
+	for tile in gate_tiles:
+		var cell_source_id: int = highlight_layer.get_cell_source_id(tile)
+		var cell_atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
+		gate_data_cells[tile] = {
+			"source_id": cell_source_id,
+			"atlas_coords": cell_atlas_coords,
+		}
+	wire_layer.create_gate(gate_data_cells)

@@ -3,7 +3,6 @@ class_name HighlightLayer extends TileMapLayer
 @export var wire_layer: WireLayer
 
 var _wire_position_buffer: Array[Vector2i]
-var _gate_rotation: int = 0
 
 
 func add_checkpoint() -> void:
@@ -51,22 +50,16 @@ func clear_position_buffer() -> void:
 	_wire_position_buffer.clear()
 
 
-func rotate_gate() -> void:
-	_gate_rotation += 1 if _gate_rotation < 3 else -3
-
-
 func gate_highlight(gate: EditorMode.Gate) -> void:
 	clear()
 	if gate == EditorMode.Gate.STARTSTOP:
 		set_cell(_mouse_to_grid(), 1, Vector2i(0, 0))
 		return
 
-	var gate_pattern: TileMapPattern = tile_set.get_pattern(7 * _gate_rotation + gate)
+	var gate_pattern: TileMapPattern = tile_set.get_pattern(gate)
 	var grid_position: Vector2i = _mouse_to_grid() + Vector2i.LEFT
 	if gate > 0:
 		grid_position += Vector2i.UP
-	elif _gate_rotation % 2 == 1:
-		grid_position += Vector2i.RIGHT + Vector2i.UP
 	set_pattern(grid_position, gate_pattern)
 
 

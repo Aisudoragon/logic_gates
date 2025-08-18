@@ -2,6 +2,7 @@ extends Node2D
 
 @export var wire_layer: WireLayer
 @export var highlight_layer: HighlightLayer
+@export var wires: Wires
 @export var wires_interface: WiresInterface
 
 var mode_selected: EditorMode.Mode = EditorMode.Mode.WIRE
@@ -9,7 +10,7 @@ var gate_selected: EditorMode.Gate = EditorMode.Gate.STARTSTOP
 
 
 func _process(_delta: float) -> void:
-	wires_interface.update_queue_size(wire_layer._logic_queue.size())
+	wires_interface.update_queue_size(wire_layer._callable_queue.size())
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -25,7 +26,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				highlight_layer.change_direction_line()
 				highlight_layer.wire_highlight()
 			if event.is_action_released(&"place"):
-				$Wires.place_on_grid()
+				wires.place_wire()
 			if event.is_action_pressed(&"destroy"):
 				wire_layer.delete_stuff()
 			if event is InputEventMouseMotion:
@@ -38,14 +39,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		# gate behavior
 		_:
 			if event.is_action_pressed(&"place"):
-				$Wires.place_on_grid()
-			if event.is_action_pressed(&"rotate"):
-				highlight_layer.rotate_gate()
-				highlight_layer.gate_highlight(gate_selected)
+				wires.place_gate()
 			if event.is_action_pressed(&"destroy"):
 				wire_layer.delete_stuff()
 			if event is InputEventMouseMotion:
 				highlight_layer.gate_highlight(gate_selected)
+	if event is InputEventKey:
+		var event_key: InputEventKey = event
+		if event.is_pressed():
+			if event_key.keycode == KEY_SPACE:
+				wire_layer.paused_queue = not wire_layer.paused_queue
+			if event_key.keycode == KEY_EQUAL:
+				wire_layer.one_queue_action()
 
 
 func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.Gate) -> void:

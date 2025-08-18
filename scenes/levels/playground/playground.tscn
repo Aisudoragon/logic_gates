@@ -9,10 +9,11 @@
 [ext_resource type="Script" uid="uid://nxyr8hqa0lkw" path="res://scenes/levels/playground/highlight_layer.gd" id="6_k3bpp"]
 [ext_resource type="PackedScene" uid="uid://ba0bl16fuws1s" path="res://scenes/interfaces/wires_interface.tscn" id="7_dhyt4"]
 
-[node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires_interface")]
+[node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface")]
 script = ExtResource("1_ywb2o")
 wire_layer = NodePath("Wires/WireLayer")
 highlight_layer = NodePath("Wires/HighlightLayer")
+wires = NodePath("Wires")
 wires_interface = NodePath("WiresInterface")
 
 [node name="GridLines" type="Node2D" parent="." node_paths=PackedStringArray("camera_2d")]
