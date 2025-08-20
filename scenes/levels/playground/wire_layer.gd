@@ -104,7 +104,7 @@ func _try_logic_transfer(grid_position: Vector2i, state: int, update: int) -> vo
 	if (
 			get_cell_alternative_tile(grid_position) == state
 			or get_cell_source_id(grid_position) == -1
-			or _per_cell_update_count.get(grid_position, -1) == update
+			or _per_cell_update_count.get(grid_position, -1) >= update
 	):
 		return
 	_per_cell_update_count[grid_position] = update
@@ -149,7 +149,7 @@ func _logic_propagate(grid_position: Vector2i, state: int, update: int) -> void:
 
 
 func _cross_through_wire(grid_position: Vector2i, state: int, update: int, direction: Vector2i) -> void:
-	if _per_cell_update_count.get(grid_position, -1) == update:
+	if _per_cell_update_count.get(grid_position, -1) >= update:
 		return
 	if get_cell_atlas_coords(grid_position) == Vector2i(15, 1):
 		_per_cell_update_count[grid_position] = update
