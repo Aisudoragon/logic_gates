@@ -2,7 +2,7 @@ class_name WireLayer extends TileMapLayer
 
 const order_executes_per_frame := 1500
 var paused_queue := false
-var _callable_queue: Array[Callable]
+var _callable_queue: DoubleLinkedListCallable = DoubleLinkedListCallable.new()
 
 var _next_free_id := 0:
 	get:
