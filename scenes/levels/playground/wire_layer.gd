@@ -104,14 +104,11 @@ func _try_logic_transfer(grid_position: Vector2i, state: int, update: int) -> vo
 	if (
 			get_cell_alternative_tile(grid_position) == state
 			or get_cell_source_id(grid_position) == -1
+			or _per_cell_update_count.get(grid_position, -1) == update
 	):
 		return
-	if (
-			not _per_cell_update_count.has(grid_position)
-			or _per_cell_update_count[grid_position] != update
-	):
-		_per_cell_update_count[grid_position] = update
-		_add_to_queue(&"_logic_propagate", [grid_position, state, update])
+	_per_cell_update_count[grid_position] = update
+	_add_to_queue(&"_logic_propagate", [grid_position, state, update])
 
 
 func _logic_propagate(grid_position: Vector2i, state: int, update: int) -> void:
@@ -152,12 +149,10 @@ func _logic_propagate(grid_position: Vector2i, state: int, update: int) -> void:
 
 
 func _cross_through_wire(grid_position: Vector2i, state: int, update: int, direction: Vector2i) -> void:
-	if _per_cell_update_count.has(grid_position):
-		if _per_cell_update_count[grid_position] != update:
-			_per_cell_update_count[grid_position] = update
-		else:
-			return
+	if _per_cell_update_count.get(grid_position, -1) == update:
+		return
 	if get_cell_atlas_coords(grid_position) == Vector2i(15, 1):
+		_per_cell_update_count[grid_position] = update
 		_add_to_queue(&"_cross_through_wire", [grid_position + direction, state, update, direction])
 	else:
 		_logic_propagate(grid_position, state, update)
