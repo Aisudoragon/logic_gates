@@ -3,7 +3,7 @@ class_name Wires extends Node2D
 @export var wire_layer: WireLayer
 @export var highlight_layer: HighlightLayer
 
-var _queue_executes_per_frame := 1
+var _queue_executes_per_frame := 500
 var _callable_queue := DoubleLinkedListCallable.new()
 var _next_free_gate_id := 0:
 	get:
@@ -14,7 +14,7 @@ var _logic_update_id := 0:
 		_logic_update_id += 1
 		return _logic_update_id
 var _wire_tiles: Dictionary[Vector2i, WireTile]
-var _wire_crossing_tiles: Dictionary[Vector2i, bool]
+var _wire_crossing_tiles: Dictionary[Vector2i, WireCrossing]
 var _gate_tiles: Dictionary[Vector2i, GateTile]
 
 
@@ -40,29 +40,49 @@ func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) ->
 	this_wire_tile.state = state
 	this_wire_tile.update_id = update_id
 
-	var connected_wires: Array[Vector2i]
-	if this_wire_tile.directions & EditorMode.Direction.RIGHT:
-		connected_wires.append(grid_position + Vector2i.RIGHT)
-	if this_wire_tile.directions & EditorMode.Direction.DOWN:
-		connected_wires.append(grid_position + Vector2i.DOWN)
-	if this_wire_tile.directions & EditorMode.Direction.LEFT:
-		connected_wires.append(grid_position + Vector2i.LEFT)
-	if this_wire_tile.directions & EditorMode.Direction.UP:
-		connected_wires.append(grid_position + Vector2i.UP)
-	for connected_wire in connected_wires:
-		var next_tile: WireTile = _wire_tiles.get(connected_wire)
-		if not next_tile:
+	var directions_dict: Dictionary[int, Vector2i] = {
+		EditorMode.Direction.RIGHT: Vector2i.RIGHT,
+		EditorMode.Direction.DOWN: Vector2i.DOWN,
+		EditorMode.Direction.LEFT: Vector2i.LEFT,
+		EditorMode.Direction.UP: Vector2i.UP,
+	}
+	for direction in directions_dict:
+		if not this_wire_tile.directions & direction:
 			continue
-		if next_tile.update_id >= update_id:
-			continue
-		if next_tile.directions & 0b1111 and _wire_crossing_tiles.has(connected_wire):
-			# TODO create method for passing through crossing wire
-			pass
-		else:
-			_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(connected_wire,
+		var next_tile_position: Vector2i = grid_position + directions_dict[direction]
+		if _wire_tiles.has(next_tile_position):
+			if _wire_tiles[next_tile_position].update_id >= update_id:
+				continue
+			_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(next_tile_position,
 					state, update_id))
+		elif _wire_crossing_tiles.has(next_tile_position):
+			if _wire_crossing_tiles[next_tile_position].get_axis_wire(
+					directions_dict[direction]).update_id >= update_id:
+				continue
+			_callable_queue.push_back(Callable(self, &"_spread_wire_through_crossing").bind(
+					next_tile_position, state, update_id, directions_dict[direction]))
+		else:
+			push_error("%d direction is set but nothing is in %s" % [direction, next_tile_position])
+
 	if _gate_tiles.has(grid_position):
 		_callable_queue.push_back(Callable(self, &"_get_into_gate").bind(grid_position))
+
+
+func _spread_wire_through_crossing(grid_position: Vector2i, state: bool, update_id: int,
+		direction: Vector2i) -> void:
+	var this_wire: WireTile = _wire_crossing_tiles[grid_position].get_axis_wire(direction)
+	if this_wire.state == state:
+		return
+	this_wire.state = state
+	this_wire.update_id = update_id
+
+	var next_tile_position: Vector2i = grid_position + direction
+	if _wire_crossing_tiles.has(next_tile_position):
+		_callable_queue.push_back(Callable(self, &"_spread_wire_through_crossing").bind(
+				next_tile_position, state, update_id, direction))
+		return
+	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(next_tile_position,
+					state, update_id))
 
 
 func _get_into_gate(grid_position: Vector2i) -> void:
@@ -133,6 +153,25 @@ class WireTile:
 
 	func _to_string() -> String:
 		return "%s, update %d, directions %d" % [state, update_id, directions]
+
+
+class WireCrossing:
+
+	var horizontal_wire: WireTile
+	var vertical_wire: WireTile
+
+
+	func _init() -> void:
+		horizontal_wire = WireTile.new()
+		horizontal_wire.directions = 5
+		vertical_wire = WireTile.new()
+		vertical_wire.directions = 10
+
+
+	func get_axis_wire(direction: Vector2i) -> WireTile:
+		if direction.abs().max_axis_index() == Vector2i.Axis.AXIS_X:
+			return horizontal_wire
+		return vertical_wire
 
 
 class GateTile:
