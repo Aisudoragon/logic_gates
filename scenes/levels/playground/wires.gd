@@ -15,7 +15,8 @@ var _logic_update_id := 0:
 		return _logic_update_id
 var _wire_tiles: Dictionary[Vector2i, WireTile]
 var _wire_crossing_tiles: Dictionary[Vector2i, WireCrossing]
-var _gate_tiles: Dictionary[Vector2i, GateTile]
+var _gate_tiles: Dictionary[Vector2i, int]
+var _gates: Dictionary[int, GateTile]
 
 
 func _process(_delta: float) -> void:
@@ -86,7 +87,7 @@ func _spread_wire_through_crossing(grid_position: Vector2i, state: bool, update_
 
 
 func _get_into_gate(grid_position: Vector2i) -> void:
-	var this_gate_tile: GateTile = _gate_tiles[grid_position]
+	var this_gate_tile: GateTile = _gates[_gate_tiles[grid_position]]
 	var inputs: Array[bool]
 	for input_coordinates: Vector2i in this_gate_tile.inputs:
 		inputs.append(_wire_tiles[input_coordinates].state)
@@ -140,19 +141,27 @@ func place_wire() -> void:
 func place_gate() -> void:
 	var gate_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	var gate_data_cells: Dictionary[Vector2i, Dictionary]
-	var new_gate_id: int = _next_free_gate_id
 	for tile in gate_tiles:
 		var cell_source_id: int = highlight_layer.get_cell_source_id(tile)
 		var cell_atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
-		gate_data_cells[tile] = {
-			"source_id": cell_source_id,
-			"atlas_coords": cell_atlas_coords,
-		}
+		gate_data_cells[tile] = {"source_id": cell_source_id, "atlas_coords": cell_atlas_coords}
 
-		# TODO place gate in code
 		if _gate_tiles.has(tile):
 			return
-		_gate_tiles[tile] = GateTile.new(cell_source_id - 2, new_gate_id)
+	# HACK change it later to soomething that supports custom gates
+	var new_gate_id: int = _next_free_gate_id
+	_gates[new_gate_id] = GateTile.new(highlight_layer.get_cell_source_id(gate_tiles[0]) - 2)
+	for tile in gate_tiles:
+		_gate_tiles[tile] = new_gate_id
+		if (
+				highlight_layer.get_cell_atlas_coords(tile) == Vector2i()
+				or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 0)
+		):
+			_wire_tiles[tile] = WireTile.new(4)
+			_gates[new_gate_id].inputs.append(tile)
+		elif highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1):
+			_wire_tiles[tile] = WireTile.new(1)
+			_gates[new_gate_id].outputs.append(tile)
 	wire_layer.create_gate(gate_data_cells)
 
 
@@ -191,11 +200,9 @@ class WireCrossing:
 class GateTile:
 
 	var gate: EditorMode.Gate
-	var id: int
 	var inputs: Array[Vector2i]
 	var outputs: Array[Vector2i]
 
 
-	func _init(new_gate_type: EditorMode.Gate, new_id: int) -> void:
+	func _init(new_gate_type: EditorMode.Gate) -> void:
 		gate = new_gate_type
-		id = new_id
