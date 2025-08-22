@@ -164,6 +164,11 @@ func place_gate() -> void:
 	wire_layer.create_gate(gate_data_cells)
 
 
+func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
+	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(grid_position, state,
+			_logic_update_id))
+
+
 class WireTile:
 
 	var state: bool

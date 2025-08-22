@@ -1,5 +1,8 @@
 class_name WireLayer extends TileMapLayer
 
+
+signal toggle_output(grid_position: Vector2i, state: bool)
+
 const order_executes_per_frame := 1500
 var paused_queue := false
 var _callable_queue: DoubleLinkedListCallable = DoubleLinkedListCallable.new()
@@ -98,6 +101,7 @@ func toggle_start_gate() -> void:
 	var state: bool = not get_cell_alternative_tile(grid_mouse_position)
 	set_cell(grid_mouse_position, 1, Vector2i(0, 0), state)
 	_try_logic_transfer(grid_mouse_position + Vector2i.RIGHT, state, _update_count)
+	toggle_output.emit(grid_mouse_position + Vector2i.RIGHT, state)
 
 
 func _try_logic_transfer(grid_position: Vector2i, state: int, update: int) -> void:

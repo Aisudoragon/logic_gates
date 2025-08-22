@@ -46,4 +46,5 @@ wires_interface = NodePath("../WiresInterface")
 
 [node name="WiresInterface" parent="." instance=ExtResource("7_dhyt4")]
 
+[connection signal="toggle_output" from="Wires/WireLayer" to="Wires" method="_on_wire_layer_toggle_output"]
 [connection signal="mode_selected" from="WiresInterface" to="." method="_on_wires_interface_mode_selected"]
