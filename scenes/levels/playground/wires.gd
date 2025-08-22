@@ -92,30 +92,29 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 	for input_coordinates: Vector2i in this_gate_tile.inputs:
 		inputs.append(_wire_tiles[input_coordinates].state)
 
-	var output_wires: Array[WireTile]
 	var output_coordinates: Array[Vector2i] = this_gate_tile.outputs
-	for output_coordinate in output_coordinates:
-		output_wires.append(_wire_tiles[output_coordinate])
+	var outputs: Array[bool]
+	outputs.resize(output_coordinates.size())
 
 	var gate_type: EditorMode.Gate = this_gate_tile.gate
 	if gate_type == EditorMode.Gate.NOT:
-		output_wires[0].state = not inputs[0]
+		outputs[0] = not inputs[0]
 	elif gate_type == EditorMode.Gate.AND:
-		output_wires[0].state = inputs[0] and inputs[1]
+		outputs[0] = inputs[0] and inputs[1]
 	elif gate_type == EditorMode.Gate.NAND:
-		output_wires[0].state = not (inputs[0] and inputs[1])
+		outputs[0] = not (inputs[0] and inputs[1])
 	elif gate_type == EditorMode.Gate.OR:
-		output_wires[0].state = inputs[0] or inputs[1]
+		outputs[0] = inputs[0] or inputs[1]
 	elif gate_type == EditorMode.Gate.NOR:
-		output_wires[0].state = not (inputs[0] or inputs[1])
+		outputs[0] = not (inputs[0] or inputs[1])
 	elif gate_type == EditorMode.Gate.XOR:
-		output_wires[0].state = not (inputs[0] == inputs[1])
+		outputs[0] = not (inputs[0] == inputs[1])
 	elif gate_type == EditorMode.Gate.XNOR:
-		output_wires[0].state = inputs[0] == inputs[1]
+		outputs[0] = inputs[0] == inputs[1]
 
-	for index in output_wires.size():
+	for index in outputs.size():
 		_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(
-				output_coordinates[index], output_wires[index].state, _logic_update_id))
+				output_coordinates[index], outputs[index], _logic_update_id))
 
 
 func place_wire() -> void:
@@ -155,7 +154,7 @@ func place_gate() -> void:
 		_gate_tiles[tile] = new_gate_id
 		if (
 				highlight_layer.get_cell_atlas_coords(tile) == Vector2i()
-				or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 0)
+				or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(0, 2)
 		):
 			_wire_tiles[tile] = WireTile.new(4)
 			_gates[new_gate_id].inputs.append(tile)
