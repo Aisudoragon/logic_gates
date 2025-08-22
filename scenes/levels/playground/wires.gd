@@ -47,7 +47,7 @@ func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) ->
 		EditorMode.Direction.UP: Vector2i.UP,
 	}
 	for direction in directions_dict:
-		if not this_wire_tile.directions & direction:
+		if not this_wire_tile.direction & direction:
 			continue
 		var next_tile_position: Vector2i = grid_position + directions_dict[direction]
 		if _wire_tiles.has(next_tile_position):
@@ -126,7 +126,13 @@ func place_wire() -> void:
 
 	var wire_types: Dictionary[Vector2i, Vector2i]
 	for tile in wire_tiles:
+		if _gate_tiles.has(tile):
+			continue
 		wire_types[tile] = highlight_layer.get_cell_atlas_coords(tile)
+
+		# FIXME warning with type safety
+		_wire_tiles[tile] = WireTile.new(highlight_layer.get_cell_tile_data(tile).get_custom_data(
+				"connected_directions"))
 	wire_layer.create_wire(wire_types)
 	highlight_layer.clear_position_buffer()
 
@@ -134,6 +140,7 @@ func place_wire() -> void:
 func place_gate() -> void:
 	var gate_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	var gate_data_cells: Dictionary[Vector2i, Dictionary]
+	var new_gate_id: int = _next_free_gate_id
 	for tile in gate_tiles:
 		var cell_source_id: int = highlight_layer.get_cell_source_id(tile)
 		var cell_atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
@@ -141,6 +148,11 @@ func place_gate() -> void:
 			"source_id": cell_source_id,
 			"atlas_coords": cell_atlas_coords,
 		}
+
+		# TODO place gate in code
+		if _gate_tiles.has(tile):
+			return
+		_gate_tiles[tile] = GateTile.new(cell_source_id - 2, new_gate_id)
 	wire_layer.create_gate(gate_data_cells)
 
 
@@ -148,11 +160,15 @@ class WireTile:
 
 	var state: bool
 	var update_id: int
-	var directions: int
+	var direction: int
+
+
+	func _init(new_directions: int) -> void:
+		direction = new_directions
 
 
 	func _to_string() -> String:
-		return "%s, update %d, directions %d" % [state, update_id, directions]
+		return "%s, update %d, directions %d" % [state, update_id, direction]
 
 
 class WireCrossing:
@@ -162,10 +178,8 @@ class WireCrossing:
 
 
 	func _init() -> void:
-		horizontal_wire = WireTile.new()
-		horizontal_wire.directions = 5
-		vertical_wire = WireTile.new()
-		vertical_wire.directions = 10
+		horizontal_wire = WireTile.new(5)
+		vertical_wire = WireTile.new(10)
 
 
 	func get_axis_wire(direction: Vector2i) -> WireTile:
@@ -180,3 +194,8 @@ class GateTile:
 	var id: int
 	var inputs: Array[Vector2i]
 	var outputs: Array[Vector2i]
+
+
+	func _init(new_gate_type: EditorMode.Gate, new_id: int) -> void:
+		gate = new_gate_type
+		id = new_id
