@@ -23,8 +23,20 @@ func _process(_delta: float) -> void:
 	process_queue(_queue_executes_per_frame)
 
 
+func _draw() -> void:
+	for grid_position in _wire_tiles:
+		var wire_color: Color
+		if _wire_tiles[grid_position].state:
+			wire_color = Color.GREEN
+		else:
+			wire_color = Color.RED
+		wire_color = Color(wire_color, 0.1)
+		draw_rect(Rect2i(grid_position * 64 + Vector2i(8, 8), Vector2i(48, 48)), wire_color)
+
+
 func process_queue(iterations: int) -> void:
 	if _callable_queue.is_empty():
+		queue_redraw()
 		return
 	for i in range(iterations):
 		if _callable_queue.is_empty():
