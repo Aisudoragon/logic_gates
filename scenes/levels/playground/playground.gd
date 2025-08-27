@@ -10,7 +10,8 @@ var gate_selected: EditorMode.Gate = EditorMode.Gate.STARTSTOP
 
 
 func _process(_delta: float) -> void:
-	wires_interface.update_queue_size(wire_layer._callable_queue.size())
+	#wires_interface.update_queue_size(wire_layer._callable_queue.size())
+	pass
 
 
 func _unhandled_input(event: InputEvent) -> void:

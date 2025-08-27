@@ -21,6 +21,7 @@ var _gates: Dictionary[int, GateTile]
 
 func _process(_delta: float) -> void:
 	process_queue(_queue_executes_per_frame)
+	queue_redraw()
 
 
 func _draw() -> void:
@@ -30,13 +31,16 @@ func _draw() -> void:
 			wire_color = Color.GREEN
 		else:
 			wire_color = Color.RED
-		wire_color = Color(wire_color, 0.1)
+		wire_color = Color(wire_color, 0.5)
 		draw_rect(Rect2i(grid_position * 64 + Vector2i(8, 8), Vector2i(48, 48)), wire_color)
+		draw_string(ThemeDB.fallback_font, grid_position * 64 + Vector2i(2, 14),
+				str(_wire_tiles[grid_position].update_id), HORIZONTAL_ALIGNMENT_LEFT, -1, 16,
+				Color.BLACK)
 
 
 func process_queue(iterations: int) -> void:
 	if _callable_queue.is_empty():
-		queue_redraw()
+		#queue_redraw()
 		return
 	for i in range(iterations):
 		if _callable_queue.is_empty():
@@ -78,6 +82,9 @@ func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) ->
 			push_error("%d direction is set but nothing is in %s" % [direction, next_tile_position])
 
 	if _gate_tiles.has(grid_position):
+		for output: Vector2i in _gates[_gate_tiles[grid_position]].outputs:
+			if grid_position == output:
+				return
 		_callable_queue.push_back(Callable(self, &"_get_into_gate").bind(grid_position))
 
 
