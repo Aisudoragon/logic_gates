@@ -3,7 +3,9 @@ class_name Wires extends Node2D
 @export var wire_layer: WireLayer
 @export var highlight_layer: HighlightLayer
 
-var _queue_executes_per_frame := 500
+var _place_wire_checkpoints: Array[Vector2i]
+
+var _queue_executes_per_frame := 1
 var _callable_queue := DoubleLinkedListCallable.new()
 var _next_free_gate_id := 0:
 	get:
@@ -24,6 +26,22 @@ func _process(_delta: float) -> void:
 	queue_redraw()
 
 
+func _unhandled_key_input(event: InputEvent) -> void:
+	var event_key := event as InputEventKey
+	# TODO Handle keyboard input here
+	if event_key.is_action_pressed(&"rotate"):
+		print("Tried to rotate")
+	elif event_key.is_action_pressed(&"special"):
+		print("Tried to special (add checkpoint to wire placing)")
+		_add_checkpoint_to_wire()
+
+
+func _unhandled_input(_event: InputEvent) -> void:
+	# TODO Handle input only for itself, if input is handled: mark it as such
+	# Maybe input of highlight layer should be handled here?
+	pass
+
+
 func _draw() -> void:
 	for grid_position in _wire_tiles:
 		var wire_color: Color
@@ -38,6 +56,54 @@ func _draw() -> void:
 				Color.BLACK)
 
 
+func place_wire() -> void:
+	var wire_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
+	if wire_tiles.size() == 1:
+		wire_layer.change_wire_crossing()
+		highlight_layer.clear_position_buffer()
+		return
+
+	var wire_types: Dictionary[Vector2i, Vector2i]
+	for tile in wire_tiles:
+		if _gate_tiles.has(tile):
+			continue
+		wire_types[tile] = highlight_layer.get_cell_atlas_coords(tile)
+
+		var tile_data: TileData = highlight_layer.get_cell_tile_data(tile)
+		assert(tile_data, "What, how, huh?")
+		var connected_directions: int = tile_data.get_custom_data("connected_directions")
+		_wire_tiles[tile] = WireTile.new(connected_directions)
+	wire_layer.create_wire(wire_types)
+	highlight_layer.clear_position_buffer()
+
+
+func place_gate() -> void:
+	var gate_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
+	var gate_data_cells: Dictionary[Vector2i, Dictionary]
+	for tile in gate_tiles:
+		var cell_source_id: int = highlight_layer.get_cell_source_id(tile)
+		var cell_atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
+		gate_data_cells[tile] = {"source_id": cell_source_id, "atlas_coords": cell_atlas_coords}
+
+		if _gate_tiles.has(tile):
+			return
+	# HACK change it later to soomething that supports custom gates
+	var new_gate_id: int = _next_free_gate_id
+	_gates[new_gate_id] = GateTile.new(highlight_layer.get_cell_source_id(gate_tiles[0]) - 2)
+	for tile in gate_tiles:
+		_gate_tiles[tile] = new_gate_id
+		if (
+				highlight_layer.get_cell_atlas_coords(tile) == Vector2i()
+				or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(0, 2)
+		):
+			_wire_tiles[tile] = WireTile.new(4)
+			_gates[new_gate_id].inputs.append(tile)
+		elif highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1):
+			_wire_tiles[tile] = WireTile.new(1)
+			_gates[new_gate_id].outputs.append(tile)
+	wire_layer.create_gate(gate_data_cells)
+
+
 func process_queue(iterations: int) -> void:
 	if _callable_queue.is_empty():
 		#queue_redraw()
@@ -48,6 +114,13 @@ func process_queue(iterations: int) -> void:
 		var action: Callable = _callable_queue.pop_front()
 		if action is Callable:
 			action.call()
+
+
+func _add_checkpoint_to_wire() -> void:
+	if _place_wire_checkpoints.is_empty():
+		return
+	var mouse_position_on_grid: Vector2i = get_local_mouse_position() / 64
+	_place_wire_checkpoints.append(mouse_position_on_grid)
 
 
 func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) -> void:
@@ -113,7 +186,9 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 
 	var output_coordinates: Array[Vector2i] = this_gate_tile.outputs
 	var outputs: Array[bool]
-	outputs.resize(output_coordinates.size())
+	var error: int = outputs.resize(output_coordinates.size())
+	if error:
+		printerr("Resizing array failed. How?")
 
 	var gate_type: EditorMode.Gate = this_gate_tile.gate
 	if gate_type == EditorMode.Gate.NOT:
@@ -134,53 +209,6 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 	for index in outputs.size():
 		_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(
 				output_coordinates[index], outputs[index], _logic_update_id))
-
-
-func place_wire() -> void:
-	var wire_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
-	if wire_tiles.size() == 1:
-		wire_layer.change_wire_crossing()
-		highlight_layer.clear_position_buffer()
-		return
-
-	var wire_types: Dictionary[Vector2i, Vector2i]
-	for tile in wire_tiles:
-		if _gate_tiles.has(tile):
-			continue
-		wire_types[tile] = highlight_layer.get_cell_atlas_coords(tile)
-
-		# FIXME warning with type safety
-		_wire_tiles[tile] = WireTile.new(highlight_layer.get_cell_tile_data(tile).get_custom_data(
-				"connected_directions"))
-	wire_layer.create_wire(wire_types)
-	highlight_layer.clear_position_buffer()
-
-
-func place_gate() -> void:
-	var gate_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
-	var gate_data_cells: Dictionary[Vector2i, Dictionary]
-	for tile in gate_tiles:
-		var cell_source_id: int = highlight_layer.get_cell_source_id(tile)
-		var cell_atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
-		gate_data_cells[tile] = {"source_id": cell_source_id, "atlas_coords": cell_atlas_coords}
-
-		if _gate_tiles.has(tile):
-			return
-	# HACK change it later to soomething that supports custom gates
-	var new_gate_id: int = _next_free_gate_id
-	_gates[new_gate_id] = GateTile.new(highlight_layer.get_cell_source_id(gate_tiles[0]) - 2)
-	for tile in gate_tiles:
-		_gate_tiles[tile] = new_gate_id
-		if (
-				highlight_layer.get_cell_atlas_coords(tile) == Vector2i()
-				or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(0, 2)
-		):
-			_wire_tiles[tile] = WireTile.new(4)
-			_gates[new_gate_id].inputs.append(tile)
-		elif highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1):
-			_wire_tiles[tile] = WireTile.new(1)
-			_gates[new_gate_id].outputs.append(tile)
-	wire_layer.create_gate(gate_data_cells)
 
 
 func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
