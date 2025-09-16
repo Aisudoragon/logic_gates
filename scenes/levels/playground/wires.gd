@@ -59,6 +59,15 @@ func _draw() -> void:
 func place_wire() -> void:
 	var wire_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	if wire_tiles.size() == 1:
+		if _wire_tiles.has(wire_tiles[0]) and _wire_tiles[wire_tiles[0]].direction == 15:
+			@warning_ignore_start("return_value_discarded")
+			_wire_tiles.erase(wire_tiles[0])
+			_wire_crossing_tiles[wire_tiles[0]] = WireCrossing.new()
+		elif _wire_crossing_tiles.has(wire_tiles[0]):
+			_wire_crossing_tiles.erase(wire_tiles[0])
+			@warning_ignore_restore("return_value_discarded")
+			_wire_tiles[wire_tiles[0]] = WireTile.new(15)
+
 		wire_layer.change_wire_crossing()
 		highlight_layer.clear_position_buffer()
 		return
