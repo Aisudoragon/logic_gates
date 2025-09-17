@@ -14,7 +14,7 @@ config/name="Logic gates"
 config/description="Graduation project for University of Rzeszów"
 config/version="0.1.0"
 config/tags=PackedStringArray("inżynierska", "uniwersytet")
-run/main_scene="res://scenes/levels/playground/playground.tscn"
+run/main_scene="uid://6tgvhg8hulcs"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="uid://mlshv5b0su4p"
 
