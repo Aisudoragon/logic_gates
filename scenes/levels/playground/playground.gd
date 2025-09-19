@@ -10,7 +10,7 @@ var gate_selected: EditorMode.Gate = EditorMode.Gate.STARTSTOP
 
 
 func _process(_delta: float) -> void:
-	#wires_interface.update_queue_size(wire_layer._callable_queue.size())
+	wires_interface.update_queue_size(wires._callable_queue.size())
 	pass
 
 
@@ -45,13 +45,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				wire_layer.delete_stuff()
 			if event is InputEventMouseMotion:
 				highlight_layer.gate_highlight(gate_selected)
-	if event is InputEventKey:
-		var event_key: InputEventKey = event
-		if event.is_pressed():
-			if event_key.keycode == KEY_SPACE:
-				wire_layer.paused_queue = not wire_layer.paused_queue
-			if event_key.keycode == KEY_EQUAL:
-				wire_layer.one_queue_action()
 
 
 func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.Gate) -> void:

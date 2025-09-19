@@ -25,8 +25,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			zoom -= Vector2(zoomSpeed, zoomSpeed)
 		zoom = clamp(zoom, Vector2(zoomMin, zoomMin), Vector2(zoomMax, zoomMax))
 
-		wires_interface.update_zoom_level(zoom.x)
-
 	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
 		var event_mm: InputEventMouseMotion = event
 		position -= event_mm.relative * dragSensitivity / zoom

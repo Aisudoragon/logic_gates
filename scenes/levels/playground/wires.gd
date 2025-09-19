@@ -225,6 +225,40 @@ func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
 			_logic_update_id))
 
 
+func _on_file_dialog_file_selected(path: String) -> void:
+	var new_save: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+
+	var placement_dict: Dictionary[Vector2i, Dictionary]
+	var success: bool
+	for tile in _wire_tiles:
+		success = placement_dict.set(tile,{"wires": _wire_tiles[tile].to_dict()})
+		if not success:
+			printerr("Couldn't write wire tile into dictionary at " + str(tile))
+	for tile in _wire_crossing_tiles:
+		success = placement_dict.set(tile, {"wires": _wire_crossing_tiles[tile].to_dict()})
+		if not success:
+			printerr("Couldn't write wire crossing tile into dictionary at " + str(tile))
+	for tile in _gate_tiles:
+		if placement_dict.has(tile):
+			placement_dict[tile].get_or_add("gate", _gate_tiles[tile])
+		else:
+			success = placement_dict.set(tile, {"gate": _gate_tiles[tile]})
+			if not success:
+				printerr("Couldn't write gate into dictionary at " + str(tile))
+	var gates_dict: Dictionary[int, Dictionary]
+	for gate in _gates:
+		gates_dict[gate] = _gates[gate].to_dict()
+
+	var save_dict := {
+		"placement": placement_dict,
+		"gates": gates_dict
+	}
+
+	var saved: bool = new_save.store_string(JSON.stringify(save_dict, "\t"))
+	if not saved:
+		printerr("Couldn't save file: " + path)
+
+
 class WireTile:
 
 	var state: bool
@@ -238,6 +272,10 @@ class WireTile:
 
 	func _to_string() -> String:
 		return "%s, update %d, directions %d" % [state, update_id, direction]
+
+
+	func to_dict() -> Dictionary:
+		return {"state": state, "direction": direction}
 
 
 class WireCrossing:
@@ -257,6 +295,14 @@ class WireCrossing:
 		return vertical_wire
 
 
+	func to_dict() -> Dictionary:
+		var return_dict := {
+			"horizontal_wire": horizontal_wire.to_dict(),
+			"vertical_wire": vertical_wire.to_dict()
+		}
+		return return_dict
+
+
 class GateTile:
 
 	var gate: EditorMode.Gate
@@ -266,3 +312,12 @@ class GateTile:
 
 	func _init(new_gate_type: EditorMode.Gate) -> void:
 		gate = new_gate_type
+
+
+	func to_dict() -> Dictionary:
+		var return_dict := {
+			"gate": gate,
+			"inputs": inputs,
+			"outputs": outputs
+		}
+		return return_dict

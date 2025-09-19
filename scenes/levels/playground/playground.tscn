@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://vxc7l235kxff"]
+[gd_scene load_steps=10 format=3 uid="uid://vxc7l235kxff"]
 
 [ext_resource type="Script" uid="uid://ddrbmlbq6sk85" path="res://scenes/levels/playground/playground.gd" id="1_ywb2o"]
 [ext_resource type="Script" uid="uid://bh6pxtvechol" path="res://scenes/levels/playground/grid_lines.gd" id="2_olfo7"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://kq8the0yie6i" path="res://scenes/levels/playground/wire_layer.gd" id="6_4wjdm"]
 [ext_resource type="Script" uid="uid://nxyr8hqa0lkw" path="res://scenes/levels/playground/highlight_layer.gd" id="6_k3bpp"]
 [ext_resource type="PackedScene" uid="uid://ba0bl16fuws1s" path="res://scenes/interfaces/wires_interface.tscn" id="7_dhyt4"]
+[ext_resource type="Script" uid="uid://d1utmmnuycrv6" path="res://scenes/levels/playground/save_buttons.gd" id="9_k3bpp"]
 
 [node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface")]
 script = ExtResource("1_ywb2o")
@@ -46,5 +47,36 @@ wires_interface = NodePath("../WiresInterface")
 
 [node name="WiresInterface" parent="." instance=ExtResource("7_dhyt4")]
 
+[node name="SaveButtons" type="HBoxContainer" parent="WiresInterface"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_right = 57.0
+offset_bottom = 40.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+script = ExtResource("9_k3bpp")
+
+[node name="SaveButton" type="Button" parent="WiresInterface/SaveButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Save"
+
+[node name="SaveAsButton" type="Button" parent="WiresInterface/SaveButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Save as"
+
+[node name="FileDialog" type="FileDialog" parent="WiresInterface/SaveButtons"]
+oversampling_override = 1.0
+initial_position = 1
+display_mode = 1
+access = 1
+filters = PackedStringArray("*.json")
+hidden_files_toggle_enabled = false
+
 [connection signal="toggle_output" from="Wires/WireLayer" to="Wires" method="_on_wire_layer_toggle_output"]
 [connection signal="mode_selected" from="WiresInterface" to="." method="_on_wires_interface_mode_selected"]
+[connection signal="pressed" from="WiresInterface/SaveButtons/SaveAsButton" to="WiresInterface/SaveButtons" method="_on_save_as_button_pressed"]
+[connection signal="file_selected" from="WiresInterface/SaveButtons/FileDialog" to="Wires" method="_on_file_dialog_file_selected"]

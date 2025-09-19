@@ -12,10 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://ddfq6xx07qih5" path="res://assets/resources/textures/gates/xor_gate.png" id="10_3xggy"]
 [ext_resource type="Texture2D" uid="uid://bw6dcg6rj4l22" path="res://assets/resources/textures/gates/xnor_gate.png" id="11_7acij"]
 
-[node name="WiresInterface" type="CanvasLayer" node_paths=PackedStringArray("debug_coordinates", "debug_zoom_level", "debug_queue_size")]
+[node name="WiresInterface" type="CanvasLayer" node_paths=PackedStringArray("debug_coordinates", "debug_queue_size")]
 script = ExtResource("1_ayhpq")
 debug_coordinates = NodePath("DebugCoordinates")
-debug_zoom_level = NodePath("DebugZoomLevel")
 debug_queue_size = NodePath("DebugQueueSize")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -297,12 +296,6 @@ offset_left = 20.0
 offset_top = 20.0
 theme_override_font_sizes/font_size = 25
 text = "Coordinates"
-
-[node name="DebugZoomLevel" type="Label" parent="."]
-offset_left = 20.0
-offset_top = 60.0
-theme_override_font_sizes/font_size = 25
-text = "Zoom level"
 
 [node name="DebugQueueSize" type="Label" parent="."]
 anchors_preset = 1

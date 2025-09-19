@@ -1,7 +1,6 @@
 class_name WiresInterface extends CanvasLayer
 
 @export var debug_coordinates: Label
-@export var debug_zoom_level: Label
 @export var debug_queue_size: Label
 
 signal mode_selected(mode: EditorMode.Mode, gate: EditorMode.Gate)
@@ -9,10 +8,6 @@ signal mode_selected(mode: EditorMode.Mode, gate: EditorMode.Gate)
 
 func update_coordinates(mouse_pos: Vector2i) -> void:
 	debug_coordinates.text = "%d, %d" % [mouse_pos.x, mouse_pos.y]
-
-
-func update_zoom_level(zoom: float) -> void:
-	debug_zoom_level.text = "zoom: %.3f" % zoom
 
 
 func update_queue_size(size: int) -> void:
