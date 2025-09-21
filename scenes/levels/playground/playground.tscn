@@ -78,5 +78,7 @@ hidden_files_toggle_enabled = false
 
 [connection signal="toggle_output" from="Wires/WireLayer" to="Wires" method="_on_wire_layer_toggle_output"]
 [connection signal="mode_selected" from="WiresInterface" to="." method="_on_wires_interface_mode_selected"]
+[connection signal="pressed" from="WiresInterface/SaveButtons/SaveButton" to="WiresInterface/SaveButtons" method="_on_save_button_pressed"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/SaveAsButton" to="WiresInterface/SaveButtons" method="_on_save_as_button_pressed"]
 [connection signal="file_selected" from="WiresInterface/SaveButtons/FileDialog" to="Wires" method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="WiresInterface/SaveButtons/FileDialog" to="WiresInterface/SaveButtons" method="_on_file_dialog_file_selected"]
