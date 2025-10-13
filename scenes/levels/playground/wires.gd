@@ -225,10 +225,33 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 
 
 func load_file(path: String) -> bool:
-	# TODO Visualize loaded map
 	var loaded_file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	var everything_dictionary: Dictionary = JSON.parse_string(loaded_file.get_as_text())
-	print(everything_dictionary)
+
+	var placement_dictionary: Dictionary = everything_dictionary["placement"]
+	for tile_string: String in placement_dictionary:
+		var tile: Vector2i = str_to_var("Vector2i" + tile_string)
+		if placement_dictionary[tile_string].has("gate"):
+			_gate_tiles[tile] = int(placement_dictionary[tile_string]["gate"])
+		if placement_dictionary[tile_string].has("wires"):
+			var wire_tile: Dictionary = placement_dictionary[tile_string]["wires"]
+			if wire_tile.has("direction"):
+				var direction: int = wire_tile["direction"]
+				var state: bool = wire_tile["state"]
+				var new_wire: WireTile = WireTile.new(direction)
+				new_wire.state = state
+				_wire_tiles[tile] = new_wire
+
+				wire_layer.set_cell(tile, 0, Vector2i(direction, 0))
+			else:
+				var wire_crossing: WireCrossing = WireCrossing.new()
+				var state: bool = wire_tile["horizontal_wire"]["state"]
+				wire_crossing.horizontal_wire.state = state
+				state = wire_tile["vertical_wire"]["state"]
+				wire_crossing.vertical_wire.state = state
+				_wire_crossing_tiles[tile] = wire_crossing
+
+				wire_layer.set_cell(tile, 0, Vector2i(15, 1))
 
 	var gates_dictionary: Dictionary = everything_dictionary["gates"]
 	for gate: String in gates_dictionary:
@@ -267,30 +290,8 @@ func load_file(path: String) -> bool:
 				atlas_coords.x = atlas_coords.x + 1
 			atlas_coords.y = atlas_coords.y + 1
 
-	var placement_dictionary: Dictionary = everything_dictionary["placement"]
-	for tile_string: String in placement_dictionary:
-		var tile: Vector2i = str_to_var("Vector2i" + tile_string)
-		if placement_dictionary[tile_string].has("gate"):
-			_gate_tiles[tile] = int(placement_dictionary[tile_string]["gate"])
-		if placement_dictionary[tile_string].has("wires"):
-			var wire_tile: Dictionary = placement_dictionary[tile_string]["wires"]
-			if wire_tile.has("direction"):
-				var direction: int = wire_tile["direction"]
-				var state: bool = wire_tile["state"]
-				var new_wire: WireTile = WireTile.new(direction)
-				new_wire.state = state
-				_wire_tiles[tile] = new_wire
-
-				wire_layer.set_cell(tile, 0, Vector2i(direction, 0))
-			else:
-				var wire_crossing: WireCrossing = WireCrossing.new()
-				var state: bool = wire_tile["horizontal_wire"]["state"]
-				wire_crossing.horizontal_wire.state = state
-				state = wire_tile["vertical_wire"]["state"]
-				wire_crossing.vertical_wire.state = state
-				_wire_crossing_tiles[tile] = wire_crossing
-
-				wire_layer.set_cell(tile, 0, Vector2i(15, 1))
+		if gate_type == EditorMode.Gate.STARTSTOP:
+			wire_layer.set_cell(inputs[0], 1, Vector2i.ZERO)
 
 	# TODO return false in case of failure
 	return false
