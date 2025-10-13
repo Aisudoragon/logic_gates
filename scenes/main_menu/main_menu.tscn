@@ -26,32 +26,31 @@ size_flags_vertical = 4
 [node name="LessonsButton" type="Button" parent="MainButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Lessons"
+text = "Lekcje"
 
 [node name="SandboxButton" type="Button" parent="MainButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Sandbox"
+text = "Piaskownica"
 
 [node name="OptionsButton" type="Button" parent="MainButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Options"
+text = "Opcje"
 
 [node name="ExitButton" type="Button" parent="MainButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Exit"
+text = "Wyjście"
 
 [node name="SandboxButtons" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 641.0
+offset_left = 721.0
 offset_top = -197.0
-offset_right = 762.0
+offset_right = 842.0
 offset_bottom = 115.0
 grow_vertical = 2
 alignment = 1
@@ -59,12 +58,12 @@ alignment = 1
 [node name="NewBoardButton" type="Button" parent="SandboxButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "New"
+text = "Nowa"
 
 [node name="LoadBoardButton" type="Button" parent="SandboxButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Load"
+text = "Wczytaj"
 
 [node name="LoadBoardDialog" type="FileDialog" parent="."]
 oversampling_override = 1.0

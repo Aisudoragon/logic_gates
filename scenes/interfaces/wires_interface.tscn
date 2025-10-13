@@ -54,7 +54,7 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/SelectThings/VBoxContainer"]
 layout_mode = 2
-text = "SELECT"
+text = "ZAZNACZ"
 horizontal_alignment = 1
 
 [node name="DrawWire" type="Button" parent="HBoxContainer"]
@@ -80,7 +80,7 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/DrawWire/VBoxContainer"]
 layout_mode = 2
-text = "WIRE"
+text = "KABEL"
 horizontal_alignment = 1
 
 [node name="PlaceStartEnd" type="Button" parent="HBoxContainer"]
@@ -106,7 +106,7 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/PlaceStartEnd/VBoxContainer"]
 layout_mode = 2
-text = "START END"
+text = "START KONIEC"
 horizontal_alignment = 1
 
 [node name="PlaceNot" type="Button" parent="HBoxContainer"]
@@ -295,7 +295,7 @@ horizontal_alignment = 1
 offset_left = 20.0
 offset_top = 20.0
 theme_override_font_sizes/font_size = 25
-text = "Coordinates"
+text = "Koordynaty"
 
 [node name="DebugQueueSize" type="Label" parent="."]
 anchors_preset = 1
@@ -307,7 +307,7 @@ offset_right = -13.0
 offset_bottom = 43.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 25
-text = "Queue"
+text = "Kolejka"
 
 [connection signal="pressed" from="HBoxContainer/SelectThings" to="." method="_on_select_things_pressed"]
 [connection signal="pressed" from="HBoxContainer/DrawWire" to="." method="_on_draw_wire_pressed"]

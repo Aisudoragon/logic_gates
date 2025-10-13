@@ -5,7 +5,7 @@ class_name Wires extends Node2D
 
 var _place_wire_checkpoints: Array[Vector2i]
 
-var _queue_executes_per_frame := 1
+var _queue_executes_per_frame := 500
 var _callable_queue := DoubleLinkedListCallable.new()
 var _next_free_gate_id := 0:
 	get:

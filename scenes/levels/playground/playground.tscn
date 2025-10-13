@@ -61,12 +61,12 @@ script = ExtResource("9_k3bpp")
 [node name="SaveButton" type="Button" parent="WiresInterface/SaveButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "Save"
+text = "Zapisz"
 
 [node name="SaveAsButton" type="Button" parent="WiresInterface/SaveButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "Save as"
+text = "Zapisz jako"
 
 [node name="FileDialog" type="FileDialog" parent="WiresInterface/SaveButtons"]
 oversampling_override = 1.0

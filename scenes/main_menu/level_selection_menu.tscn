@@ -1,6 +1,18 @@
-[gd_scene format=3 uid="uid://eycv6dmcnbo8"]
+[gd_scene load_steps=2 format=3 uid="uid://eycv6dmcnbo8"]
 
-[node name="LevelSelection" type="VBoxContainer"]
+[ext_resource type="Script" uid="uid://dhr6wvdo7srs7" path="res://scenes/main_menu/level_selection_menu.gd" id="1_d8w7r"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d8w7r")
+
+[node name="LevelSelection" type="VBoxContainer" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -9,23 +21,30 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelSelection"]
 layout_mode = 2
 
-[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="LevelSelection/HBoxContainer"]
 custom_minimum_size = Vector2(83.975, 0)
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+[node name="Button" type="Button" parent="LevelSelection/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LevelSelection/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+text = "Wróć"
+
+[node name="PanelContainer" type="PanelContainer" parent="LevelSelection/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer"]
+[node name="Label" type="Label" parent="LevelSelection/HBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 52
-text = "LESSONS"
+text = "LEKCJE"
 horizontal_alignment = 1
 
-[node name="PanelContainer2" type="PanelContainer" parent="."]
+[node name="PanelContainer2" type="PanelContainer" parent="LevelSelection"]
 layout_mode = 2
 size_flags_vertical = 3

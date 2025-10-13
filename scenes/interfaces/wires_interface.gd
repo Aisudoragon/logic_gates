@@ -11,7 +11,7 @@ func update_coordinates(mouse_pos: Vector2i) -> void:
 
 
 func update_queue_size(size: int) -> void:
-	debug_queue_size.text = "%d : queue" % size
+	debug_queue_size.text = "%d : kolejka" % size
 
 
 func _on_select_things_pressed() -> void:
