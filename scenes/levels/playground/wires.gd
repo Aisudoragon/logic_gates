@@ -107,7 +107,11 @@ func place_gate() -> void:
 		):
 			_wire_tiles[tile] = WireTile.new(4)
 			_gates[new_gate_id].inputs.append(tile)
-		elif highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1):
+		elif (
+				highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1)
+				or (_gates[new_gate_id].gate == EditorMode.Gate.NOT
+				and highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 0))
+		):
 			_wire_tiles[tile] = WireTile.new(1)
 			_gates[new_gate_id].outputs.append(tile)
 	wire_layer.create_gate(gate_data_cells)
