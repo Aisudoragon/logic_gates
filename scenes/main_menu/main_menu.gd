@@ -1,12 +1,10 @@
 extends Control
 
+signal change_scene(new_scene: String)
+
 
 func _on_lessons_button_pressed() -> void:
-	visible = false
-
-	var error: Error = get_tree().change_scene_to_file("res://scenes/main_menu/level_selection_menu.tscn")
-	if error:
-		printerr("Couldn't change to Level selection scene")
+	change_scene.emit("level_selection")
 
 
 func _on_sandbox_button_pressed() -> void:
@@ -14,9 +12,7 @@ func _on_sandbox_button_pressed() -> void:
 
 
 func _on_new_board_button_pressed() -> void:
-	var error: Error = get_tree().change_scene_to_file("res://scenes/levels/playground/playground.tscn")
-	if error:
-		printerr("Couldn't change to sandbox scene")
+	change_scene.emit("playground")
 
 
 func _on_load_board_button_pressed() -> void:
