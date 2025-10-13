@@ -224,12 +224,52 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 				output_coordinates[index], outputs[index], _logic_update_id))
 
 
-#func load_file(path: String) -> bool:
-	## TODO Load file into editor
-	#var loaded_file: FileAccess = FileAccess.open(path, FileAccess.READ)
-#
-#
-	#pass
+func load_file(path: String) -> bool:
+	# TODO Visualize loaded map
+	var loaded_file: FileAccess = FileAccess.open(path, FileAccess.READ)
+	var everything_dictionary: Dictionary = JSON.parse_string(loaded_file.get_as_text())
+	print(everything_dictionary)
+
+	var gates_dictionary: Dictionary = everything_dictionary["gates"]
+	for gate: String in gates_dictionary:
+		var gate_id: int = _next_free_gate_id
+		var gate_type: EditorMode.Gate = gates_dictionary[gate]["gate"]
+		var inputs: Array[Vector2i]
+		for input: String in gates_dictionary[gate]["inputs"]:
+			inputs.append(str_to_var("Vector2i" + input))
+		var outputs: Array[Vector2i]
+		for output: String in gates_dictionary[gate]["outputs"]:
+			outputs.append(str_to_var("Vector2i" + output))
+
+		var new_gate: GateTile = GateTile.new(gate_type)
+		new_gate.inputs = inputs
+		new_gate.outputs = outputs
+
+		_gates[gate_id] = new_gate
+
+	var placement_dictionary: Dictionary = everything_dictionary["placement"]
+	for tile_string: String in placement_dictionary:
+		var tile: Vector2i = str_to_var("Vector2i" + tile_string)
+		if placement_dictionary[tile_string].has("gate"):
+			_gate_tiles[tile] = int(placement_dictionary[tile_string]["gate"])
+		if placement_dictionary[tile_string].has("wires"):
+			var wire_tile: Dictionary = placement_dictionary[tile_string]["wires"]
+			if wire_tile.has("direction"):
+				var direction: int = wire_tile["direction"]
+				var state: bool = wire_tile["state"]
+				var new_wire: WireTile = WireTile.new(direction)
+				new_wire.state = state
+				_wire_tiles[tile] = new_wire
+			else:
+				var wire_crossing: WireCrossing = WireCrossing.new()
+				var state: bool = wire_tile["horizontal_wire"]["state"]
+				wire_crossing.horizontal_wire.state = state
+				state = wire_tile["vertical_wire"]["state"]
+				wire_crossing.vertical_wire.state = state
+				_wire_crossing_tiles[tile] = wire_crossing
+
+	# TODO return false in case of failure
+	return false
 
 
 func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:

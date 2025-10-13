@@ -66,12 +66,12 @@ text = "Działanie bramki AND"
 [node name="Label3" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "Bramki NAND"
+text = "Bramki NOT"
 
 [node name="Label4" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "Wytłumaczenie pozostałych bramek po kolei"
+text = "Pozostałe bramki po kolei"
 
 [node name="Label5" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
 layout_mode = 2
@@ -86,7 +86,7 @@ text = "Mapa Karnaugh"
 [node name="Label9" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "Objaśnienie \"glitchy\""
+text = "Objaśnienie race condition/\"glitche\""
 
 [node name="Label6" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
 layout_mode = 2
@@ -102,5 +102,10 @@ text = "SR latch"
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Przechowywanie danych"
+
+[node name="Label11" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Automaty Moore'a i Mealy'ego"
 
 [connection signal="pressed" from="LevelSelection/HBoxContainer/PanelContainer2/Back" to="." method="_on_back_pressed"]

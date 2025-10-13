@@ -48,6 +48,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func propagade_file_path(path: String) -> void:
+	wires.load_file(path)
 	$WiresInterface/SaveButtons.save_path = path
 
 
