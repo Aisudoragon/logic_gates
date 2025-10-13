@@ -244,8 +244,28 @@ func load_file(path: String) -> bool:
 		var new_gate: GateTile = GateTile.new(gate_type)
 		new_gate.inputs = inputs
 		new_gate.outputs = outputs
-
 		_gates[gate_id] = new_gate
+
+		var min_pos: Vector2i = new_gate.inputs[0]
+		var max_pos: Vector2i = new_gate.inputs[0]
+		for input: Vector2i in new_gate.inputs:
+			min_pos.x = input.x if input.x < min_pos.x else min_pos.x
+			min_pos.y = input.y if input.y < min_pos.y else min_pos.y
+			max_pos.x = input.x if input.x > max_pos.x else max_pos.x
+			max_pos.y = input.y if input.y > max_pos.y else max_pos.y
+		for output: Vector2i in new_gate.outputs:
+			min_pos.x = output.x if output.x < min_pos.x else min_pos.x
+			min_pos.y = output.y if output.y < min_pos.y else min_pos.y
+			max_pos.x = output.x if output.x > max_pos.x else max_pos.x
+			max_pos.y = output.y if output.y > max_pos.y else max_pos.y
+
+		var atlas_coords: Vector2i
+		for y in range(min_pos.y, max_pos.y + 1):
+			atlas_coords.x = 0
+			for x in range(min_pos.x, max_pos.x + 1):
+				wire_layer.set_cell(Vector2i(x, y), gate_type + 2, atlas_coords)
+				atlas_coords.x = atlas_coords.x + 1
+			atlas_coords.y = atlas_coords.y + 1
 
 	var placement_dictionary: Dictionary = everything_dictionary["placement"]
 	for tile_string: String in placement_dictionary:
@@ -260,6 +280,8 @@ func load_file(path: String) -> bool:
 				var new_wire: WireTile = WireTile.new(direction)
 				new_wire.state = state
 				_wire_tiles[tile] = new_wire
+
+				wire_layer.set_cell(tile, 0, Vector2i(direction, 0))
 			else:
 				var wire_crossing: WireCrossing = WireCrossing.new()
 				var state: bool = wire_tile["horizontal_wire"]["state"]
@@ -267,6 +289,8 @@ func load_file(path: String) -> bool:
 				state = wire_tile["vertical_wire"]["state"]
 				wire_crossing.vertical_wire.state = state
 				_wire_crossing_tiles[tile] = wire_crossing
+
+				wire_layer.set_cell(tile, 0, Vector2i(15, 1))
 
 	# TODO return false in case of failure
 	return false
