@@ -220,6 +220,14 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 				output_coordinates[index], outputs[index], _logic_update_id))
 
 
+#func load_file(path: String) -> bool:
+	## TODO Load file into editor
+	#var loaded_file: FileAccess = FileAccess.open(path, FileAccess.READ)
+#
+#
+	#pass
+
+
 func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
 	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(grid_position, state,
 			_logic_update_id))

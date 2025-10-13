@@ -9,3 +9,4 @@ script = ExtResource("1_0xm2m")
 [node name="MainMenu" parent="." instance=ExtResource("2_h2yge")]
 
 [connection signal="change_scene" from="MainMenu" to="." method="_on_main_menu_change_scene"]
+[connection signal="load_file" from="MainMenu" to="." method="_on_main_menu_load_file"]

@@ -47,6 +47,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				highlight_layer.gate_highlight(gate_selected)
 
 
+func propagade_file_path(path: String) -> void:
+	$WiresInterface/SaveButtons.save_path = path
+
+
 func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.Gate) -> void:
 	mode_selected = mode
 	gate_selected = gate
