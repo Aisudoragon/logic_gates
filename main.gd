@@ -24,6 +24,7 @@ func _change_scene(new_scene: String) -> void:
 			printerr('[%d] Something went wrong with connecting "change_scene" signal' % error)
 	if loaded_file_path and new_scene == "playground":
 		current_scene.propagade_file_path(loaded_file_path)
+		loaded_file_path = ""
 	if current_scene.has_signal(&"load_file"):
 		var error: Error = current_scene.load_file.connect(_on_main_menu_load_file)
 		if error:
@@ -31,7 +32,12 @@ func _change_scene(new_scene: String) -> void:
 
 
 func _on_main_menu_change_scene(new_scene: String) -> void:
-	_change_scene(new_scene)
+	if new_scene.begins_with("lesson_selection"):
+		print(new_scene.erase(0, 16))
+		loaded_file_path = "user://level1.json"
+		_change_scene("playground")
+	else:
+		_change_scene(new_scene)
 
 
 func _on_main_menu_load_file(path: String) -> void:

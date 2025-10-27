@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhr6wvdo7srs7" path="res://scenes/main_menu/level_selection_menu.gd" id="1_d8w7r"]
 
-[node name="LevelSelectionMenu" type="Control"]
+[node name="LevelSelectionMenu" type="Control" node_paths=PackedStringArray("lessonExplanation", "proceedButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,6 +10,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_d8w7r")
+lessonExplanation = NodePath("LevelSelection/PanelContainer2/HBoxContainer/Panel/VBoxContainer2/RichTextLabel")
+proceedButton = NodePath("LevelSelection/PanelContainer2/HBoxContainer/Panel/VBoxContainer2/ProceedButton")
 
 [node name="LevelSelection" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -30,9 +32,6 @@ layout_mode = 2
 
 [node name="Back" type="Button" parent="LevelSelection/HBoxContainer/PanelContainer2"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="LevelSelection/HBoxContainer/PanelContainer2"]
-layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Wróć"
 
@@ -43,71 +42,12 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="LevelSelection/HBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 52
-text = "LEKCJE"
+text = "ZADANIA"
 horizontal_alignment = 1
 
 [node name="PanelContainer2" type="PanelContainer" parent="LevelSelection"]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="LessonsList" type="VBoxContainer" parent="LevelSelection/PanelContainer2"]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Czym są bramki logiczne, oraz jak działa układ. Tablice prawdy itd."
-
-[node name="Label2" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Działanie bramki AND"
-
-[node name="Label3" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Bramki NOT"
-
-[node name="Label4" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Pozostałe bramki po kolei"
-
-[node name="Label5" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Jak można stworzyć inne bramki przy pomocy samych NAND/NOR"
-
-[node name="Label10" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Mapa Karnaugh"
-
-[node name="Label9" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Objaśnienie race condition/\"glitche\""
-
-[node name="Label6" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Dodawanie dwóch bitów"
-
-[node name="Label7" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "SR latch"
-
-[node name="Label8" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Przechowywanie danych"
-
-[node name="Label11" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Automaty Moore'a i Mealy'ego"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="LevelSelection/PanelContainer2"]
 layout_mode = 2
@@ -115,17 +55,18 @@ layout_mode = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="LevelSelection/PanelContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton1" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton1"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -135,16 +76,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 1[/font_size]
-Bramki logiczne"
-horizontal_alignment = 1
+text = "[font_size=22]1. Bramki logiczne[/font_size]"
 vertical_alignment = 1
 
-[node name="Button3" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton2" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button3"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,16 +93,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 2[/font_size]
-Tablice prawdy"
-horizontal_alignment = 1
+text = "[font_size=22]2. Tablice prawdy[/font_size]"
 vertical_alignment = 1
 
-[node name="Button2" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton3" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton3"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -173,16 +110,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 3[/font_size]
-Działanie układu"
-horizontal_alignment = 1
+text = "[font_size=22]3. Działanie układu[/font_size]"
 vertical_alignment = 1
 
-[node name="Button6" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton4" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button6"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton4"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -192,16 +128,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 4.1[/font_size]
-Bramka NOT"
-horizontal_alignment = 1
+text = "[font_size=22]4.1. Bramka NOT[/font_size]"
 vertical_alignment = 1
 
-[node name="Button4" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton5" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button4"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton5"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -211,16 +146,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 4.2[/font_size]
-Bramka AND"
-horizontal_alignment = 1
+text = "[font_size=22]4.2. Bramka AND[/font_size]"
 vertical_alignment = 1
 
-[node name="Button5" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton6" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button5"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton6"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -230,16 +164,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 4.3[/font_size]
-Bramka OR"
-horizontal_alignment = 1
+text = "[font_size=22]4.3. Bramka OR[/font_size]"
 vertical_alignment = 1
 
-[node name="Button7" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton7" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button7"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton7"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -249,16 +182,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 4.4[/font_size]
-Bramka NAND"
-horizontal_alignment = 1
+text = "[font_size=22]4.4. Bramka NAND[/font_size]"
 vertical_alignment = 1
 
-[node name="Button8" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton8" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button8"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton8"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -268,16 +200,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 4.5[/font_size]
-Bramka NOR"
-horizontal_alignment = 1
+text = "[font_size=22]4.5. Bramka NOR[/font_size]"
 vertical_alignment = 1
 
-[node name="Button9" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton9" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button9"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton9"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -287,16 +218,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 4.6[/font_size]
-Bramka XOR"
-horizontal_alignment = 1
+text = "[font_size=22]4.6. Bramka XOR[/font_size]"
 vertical_alignment = 1
 
-[node name="Button10" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton10" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button10"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton10"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -306,16 +236,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 5[/font_size]
-Mapa Karnaugh"
-horizontal_alignment = 1
+text = "[font_size=22]5. Mapa Karnaugh[/font_size]"
 vertical_alignment = 1
 
-[node name="Button11" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton11" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button11"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton11"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -325,16 +254,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 6[/font_size]
-Hazard"
-horizontal_alignment = 1
+text = "[font_size=22]6. Hazard[/font_size]"
 vertical_alignment = 1
 
-[node name="Button12" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton12" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button12"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton12"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -344,16 +272,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 7[/font_size]
-Dodawanie dwóch bitów"
-horizontal_alignment = 1
+text = "[font_size=22]7. Dodawanie dwóch bitów[/font_size]"
 vertical_alignment = 1
 
-[node name="Button13" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton13" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button13"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton13"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -363,16 +290,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 8[/font_size]
-Przerzutnik"
-horizontal_alignment = 1
+text = "[font_size=22]8. Przerzutnik[/font_size]"
 vertical_alignment = 1
 
-[node name="Button14" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="LessonButton14" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button14"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton14"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -382,16 +308,15 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 8.1[/font_size]
-Przechowywanie danych"
-horizontal_alignment = 1
+text = "[font_size=22]8.1. Przechowywanie danych[/font_size]"
 vertical_alignment = 1
 
-[node name="Button15" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+[node name="LessonButton15" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
+disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button15"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton15"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -401,14 +326,52 @@ grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=24]Zadanie 9[/font_size]
-Automaty Moore'a i Mealy'ego"
-horizontal_alignment = 1
+text = "[font_size=22]9. Automaty Moore'a i Mealy'ego[/font_size]"
 vertical_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="LevelSelection/PanelContainer2/HBoxContainer"]
+[node name="Panel" type="Control" parent="LevelSelection/PanelContainer2/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/Panel/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Wybierz zadanie, aby lepiej się z nim zapoznać."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProceedButton" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/Panel/VBoxContainer2"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Przejdź do zadania"
+
 [connection signal="pressed" from="LevelSelection/HBoxContainer/PanelContainer2/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton1" to="." method="_on_lesson_button_1_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton2" to="." method="_on_lesson_button_2_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton3" to="." method="_on_lesson_button_3_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton4" to="." method="_on_lesson_button_4_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton5" to="." method="_on_lesson_button_5_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton6" to="." method="_on_lesson_button_6_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton7" to="." method="_on_lesson_button_7_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton8" to="." method="_on_lesson_button_8_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton9" to="." method="_on_lesson_button_9_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton10" to="." method="_on_lesson_button_10_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton11" to="." method="_on_lesson_button_11_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton12" to="." method="_on_lesson_button_12_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton13" to="." method="_on_lesson_button_13_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton14" to="." method="_on_lesson_button_14_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton15" to="." method="_on_lesson_button_15_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/Panel/VBoxContainer2/ProceedButton" to="." method="_on_proceed_button_pressed"]

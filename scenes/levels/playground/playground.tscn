@@ -81,6 +81,53 @@ access = 1
 filters = PackedStringArray("*.json")
 hidden_files_toggle_enabled = false
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 50.0
+offset_top = -20.0
+offset_right = 90.0
+offset_bottom = 20.0
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -269.0
+offset_right = 248.0
+offset_bottom = 269.0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Zadanie"
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Rozpiska różnych celów do zrobienia, np:
+
+[ul][color=green]Połącz kable[/color]
+[color=red]Przełącz wszystkie wejścia na stan włączony[/color][/ul]"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pomoc"
+
 [connection signal="toggle_output" from="Wires/WireLayer" to="Wires" method="_on_wire_layer_toggle_output"]
 [connection signal="mode_selected" from="WiresInterface" to="." method="_on_wires_interface_mode_selected"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/BackButton" to="." method="_on_back_button_pressed"]
