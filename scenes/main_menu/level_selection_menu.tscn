@@ -50,62 +50,365 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LevelSelection/PanelContainer2"]
+[node name="LessonsList" type="VBoxContainer" parent="LevelSelection/PanelContainer2"]
+visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Czym są bramki logiczne, oraz jak działa układ. Tablice prawdy itd."
 
-[node name="Label2" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label2" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Działanie bramki AND"
 
-[node name="Label3" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label3" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Bramki NOT"
 
-[node name="Label4" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label4" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Pozostałe bramki po kolei"
 
-[node name="Label5" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label5" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Jak można stworzyć inne bramki przy pomocy samych NAND/NOR"
 
-[node name="Label10" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label10" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Mapa Karnaugh"
 
-[node name="Label9" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label9" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Objaśnienie race condition/\"glitche\""
 
-[node name="Label6" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label6" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Dodawanie dwóch bitów"
 
-[node name="Label7" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label7" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "SR latch"
 
-[node name="Label8" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label8" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Przechowywanie danych"
 
-[node name="Label11" type="Label" parent="LevelSelection/PanelContainer2/VBoxContainer"]
+[node name="Label11" type="Label" parent="LevelSelection/PanelContainer2/LessonsList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Automaty Moore'a i Mealy'ego"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelSelection/PanelContainer2"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LevelSelection/PanelContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 1[/font_size]
+Bramki logiczne"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button3" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 2[/font_size]
+Tablice prawdy"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 3[/font_size]
+Działanie układu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button6" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 4.1[/font_size]
+Bramka NOT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 4.2[/font_size]
+Bramka AND"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button5" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 4.3[/font_size]
+Bramka OR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button7" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button7"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 4.4[/font_size]
+Bramka NAND"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button8" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button8"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 4.5[/font_size]
+Bramka NOR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button9" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button9"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 4.6[/font_size]
+Bramka XOR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button10" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button10"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 5[/font_size]
+Mapa Karnaugh"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button11" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button11"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 6[/font_size]
+Hazard"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button12" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button12"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 7[/font_size]
+Dodawanie dwóch bitów"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button13" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button13"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 8[/font_size]
+Przerzutnik"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button14" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button14"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 8.1[/font_size]
+Przechowywanie danych"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button15" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/Button15"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=24]Zadanie 9[/font_size]
+Automaty Moore'a i Mealy'ego"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="LevelSelection/PanelContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
 
 [connection signal="pressed" from="LevelSelection/HBoxContainer/PanelContainer2/Back" to="." method="_on_back_pressed"]
