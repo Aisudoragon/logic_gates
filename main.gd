@@ -9,6 +9,15 @@ var scenes: Dictionary[String, PackedScene] = {
 }
 
 
+func _enter_tree() -> void:
+	if not FileAccess.file_exists(Filepaths.save_progress):
+		var new_save_template: String = FileAccess.open(Filepaths.save_template, FileAccess.READ).get_as_text()
+		var progress_file := FileAccess.open(Filepaths.save_progress, FileAccess.WRITE)
+		progress_file.store_string(new_save_template)
+
+	# TODO zapisywać stan postępów gracza
+
+
 func _instantiate_scene(path: String) -> Node:
 	return scenes[path].instantiate()
 
@@ -34,7 +43,7 @@ func _change_scene(new_scene: String) -> void:
 func _on_main_menu_change_scene(new_scene: String) -> void:
 	if new_scene.begins_with("lesson_selection"):
 		print(new_scene.erase(0, 16))
-		loaded_file_path = "user://level1.json"
+		loaded_file_path = "user://level1.circuit"
 		_change_scene("playground")
 	else:
 		_change_scene(new_scene)

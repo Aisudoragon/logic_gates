@@ -51,9 +51,9 @@ func _draw() -> void:
 			wire_color = Color.RED
 		wire_color = Color(wire_color, 0.5)
 		draw_rect(Rect2i(grid_position * 64 + Vector2i(8, 8), Vector2i(48, 48)), wire_color)
-		draw_string(ThemeDB.fallback_font, grid_position * 64 + Vector2i(2, 14),
-				str(_wire_tiles[grid_position].update_id), HORIZONTAL_ALIGNMENT_LEFT, -1, 16,
-				Color.BLACK)
+		#draw_string(ThemeDB.fallback_font, grid_position * 64 + Vector2i(2, 14),
+				#str(_wire_tiles[grid_position].update_id), HORIZONTAL_ALIGNMENT_LEFT, -1, 16,
+				#Color.BLACK)
 
 
 func place_wire() -> void:

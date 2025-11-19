@@ -78,7 +78,7 @@ oversampling_override = 1.0
 initial_position = 1
 display_mode = 1
 access = 1
-filters = PackedStringArray("*.json")
+filters = PackedStringArray("*.circuit")
 hidden_files_toggle_enabled = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
