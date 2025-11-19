@@ -11,9 +11,7 @@ var scenes: Dictionary[String, PackedScene] = {
 
 func _enter_tree() -> void:
 	if not FileAccess.file_exists(Filepaths.save_progress):
-		var new_save_template: String = FileAccess.open(Filepaths.save_template, FileAccess.READ).get_as_text()
-		var progress_file := FileAccess.open(Filepaths.save_progress, FileAccess.WRITE)
-		progress_file.store_string(new_save_template)
+		SaveProgress.create_save()
 
 	# TODO zapisywać stan postępów gracza
 
