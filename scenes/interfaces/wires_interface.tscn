@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://ba0bl16fuws1s"]
+[gd_scene load_steps=13 format=3 uid="uid://ba0bl16fuws1s"]
 
 [ext_resource type="Script" uid="uid://csitk4tag8uya" path="res://scenes/interfaces/wires_interface.gd" id="1_ayhpq"]
 [ext_resource type="Texture2D" uid="uid://fhjnqem02rdj" path="res://assets/resources/textures/cursor.png" id="1_q7lvh"]
 [ext_resource type="Texture2D" uid="uid://mlshv5b0su4p" path="res://assets/resources/textures/wire_icon.png" id="2_4grtn"]
-[ext_resource type="Texture2D" uid="uid://bn8kqmn3h7yg1" path="res://assets/resources/textures/startstop.png" id="4_ngnnj"]
+[ext_resource type="Texture2D" uid="uid://bbg8fvon1wmeu" path="res://assets/resources/textures/gates/start.png" id="4_gaxxl"]
+[ext_resource type="Texture2D" uid="uid://civjxmdflhuur" path="res://assets/resources/textures/gates/stop.png" id="5_nc38x"]
 [ext_resource type="Texture2D" uid="uid://dqu2giric734j" path="res://assets/resources/textures/gates/not_gate.png" id="5_wa0ej"]
 [ext_resource type="Texture2D" uid="uid://cm8d2wqkbw8k4" path="res://assets/resources/textures/gates/and_gate.png" id="6_0w0iy"]
 [ext_resource type="Texture2D" uid="uid://bs2wxo5wart8s" path="res://assets/resources/textures/gates/nand_gate.png" id="7_2lufr"]
@@ -83,12 +84,12 @@ layout_mode = 2
 text = "KABEL"
 horizontal_alignment = 1
 
-[node name="PlaceStartEnd" type="Button" parent="HBoxContainer"]
+[node name="PlaceStart" type="Button" parent="HBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PlaceStartEnd"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PlaceStart"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,16 +98,42 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PlaceStartEnd/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PlaceStart/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("4_ngnnj")
+texture = ExtResource("4_gaxxl")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="HBoxContainer/PlaceStartEnd/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/PlaceStart/VBoxContainer"]
 layout_mode = 2
-text = "START KONIEC"
+text = "START"
+horizontal_alignment = 1
+
+[node name="PlaceEnd" type="Button" parent="HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PlaceEnd"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PlaceEnd/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("5_nc38x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer/PlaceEnd/VBoxContainer"]
+layout_mode = 2
+text = "KONIEC"
 horizontal_alignment = 1
 
 [node name="PlaceNot" type="Button" parent="HBoxContainer"]
@@ -311,7 +338,8 @@ text = "Kolejka"
 
 [connection signal="pressed" from="HBoxContainer/SelectThings" to="." method="_on_select_things_pressed"]
 [connection signal="pressed" from="HBoxContainer/DrawWire" to="." method="_on_draw_wire_pressed"]
-[connection signal="pressed" from="HBoxContainer/PlaceStartEnd" to="." method="_on_place_start_end_pressed"]
+[connection signal="pressed" from="HBoxContainer/PlaceStart" to="." method="_on_place_start_pressed"]
+[connection signal="pressed" from="HBoxContainer/PlaceEnd" to="." method="_on_place_end_pressed"]
 [connection signal="pressed" from="HBoxContainer/PlaceNot" to="." method="_on_place_not_pressed"]
 [connection signal="pressed" from="HBoxContainer/PlaceAnd" to="." method="_on_place_and_pressed"]
 [connection signal="pressed" from="HBoxContainer/PlaceNand" to="." method="_on_place_nand_pressed"]

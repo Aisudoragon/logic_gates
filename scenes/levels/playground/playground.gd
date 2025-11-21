@@ -8,7 +8,7 @@ extends Node2D
 signal change_scene(new_scene: String)
 
 var mode_selected: EditorMode.Mode = EditorMode.Mode.WIRE
-var gate_selected: EditorMode.Gate = EditorMode.Gate.STARTSTOP
+var gate_selected: EditorMode.Gate = EditorMode.Gate.START
 
 
 func _process(_delta: float) -> void:
@@ -40,7 +40,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if Input.is_action_pressed(&"destroy"):
 					wire_layer.delete_stuff()
 		# gate behavior
-		_:
+		EditorMode.Mode.GATE:
 			if event.is_action_pressed(&"place"):
 				wires.place_gate()
 			if event.is_action_pressed(&"destroy"):

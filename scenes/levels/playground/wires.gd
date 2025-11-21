@@ -102,10 +102,13 @@ func place_gate() -> void:
 	for tile in gate_tiles:
 		_gate_tiles[tile] = new_gate_id
 		if (
-				highlight_layer.get_cell_atlas_coords(tile) == Vector2i()
+				highlight_layer.get_cell_atlas_coords(tile) == Vector2i.ZERO
 				or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(0, 2)
 		):
-			_wire_tiles[tile] = WireTile.new(4)
+			if _gates[new_gate_id].gate == EditorMode.Gate.START:
+				_wire_tiles[tile] = WireTile.new(1)
+			else:
+				_wire_tiles[tile] = WireTile.new(4)
 			_gates[new_gate_id].inputs.append(tile)
 		elif (
 				highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1)
@@ -290,8 +293,10 @@ func load_file(path: String) -> bool:
 				atlas_coords.x = atlas_coords.x + 1
 			atlas_coords.y = atlas_coords.y + 1
 
-		if gate_type == EditorMode.Gate.STARTSTOP:
-			wire_layer.set_cell(inputs[0], 1, Vector2i.ZERO)
+		if gate_type == EditorMode.Gate.START:
+			wire_layer.set_cell(inputs[0], 9, Vector2i.ZERO)
+		if gate_type == EditorMode.Gate.STOP:
+			wire_layer.set_cell(inputs[0], 10, Vector2i.ZERO)
 
 	# TODO return false in case of failure
 	return false

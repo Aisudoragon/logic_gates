@@ -15,15 +15,19 @@ func update_queue_size(size: int) -> void:
 
 
 func _on_select_things_pressed() -> void:
-	mode_selected.emit(EditorMode.Mode.SELECT, EditorMode.Gate.STARTSTOP)
+	mode_selected.emit(EditorMode.Mode.SELECT, EditorMode.Gate.START)
 
 
 func _on_draw_wire_pressed() -> void:
-	mode_selected.emit(EditorMode.Mode.WIRE, EditorMode.Gate.STARTSTOP)
+	mode_selected.emit(EditorMode.Mode.WIRE, EditorMode.Gate.START)
 
 
-func _on_place_start_end_pressed() -> void:
-	mode_selected.emit(EditorMode.Mode.GATE, EditorMode.Gate.STARTSTOP)
+func _on_place_start_pressed() -> void:
+	mode_selected.emit(EditorMode.Mode.GATE, EditorMode.Gate.START)
+
+
+func _on_place_end_pressed() -> void:
+	mode_selected.emit(EditorMode.Mode.GATE, EditorMode.Gate.STOP)
 
 
 func _on_place_not_pressed() -> void:

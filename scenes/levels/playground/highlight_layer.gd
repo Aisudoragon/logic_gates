@@ -52,8 +52,11 @@ func clear_position_buffer() -> void:
 
 func gate_highlight(gate: EditorMode.Gate) -> void:
 	clear()
-	if gate == EditorMode.Gate.STARTSTOP:
-		set_cell(_mouse_to_grid(), 1, Vector2i(0, 0))
+	if gate == EditorMode.Gate.START:
+		set_cell(_mouse_to_grid(), 9, Vector2i(0, 0))
+		return
+	elif gate == EditorMode.Gate.STOP:
+		set_cell(_mouse_to_grid(), 10, Vector2i(0, 0))
 		return
 
 	var gate_pattern: TileMapPattern = tile_set.get_pattern(gate)

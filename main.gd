@@ -14,10 +14,10 @@ func _enter_tree() -> void:
 
 
 func _change_scene(new_node: CanvasItem) -> void:
-	new_node.visible = true
-	new_node.process_mode = Node.PROCESS_MODE_PAUSABLE
 	current_node.visible = false
 	current_node.process_mode = Node.PROCESS_MODE_DISABLED
+	new_node.visible = true
+	new_node.process_mode = Node.PROCESS_MODE_PAUSABLE
 
 	current_node = new_node
 

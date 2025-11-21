@@ -1,6 +1,6 @@
-[gd_resource type="TileSet" load_steps=26 format=3 uid="uid://boqjjkshra24t"]
+[gd_resource type="TileSet" load_steps=28 format=3 uid="uid://boqjjkshra24t"]
 
-[ext_resource type="Texture2D" uid="uid://bn8kqmn3h7yg1" path="res://assets/resources/textures/startstop.png" id="1_bvmjg"]
+[ext_resource type="Texture2D" uid="uid://civjxmdflhuur" path="res://assets/resources/textures/gates/stop.png" id="2_67t6k"]
 [ext_resource type="Texture2D" uid="uid://dqu2giric734j" path="res://assets/resources/textures/gates/not_gate.png" id="2_y8ac4"]
 [ext_resource type="Texture2D" uid="uid://cm8d2wqkbw8k4" path="res://assets/resources/textures/gates/and_gate.png" id="3_yixnu"]
 [ext_resource type="Texture2D" uid="uid://5lxq8mfmvj58" path="res://assets/resources/textures/gates/or_gate.png" id="4_fg87c"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bpv830oqtui6i" path="res://assets/resources/textures/gates/nor_gate.png" id="6_u75fb"]
 [ext_resource type="Texture2D" uid="uid://ddfq6xx07qih5" path="res://assets/resources/textures/gates/xor_gate.png" id="7_m2qao"]
 [ext_resource type="Texture2D" uid="uid://bw6dcg6rj4l22" path="res://assets/resources/textures/gates/xnor_gate.png" id="8_qpaw7"]
+[ext_resource type="Texture2D" uid="uid://bbg8fvon1wmeu" path="res://assets/resources/textures/gates/start.png" id="10_3lym3"]
 [ext_resource type="Texture2D" uid="uid://bmvkb0tf101ct" path="res://assets/resources/textures/wires.png" id="10_c3214"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_xg0g8"]
@@ -84,23 +85,11 @@ texture_region_size = Vector2i(64, 64)
 15:1/next_alternative_id = 2
 15:1/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sjw15"]
-texture = ExtResource("1_bvmjg")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1l216"]
+texture = ExtResource("2_67t6k")
 texture_region_size = Vector2i(64, 64)
-0:0/next_alternative_id = 7
 0:0/0 = 0
-0:0/0/modulate = Color(1, 0, 0, 1)
-0:0/0/custom_data_2 = 1
-0:0/1 = 1
-0:0/1/modulate = Color(0, 1, 0, 1)
-0:0/1/custom_data_2 = 1
-1:0/next_alternative_id = 5
-1:0/0 = 0
-1:0/0/modulate = Color(1, 0, 0, 1)
-1:0/0/custom_data_2 = 4
-1:0/1 = 1
-1:0/1/modulate = Color(0, 1, 0, 1)
-1:0/1/custom_data_2 = 4
+0:0/0/custom_data_2 = 4
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bbuuw"]
 texture = ExtResource("2_y8ac4")
@@ -252,6 +241,17 @@ texture_region_size = Vector2i(64, 64)
 1:2/0 = 0
 2:2/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnj5n"]
+texture = ExtResource("10_3lym3")
+texture_region_size = Vector2i(64, 64)
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/0/modulate = Color(1, 0, 0, 1)
+0:0/0/custom_data_2 = 1
+0:0/1 = 1
+0:0/1/modulate = Color(0, 1, 0, 1)
+0:0/1/custom_data_2 = 1
+
 [resource]
 tile_size = Vector2i(64, 64)
 custom_data_layer_0/name = "output_offset"
@@ -267,8 +267,9 @@ sources/5 = SubResource("TileSetAtlasSource_sflw3")
 sources/4 = SubResource("TileSetAtlasSource_4qghh")
 sources/3 = SubResource("TileSetAtlasSource_xf1h5")
 sources/2 = SubResource("TileSetAtlasSource_bbuuw")
-sources/1 = SubResource("TileSetAtlasSource_sjw15")
 sources/0 = SubResource("TileSetAtlasSource_fl82b")
+sources/9 = SubResource("TileSetAtlasSource_lnj5n")
+sources/10 = SubResource("TileSetAtlasSource_1l216")
 pattern_0 = SubResource("TileMapPattern_xg0g8")
 pattern_1 = SubResource("TileMapPattern_67t6k")
 pattern_2 = SubResource("TileMapPattern_7bqht")

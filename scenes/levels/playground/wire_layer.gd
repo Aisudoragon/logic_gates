@@ -1,6 +1,5 @@
 class_name WireLayer extends TileMapLayer
 
-
 signal toggle_output(grid_position: Vector2i, state: bool)
 
 
@@ -58,12 +57,8 @@ func create_gate(tiles: Dictionary[Vector2i, Dictionary]) -> void:
 
 func toggle_start_gate() -> void:
 	var grid_mouse_position: Vector2i = local_to_map(get_local_mouse_position())
-	if not (
-			get_cell_source_id(grid_mouse_position) == 1
-			and get_cell_atlas_coords(grid_mouse_position) == Vector2i(0, 0)
-	):
+	if not get_cell_source_id(grid_mouse_position) == 9:
 		return
 	var state: bool = not get_cell_alternative_tile(grid_mouse_position)
-	set_cell(grid_mouse_position, 1, Vector2i(0, 0), state)
-	#_try_logic_transfer(grid_mouse_position + Vector2i.RIGHT, state, _update_count)
-	toggle_output.emit(grid_mouse_position + Vector2i.RIGHT, state)
+	set_cell(grid_mouse_position, 9, Vector2i(0, 0), state)
+	toggle_output.emit(grid_mouse_position, state)
