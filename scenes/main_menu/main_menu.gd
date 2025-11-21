@@ -1,11 +1,12 @@
 extends Control
 
-signal change_scene(new_scene: String)
-signal load_file(path: String)
+signal change_scene_level_selection
+signal change_scene_options
+signal change_scene_playground(path: String)
 
 
 func _on_lessons_button_pressed() -> void:
-	change_scene.emit("level selection")
+	change_scene_level_selection.emit()
 
 
 func _on_sandbox_button_pressed() -> void:
@@ -13,7 +14,7 @@ func _on_sandbox_button_pressed() -> void:
 
 
 func _on_new_board_button_pressed() -> void:
-	change_scene.emit("playground")
+	change_scene_playground.emit("")
 
 
 func _on_load_board_button_pressed() -> void:
@@ -30,5 +31,4 @@ func _on_exit_button_pressed() -> void:
 
 
 func _on_load_board_dialog_file_selected(path: String) -> void:
-	load_file.emit(path)
-	change_scene.emit("playground")
+	change_scene_playground.emit(path)

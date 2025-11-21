@@ -41,6 +41,8 @@ script = ExtResource("6_k3bpp")
 wire_layer = NodePath("../WireLayer")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("wires_interface")]
+anchor_mode = 0
+limit_enabled = false
 editor_draw_screen = false
 script = ExtResource("3_dsu8x")
 wires_interface = NodePath("../WiresInterface")
