@@ -5,7 +5,7 @@ extends Node2D
 @export var wires: Wires
 @export var wires_interface: WiresInterface
 
-signal change_scene(new_scene: String)
+signal change_scene_main_menu()
 
 var mode_selected: EditorMode.Mode = EditorMode.Mode.WIRE
 var gate_selected: EditorMode.Gate = EditorMode.Gate.START
@@ -60,7 +60,9 @@ func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.G
 
 	if mode == EditorMode.Mode.SELECT:
 		highlight_layer.clear()
+	if gate == EditorMode.Gate.CUSTOM:
+		wires.load_custom_gate()
 
 
 func _on_back_button_pressed() -> void:
-	change_scene.emit("main menu")
+	change_scene_main_menu.emit()

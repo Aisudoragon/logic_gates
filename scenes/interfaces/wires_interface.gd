@@ -56,3 +56,7 @@ func _on_place_xor_pressed() -> void:
 
 func _on_place_xnor_pressed() -> void:
 	mode_selected.emit(EditorMode.Mode.GATE, EditorMode.Gate.XNOR)
+
+
+func _on_place_custom_pressed() -> void:
+	mode_selected.emit(EditorMode.Mode.GATE, EditorMode.Gate.CUSTOM)

@@ -16,6 +16,7 @@ enum Gate {
 	XNOR,
 	START,
 	STOP,
+	CUSTOM,
 }
 
 enum Direction {

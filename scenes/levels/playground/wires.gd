@@ -19,6 +19,7 @@ var _wire_tiles: Dictionary[Vector2i, WireTile]
 var _wire_crossing_tiles: Dictionary[Vector2i, WireCrossing]
 var _gate_tiles: Dictionary[Vector2i, int]
 var _gates: Dictionary[int, GateTile]
+var _custom_gates: Array[CustomGate]
 
 
 func _process(_delta: float) -> void:
@@ -29,10 +30,7 @@ func _process(_delta: float) -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
 	var event_key := event as InputEventKey
 	# TODO Handle keyboard input here
-	if event_key.is_action_pressed(&"rotate"):
-		print("Tried to rotate")
-	elif event_key.is_action_pressed(&"special"):
-		print("Tried to special (add checkpoint to wire placing)")
+	if event_key.is_action_pressed(&"special"):
 		_add_checkpoint_to_wire()
 
 
@@ -60,17 +58,17 @@ func place_wire() -> void:
 	var wire_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	if wire_tiles.size() == 1:
 		if _wire_tiles.has(wire_tiles[0]) and _wire_tiles[wire_tiles[0]].direction == 15:
-			@warning_ignore_start("return_value_discarded")
 			_wire_tiles.erase(wire_tiles[0])
 			_wire_crossing_tiles[wire_tiles[0]] = WireCrossing.new()
 		elif _wire_crossing_tiles.has(wire_tiles[0]):
 			_wire_crossing_tiles.erase(wire_tiles[0])
-			@warning_ignore_restore("return_value_discarded")
 			_wire_tiles[wire_tiles[0]] = WireTile.new(15)
 
 		wire_layer.change_wire_crossing()
 		highlight_layer.clear_position_buffer()
 		return
+
+	update_save_preview()
 
 	var wire_types: Dictionary[Vector2i, Vector2i]
 	for tile in wire_tiles:
@@ -99,25 +97,33 @@ func place_gate() -> void:
 	# HACK change it later to soomething that supports custom gates
 	var new_gate_id: int = _next_free_gate_id
 	_gates[new_gate_id] = GateTile.new(highlight_layer.get_cell_source_id(gate_tiles[0]) - 2)
-	for tile in gate_tiles:
-		_gate_tiles[tile] = new_gate_id
-		if (
-				highlight_layer.get_cell_atlas_coords(tile) == Vector2i.ZERO
-				or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(0, 2)
-		):
-			if _gates[new_gate_id].gate == EditorMode.Gate.START:
-				_wire_tiles[tile] = WireTile.new(1)
-			else:
+	if gate_tiles.size() == 1:
+		if _gates[new_gate_id].gate == EditorMode.Gate.START:
+			_wire_tiles[gate_tiles[0]] = WireTile.new(1)
+			_gates[new_gate_id].outputs.append(gate_tiles[0])
+		else:
+			_wire_tiles[gate_tiles[0]] = WireTile.new(4)
+			_gates[new_gate_id].inputs.append(gate_tiles[0])
+		_gate_tiles[gate_tiles[0]] = new_gate_id
+	else:
+		for tile in gate_tiles:
+			_gate_tiles[tile] = new_gate_id
+			if (
+					highlight_layer.get_cell_atlas_coords(tile) == Vector2i.ZERO
+					or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(0, 2)
+			):
 				_wire_tiles[tile] = WireTile.new(4)
-			_gates[new_gate_id].inputs.append(tile)
-		elif (
-				highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1)
-				or (_gates[new_gate_id].gate == EditorMode.Gate.NOT
-				and highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 0))
-		):
-			_wire_tiles[tile] = WireTile.new(1)
-			_gates[new_gate_id].outputs.append(tile)
+				_gates[new_gate_id].inputs.append(tile)
+			elif (
+					highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1)
+					or (_gates[new_gate_id].gate == EditorMode.Gate.NOT
+					and highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 0))
+			):
+				_wire_tiles[tile] = WireTile.new(1)
+				_gates[new_gate_id].outputs.append(tile)
 	wire_layer.create_gate(gate_data_cells)
+
+	update_save_preview()
 
 
 func process_queue(iterations: int) -> void:
@@ -228,8 +234,7 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 
 
 func load_file(path: String) -> bool:
-	var loaded_file: FileAccess = FileAccess.open(path, FileAccess.READ)
-	var everything_dictionary: Dictionary = JSON.parse_string(loaded_file.get_as_text())
+	var everything_dictionary: Dictionary = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
 
 	var placement_dictionary: Dictionary = everything_dictionary["placement"]
 	for tile_string: String in placement_dictionary:
@@ -275,15 +280,15 @@ func load_file(path: String) -> bool:
 		var min_pos: Vector2i = new_gate.inputs[0]
 		var max_pos: Vector2i = new_gate.inputs[0]
 		for input: Vector2i in new_gate.inputs:
-			min_pos.x = input.x if input.x < min_pos.x else min_pos.x
-			min_pos.y = input.y if input.y < min_pos.y else min_pos.y
-			max_pos.x = input.x if input.x > max_pos.x else max_pos.x
-			max_pos.y = input.y if input.y > max_pos.y else max_pos.y
+			min_pos.x = min(input.x, min_pos.x)
+			min_pos.y = min(input.y, min_pos.y)
+			max_pos.x = max(input.x, max_pos.x)
+			max_pos.y = max(input.y, max_pos.y)
 		for output: Vector2i in new_gate.outputs:
-			min_pos.x = output.x if output.x < min_pos.x else min_pos.x
-			min_pos.y = output.y if output.y < min_pos.y else min_pos.y
-			max_pos.x = output.x if output.x > max_pos.x else max_pos.x
-			max_pos.y = output.y if output.y > max_pos.y else max_pos.y
+			min_pos.x = min(output.x, min_pos.x)
+			min_pos.y = min(output.y, min_pos.y)
+			max_pos.x = max(output.x, max_pos.x)
+			max_pos.y = max(output.y, max_pos.y)
 
 		var atlas_coords: Vector2i
 		for y in range(min_pos.y, max_pos.y + 1):
@@ -298,8 +303,83 @@ func load_file(path: String) -> bool:
 		if gate_type == EditorMode.Gate.STOP:
 			wire_layer.set_cell(inputs[0], 10, Vector2i.ZERO)
 
+	update_save_preview()
+	return true
 	# TODO return false in case of failure
 	return false
+
+
+func load_custom_gate() -> void:
+	var loaded_circuit_dict: Dictionary = JSON.parse_string(FileAccess.open("user://test-custom.circuit", FileAccess.READ).get_as_text())
+	var loaded_gates_dict: Dictionary = loaded_circuit_dict["gates"]
+	var inputs_pos: Array[Vector2i]
+	var outputs_pos: Array[Vector2i]
+	for id: String in loaded_gates_dict:
+		var gate: Dictionary = loaded_gates_dict[id]
+		if gate["gate"] == 7:
+			inputs_pos.append(str_to_var("Vector2i" + gate["outputs"][0]))
+		elif gate["gate"] == 8:
+			outputs_pos.append(str_to_var("Vector2i" + gate["inputs"][0]))
+	inputs_pos.sort()
+	outputs_pos.sort()
+	# TODO włożyć gdzieś te wejścia/wyjścia
+	place_custom_gate("user://test-custom.circuit", Vector2i.ZERO)
+
+
+func place_custom_gate(path: String, coordinates: Vector2i) -> void:
+	var loaded_circuit_dict: Dictionary = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
+	var new_custom_gate := CustomGate.new()
+	_custom_gates.append(new_custom_gate)
+
+	var placement_dictionary: Dictionary = loaded_circuit_dict["placement"]
+	for tile_string: String in placement_dictionary:
+		var tile: Vector2i = str_to_var("Vector2i" + tile_string)
+		if placement_dictionary[tile_string].has("gate"):
+			new_custom_gate._gate_tiles[tile] = int(placement_dictionary[tile_string]["gate"])
+		if placement_dictionary[tile_string].has("wires"):
+			var wire_tile: Dictionary = placement_dictionary[tile_string]["wires"]
+			if wire_tile.has("direction"):
+				var direction: int = wire_tile["direction"]
+				var state: bool = wire_tile["state"]
+				var new_wire: WireTile = WireTile.new(direction)
+				new_wire.state = state
+				new_custom_gate._wire_tiles[tile] = new_wire
+			else:
+				var wire_crossing: WireCrossing = WireCrossing.new()
+				var state: bool = wire_tile["horizontal_wire"]["state"]
+				wire_crossing.horizontal_wire.state = state
+				state = wire_tile["vertical_wire"]["state"]
+				wire_crossing.vertical_wire.state = state
+				new_custom_gate._wire_crossing_tiles[tile] = wire_crossing
+
+	var loaded_gates_dict: Dictionary = loaded_circuit_dict["gates"]
+	for gate: String in loaded_gates_dict:
+		var gate_id: int = _next_free_gate_id
+		var gate_type: EditorMode.Gate = loaded_gates_dict[gate]["gate"]
+		var inputs: Array[Vector2i]
+		for input: String in loaded_gates_dict[gate]["inputs"]:
+			inputs.append(str_to_var("Vector2i" + input))
+		var outputs: Array[Vector2i]
+		for output: String in loaded_gates_dict[gate]["outputs"]:
+			outputs.append(str_to_var("Vector2i" + output))
+
+		var new_gate: GateTile = GateTile.new(gate_type)
+		new_gate.inputs = inputs
+		new_gate.outputs = outputs
+		new_custom_gate._gates[gate_id] = new_gate
+
+	# TODO załadować custom bramkę
+	# HACK
+	var next_gate_id: int = _next_free_gate_id
+	_gates[next_gate_id] = GateTile.new(EditorMode.Gate.CUSTOM)
+	wire_layer.set_cell(Vector2i.ZERO, 11, Vector2i.ZERO)
+	_wire_tiles[Vector2i.ZERO] = WireTile.new(4)
+	wire_layer.set_cell(Vector2i(1, 0), 11, Vector2i(1, 0))
+	_wire_tiles[Vector2i(1, 0)] = WireTile.new(1)
+	wire_layer.set_cell(Vector2i(0, 1), 11, Vector2i(0, 2))
+	_wire_tiles[Vector2i(0, 1)] = WireTile.new(4)
+	wire_layer.set_cell(Vector2i(1, 1), 11, Vector2i(1, 2))
+	_wire_tiles[Vector2i(1, 1)] = WireTile.new(1)
 
 
 func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
@@ -308,8 +388,6 @@ func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
 
 
 func _on_file_dialog_file_selected(path: String) -> void:
-	var new_save: FileAccess = FileAccess.open(path, FileAccess.WRITE)
-
 	var placement_dict: Dictionary[Vector2i, Dictionary]
 	var success: bool
 	for tile in _wire_tiles:
@@ -336,13 +414,41 @@ func _on_file_dialog_file_selected(path: String) -> void:
 		"gates": gates_dict
 	}
 
-	var saved: bool = new_save.store_string(JSON.stringify(save_dict, "\t"))
+	var saved: bool = FileAccess.open(path, FileAccess.WRITE).store_string(JSON.stringify(save_dict, "\t"))
 	if not saved:
 		printerr("Couldn't save file: " + path)
 
 
-class WireTile:
+func update_save_preview() -> void:
+	var placement_dict: Dictionary[Vector2i, Dictionary]
+	var success: bool
+	for tile in _wire_tiles:
+		success = placement_dict.set(tile,{"wires": _wire_tiles[tile].to_dict()})
+		if not success:
+			printerr("Couldn't write wire tile into dictionary at " + str(tile))
+	for tile in _wire_crossing_tiles:
+		success = placement_dict.set(tile, {"wires": _wire_crossing_tiles[tile].to_dict()})
+		if not success:
+			printerr("Couldn't write wire crossing tile into dictionary at " + str(tile))
+	for tile in _gate_tiles:
+		if placement_dict.has(tile):
+			placement_dict[tile].get_or_add("gate", _gate_tiles[tile])
+		else:
+			success = placement_dict.set(tile, {"gate": _gate_tiles[tile]})
+			if not success:
+				printerr("Couldn't write gate into dictionary at " + str(tile))
+	var gates_dict: Dictionary[int, Dictionary]
+	for gate in _gates:
+		gates_dict[gate] = _gates[gate].to_dict()
 
+	var save_dict := {
+		"placement": placement_dict,
+		"gates": gates_dict
+	}
+	$"../WiresInterface/CodeEdit".text = JSON.stringify(save_dict, "\t")
+
+
+class WireTile:
 	var state: bool
 	var update_id: int
 	var direction: int
@@ -361,7 +467,6 @@ class WireTile:
 
 
 class WireCrossing:
-
 	var horizontal_wire: WireTile
 	var vertical_wire: WireTile
 
@@ -378,15 +483,13 @@ class WireCrossing:
 
 
 	func to_dict() -> Dictionary:
-		var return_dict := {
+		return {
 			"horizontal_wire": horizontal_wire.to_dict(),
-			"vertical_wire": vertical_wire.to_dict()
+			"vertical_wire": vertical_wire.to_dict(),
 		}
-		return return_dict
 
 
 class GateTile:
-
 	var gate: EditorMode.Gate
 	var inputs: Array[Vector2i]
 	var outputs: Array[Vector2i]
@@ -397,9 +500,28 @@ class GateTile:
 
 
 	func to_dict() -> Dictionary:
-		var return_dict := {
+		return {
 			"gate": gate,
 			"inputs": inputs,
-			"outputs": outputs
+			"outputs": outputs,
 		}
-		return return_dict
+
+
+class CustomGateTile:
+	var file_path: String
+	var inputs: Dictionary[Vector2i, int]
+	var outputs: Dictionary[int, Vector2i]
+	var inner_workings: CustomGate
+
+
+	func _init(new_file_path: String, new_inner_workings: CustomGate) -> void:
+		file_path = new_file_path
+		inner_workings = new_inner_workings
+
+
+	func to_dict() -> Dictionary:
+		return {
+			"gate": file_path,
+			"inputs": inputs,
+			"outputs": outputs,
+		}

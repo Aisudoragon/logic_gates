@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ba0bl16fuws1s"]
+[gd_scene load_steps=14 format=3 uid="uid://ba0bl16fuws1s"]
 
 [ext_resource type="Script" uid="uid://csitk4tag8uya" path="res://scenes/interfaces/wires_interface.gd" id="1_ayhpq"]
 [ext_resource type="Texture2D" uid="uid://fhjnqem02rdj" path="res://assets/resources/textures/cursor.png" id="1_q7lvh"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bpv830oqtui6i" path="res://assets/resources/textures/gates/nor_gate.png" id="9_4jvg5"]
 [ext_resource type="Texture2D" uid="uid://ddfq6xx07qih5" path="res://assets/resources/textures/gates/xor_gate.png" id="10_3xggy"]
 [ext_resource type="Texture2D" uid="uid://bw6dcg6rj4l22" path="res://assets/resources/textures/gates/xnor_gate.png" id="11_7acij"]
+[ext_resource type="Texture2D" uid="uid://4rrdnmyfbq4h" path="res://assets/resources/textures/gates/custom_gate.png" id="13_nc38x"]
 
 [node name="WiresInterface" type="CanvasLayer" node_paths=PackedStringArray("debug_coordinates", "debug_queue_size")]
 script = ExtResource("1_ayhpq")
@@ -318,6 +319,32 @@ layout_mode = 2
 text = "XNOR"
 horizontal_alignment = 1
 
+[node name="PlaceCustom" type="Button" parent="HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PlaceCustom"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PlaceCustom/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("13_nc38x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer/PlaceCustom/VBoxContainer"]
+layout_mode = 2
+text = "WŁASNA"
+horizontal_alignment = 1
+
 [node name="DebugCoordinates" type="Label" parent="."]
 offset_left = 20.0
 offset_top = 20.0
@@ -347,3 +374,4 @@ text = "Kolejka"
 [connection signal="pressed" from="HBoxContainer/PlaceNor" to="." method="_on_place_nor_pressed"]
 [connection signal="pressed" from="HBoxContainer/PlaceXor" to="." method="_on_place_xor_pressed"]
 [connection signal="pressed" from="HBoxContainer/PlaceXnor" to="." method="_on_place_xnor_pressed"]
+[connection signal="pressed" from="HBoxContainer/PlaceCustom" to="." method="_on_place_custom_pressed"]
