@@ -5,7 +5,8 @@ class_name Wires extends Node2D
 
 var _place_wire_checkpoints: Array[Vector2i]
 
-var _queue_executes_per_frame := 500
+#var _queue_executes_per_frame := 500
+var _queue_executes_per_frame := 1
 var _callable_queue := DoubleLinkedListCallable.new()
 var _next_free_gate_id := 0:
 	get:
@@ -20,6 +21,7 @@ var _wire_crossing_tiles: Dictionary[Vector2i, WireCrossing]
 var _gate_tiles: Dictionary[Vector2i, int]
 var _gates: Dictionary[int, GateTile]
 var _custom_gates: Array[CustomGate]
+var _custom_gate_tiles: Dictionary[Vector2i, CustomGateTile]
 
 
 func _process(_delta: float) -> void:
@@ -227,6 +229,13 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 		outputs[0] = not (inputs[0] == inputs[1])
 	elif gate_type == EditorMode.Gate.XNOR:
 		outputs[0] = inputs[0] == inputs[1]
+	elif gate_type == EditorMode.Gate.CUSTOM:
+		print("Entering custom gate!")
+		# TODO Enter into gate coordinates and propagade signal there
+		if not _custom_gate_tiles.has(grid_position):
+			return
+		var the_gate: CustomGate = _custom_gate_tiles[grid_position].inner_workings
+		the_gate._spread_wire_logic(_custom_gate_tiles[grid_position].swap_coordinate, _wire_tiles[grid_position].state, _logic_update_id)
 
 	for index in outputs.size():
 		_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(
@@ -328,7 +337,7 @@ func load_custom_gate() -> void:
 
 func place_custom_gate(path: String, coordinates: Vector2i) -> void:
 	var loaded_circuit_dict: Dictionary = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
-	var new_custom_gate := CustomGate.new()
+	var new_custom_gate := CustomGate.new(_callable_queue, self)
 	_custom_gates.append(new_custom_gate)
 
 	var placement_dictionary: Dictionary = loaded_circuit_dict["placement"]
@@ -336,6 +345,8 @@ func place_custom_gate(path: String, coordinates: Vector2i) -> void:
 		var tile: Vector2i = str_to_var("Vector2i" + tile_string)
 		if placement_dictionary[tile_string].has("gate"):
 			new_custom_gate._gate_tiles[tile] = int(placement_dictionary[tile_string]["gate"])
+			
+			new_custom_gate._custom_gate_tiles[Vector2i(11, 5)] = CustomGateTile.new(path, new_custom_gate, Vector2i(1, 1))
 		if placement_dictionary[tile_string].has("wires"):
 			var wire_tile: Dictionary = placement_dictionary[tile_string]["wires"]
 			if wire_tile.has("direction"):
@@ -374,12 +385,20 @@ func place_custom_gate(path: String, coordinates: Vector2i) -> void:
 	_gates[next_gate_id] = GateTile.new(EditorMode.Gate.CUSTOM)
 	wire_layer.set_cell(Vector2i.ZERO, 11, Vector2i.ZERO)
 	_wire_tiles[Vector2i.ZERO] = WireTile.new(4)
+	_gate_tiles[Vector2i.ZERO] = next_gate_id
+	_custom_gate_tiles[Vector2i.ZERO] = CustomGateTile.new(path, new_custom_gate, Vector2i(7, 3))
 	wire_layer.set_cell(Vector2i(1, 0), 11, Vector2i(1, 0))
 	_wire_tiles[Vector2i(1, 0)] = WireTile.new(1)
+	_gate_tiles[Vector2i(1, 0)] = next_gate_id
+	_custom_gate_tiles[Vector2i(1, 0)] = CustomGateTile.new(path, new_custom_gate, Vector2i(7, 5))
 	wire_layer.set_cell(Vector2i(0, 1), 11, Vector2i(0, 2))
 	_wire_tiles[Vector2i(0, 1)] = WireTile.new(4)
+	_gate_tiles[Vector2i(0, 1)] = next_gate_id
+	#_custom_gate_tiles[Vector2i(0, 1)] = CustomGateTile.new(path, new_custom_gate, Vector2i(11, 3))
 	wire_layer.set_cell(Vector2i(1, 1), 11, Vector2i(1, 2))
 	_wire_tiles[Vector2i(1, 1)] = WireTile.new(1)
+	_gate_tiles[Vector2i(1, 1)] = next_gate_id
+	#_custom_gate_tiles[Vector2i(1, 1)] = CustomGateTile.new(path, new_custom_gate, Vector2i(11, 5))
 
 
 func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
@@ -509,19 +528,18 @@ class GateTile:
 
 class CustomGateTile:
 	var file_path: String
-	var inputs: Dictionary[Vector2i, int]
-	var outputs: Dictionary[int, Vector2i]
+	var swap_coordinate: Vector2i
 	var inner_workings: CustomGate
 
 
-	func _init(new_file_path: String, new_inner_workings: CustomGate) -> void:
+	func _init(new_file_path: String, new_inner_workings: CustomGate, new_swap_coordinate: Vector2i) -> void:
 		file_path = new_file_path
 		inner_workings = new_inner_workings
+		swap_coordinate = new_swap_coordinate
 
 
 	func to_dict() -> Dictionary:
 		return {
 			"gate": file_path,
-			"inputs": inputs,
-			"outputs": outputs,
+			"swap_coordinate": swap_coordinate,
 		}

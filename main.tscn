@@ -12,6 +12,7 @@ level_selection = NodePath("LevelSelectionMenu")
 playground = NodePath("Playground")
 
 [node name="MainMenu" parent="." instance=ExtResource("2_h2yge")]
+metadata/_edit_use_anchors_ = true
 
 [node name="LevelSelectionMenu" parent="." instance=ExtResource("4_lquwl")]
 visible = false
