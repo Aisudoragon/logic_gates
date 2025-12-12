@@ -4,8 +4,8 @@ class_name Wires extends Node2D
 @export var highlight_layer: HighlightLayer
 
 var _place_wire_checkpoints: Array[Vector2i]
+var _custom_gate_dict: Dictionary
 
-#var _queue_executes_per_frame := 500
 var _queue_executes_per_frame := 1
 var _callable_queue := DoubleLinkedListCallable.new()
 var _next_free_gate_id := 0:
@@ -318,35 +318,32 @@ func load_file(path: String) -> bool:
 	return false
 
 
-func load_custom_gate() -> void:
-	var loaded_circuit_dict: Dictionary = JSON.parse_string(FileAccess.open("user://test-custom.circuit", FileAccess.READ).get_as_text())
-	var loaded_gates_dict: Dictionary = loaded_circuit_dict["gates"]
-	var inputs_pos: Array[Vector2i]
-	var outputs_pos: Array[Vector2i]
+func load_custom_gate(path: String) -> void:
+	_custom_gate_dict = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
+	var loaded_gates_dict: Dictionary = _custom_gate_dict["gates"]
+	var inputs := 0
+	var outputs := 0
 	for id: String in loaded_gates_dict:
 		var gate: Dictionary = loaded_gates_dict[id]
 		if gate["gate"] == 7:
-			inputs_pos.append(str_to_var("Vector2i" + gate["outputs"][0]))
+			inputs = inputs + 1
 		elif gate["gate"] == 8:
-			outputs_pos.append(str_to_var("Vector2i" + gate["inputs"][0]))
-	inputs_pos.sort()
-	outputs_pos.sort()
+			outputs = outputs + 1
+	highlight_layer._custom_gate_pins = Vector2i(inputs, outputs)
 	# TODO włożyć gdzieś te wejścia/wyjścia
-	place_custom_gate("user://test-custom.circuit", Vector2i.ZERO)
 
 
-func place_custom_gate(path: String, coordinates: Vector2i) -> void:
-	var loaded_circuit_dict: Dictionary = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
+func place_custom_gate(path: String) -> void:
 	var new_custom_gate := CustomGate.new(_callable_queue, self)
 	_custom_gates.append(new_custom_gate)
 
-	var placement_dictionary: Dictionary = loaded_circuit_dict["placement"]
+	var placement_dictionary: Dictionary = _custom_gate_dict["placement"]
+	# Place grid inside the gate.
 	for tile_string: String in placement_dictionary:
 		var tile: Vector2i = str_to_var("Vector2i" + tile_string)
 		if placement_dictionary[tile_string].has("gate"):
 			new_custom_gate._gate_tiles[tile] = int(placement_dictionary[tile_string]["gate"])
-			
-			new_custom_gate._custom_gate_tiles[Vector2i(11, 5)] = CustomGateTile.new(path, new_custom_gate, Vector2i(1, 1))
+			#new_custom_gate._custom_gate_tiles[Vector2i(11, 5)] = CustomGateTile.new(path, new_custom_gate, Vector2i(1, 1))
 		if placement_dictionary[tile_string].has("wires"):
 			var wire_tile: Dictionary = placement_dictionary[tile_string]["wires"]
 			if wire_tile.has("direction"):
@@ -363,42 +360,63 @@ func place_custom_gate(path: String, coordinates: Vector2i) -> void:
 				wire_crossing.vertical_wire.state = state
 				new_custom_gate._wire_crossing_tiles[tile] = wire_crossing
 
-	var loaded_gates_dict: Dictionary = loaded_circuit_dict["gates"]
+	var loaded_gates_dict: Dictionary = _custom_gate_dict["gates"]
+
+	var gate_inputs: Array[Vector2i]
+	var gate_outputs: Array[Vector2i]
+	# Fill data for all gates inside.
 	for gate: String in loaded_gates_dict:
 		var gate_id: int = _next_free_gate_id
 		var gate_type: EditorMode.Gate = loaded_gates_dict[gate]["gate"]
-		var inputs: Array[Vector2i]
+		var inputs_inside: Array[Vector2i]
 		for input: String in loaded_gates_dict[gate]["inputs"]:
-			inputs.append(str_to_var("Vector2i" + input))
-		var outputs: Array[Vector2i]
+			inputs_inside.append(str_to_var("Vector2i" + input))
+		var outputs_inside: Array[Vector2i]
 		for output: String in loaded_gates_dict[gate]["outputs"]:
-			outputs.append(str_to_var("Vector2i" + output))
+			outputs_inside.append(str_to_var("Vector2i" + output))
+
+		if gate_type == EditorMode.Gate.START:
+			gate_inputs.append(outputs_inside[0])
+		elif gate_type == EditorMode.Gate.STOP:
+			gate_outputs.append(inputs_inside[0])
 
 		var new_gate: GateTile = GateTile.new(gate_type)
-		new_gate.inputs = inputs
-		new_gate.outputs = outputs
+		new_gate.inputs = inputs_inside
+		new_gate.outputs = outputs_inside
 		new_custom_gate._gates[gate_id] = new_gate
 
-	# TODO załadować custom bramkę
-	# HACK
+	var tiles: Array[Vector2i] = highlight_layer.get_used_cells()
+	for tile in tiles:
+		if _gate_tiles.has(tile):
+			return
+
+	var inputs: Array[Vector2i]
+	var outputs: Array[Vector2i]
 	var next_gate_id: int = _next_free_gate_id
 	_gates[next_gate_id] = GateTile.new(EditorMode.Gate.CUSTOM)
-	wire_layer.set_cell(Vector2i.ZERO, 11, Vector2i.ZERO)
-	_wire_tiles[Vector2i.ZERO] = WireTile.new(4)
-	_gate_tiles[Vector2i.ZERO] = next_gate_id
-	_custom_gate_tiles[Vector2i.ZERO] = CustomGateTile.new(path, new_custom_gate, Vector2i(7, 3))
-	wire_layer.set_cell(Vector2i(1, 0), 11, Vector2i(1, 0))
-	_wire_tiles[Vector2i(1, 0)] = WireTile.new(1)
-	_gate_tiles[Vector2i(1, 0)] = next_gate_id
-	_custom_gate_tiles[Vector2i(1, 0)] = CustomGateTile.new(path, new_custom_gate, Vector2i(7, 5))
-	wire_layer.set_cell(Vector2i(0, 1), 11, Vector2i(0, 2))
-	_wire_tiles[Vector2i(0, 1)] = WireTile.new(4)
-	_gate_tiles[Vector2i(0, 1)] = next_gate_id
-	#_custom_gate_tiles[Vector2i(0, 1)] = CustomGateTile.new(path, new_custom_gate, Vector2i(11, 3))
-	wire_layer.set_cell(Vector2i(1, 1), 11, Vector2i(1, 2))
-	_wire_tiles[Vector2i(1, 1)] = WireTile.new(1)
-	_gate_tiles[Vector2i(1, 1)] = next_gate_id
-	#_custom_gate_tiles[Vector2i(1, 1)] = CustomGateTile.new(path, new_custom_gate, Vector2i(11, 5))
+	for tile in tiles:
+		var atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
+		if atlas_coords.x == 0:
+			inputs.append(tile)
+			_wire_tiles[tile] = WireTile.new(4)
+			_gate_tiles[tile] = next_gate_id
+		elif atlas_coords.x == 1:
+			outputs.append(tile)
+			_wire_tiles[tile] = WireTile.new(1)
+			_gate_tiles[tile] = next_gate_id
+
+		wire_layer.set_cell(tile, 11, atlas_coords)
+
+	inputs.sort()
+	outputs.sort()
+	gate_inputs.sort()
+	gate_outputs.sort()
+
+	for input in range(inputs.size()):
+		_custom_gate_tiles[inputs[input]] = CustomGateTile.new(path, new_custom_gate, gate_inputs[input])
+	for output in range(outputs.size()):
+		#_custom_gate_tiles[outputs[output]] = CustomGateTile.new(path, new_custom_gate, outputs[output])
+		new_custom_gate.exits[gate_outputs[output]] = outputs[output]
 
 
 func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
@@ -534,8 +552,8 @@ class CustomGateTile:
 
 	func _init(new_file_path: String, new_inner_workings: CustomGate, new_swap_coordinate: Vector2i) -> void:
 		file_path = new_file_path
-		inner_workings = new_inner_workings
 		swap_coordinate = new_swap_coordinate
+		inner_workings = new_inner_workings
 
 
 	func to_dict() -> Dictionary:

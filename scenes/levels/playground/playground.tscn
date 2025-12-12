@@ -75,15 +75,15 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Zapisz jako"
 
-[node name="FileDialog" type="FileDialog" parent="WiresInterface/SaveButtons"]
+[node name="SaveDialog" type="FileDialog" parent="WiresInterface/SaveButtons"]
 oversampling_override = 1.0
 initial_position = 1
 display_mode = 1
 access = 1
 filters = PackedStringArray("*.circuit")
-hidden_files_toggle_enabled = false
 
 [node name="CodeEdit" type="CodeEdit" parent="WiresInterface"]
+visible = false
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -95,6 +95,15 @@ size_flags_horizontal = 0
 editable = false
 draw_tabs = true
 gutters_draw_line_numbers = true
+
+[node name="GateDialog" type="FileDialog" parent="WiresInterface"]
+oversampling_override = 1.0
+title = "Open a File"
+initial_position = 2
+file_mode = 0
+display_mode = 1
+access = 1
+filters = PackedStringArray("*.circuit")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
@@ -148,5 +157,6 @@ text = "Pomoc"
 [connection signal="pressed" from="WiresInterface/SaveButtons/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/SaveButton" to="WiresInterface/SaveButtons" method="_on_save_button_pressed"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/SaveAsButton" to="WiresInterface/SaveButtons" method="_on_save_as_button_pressed"]
-[connection signal="file_selected" from="WiresInterface/SaveButtons/FileDialog" to="Wires" method="_on_file_dialog_file_selected"]
-[connection signal="file_selected" from="WiresInterface/SaveButtons/FileDialog" to="WiresInterface/SaveButtons" method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="Wires" method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="WiresInterface/SaveButtons" method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="WiresInterface/GateDialog" to="." method="_on_gate_dialog_file_selected"]

@@ -17,4 +17,4 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 
 func _on_save_as_button_pressed() -> void:
-	($FileDialog as FileDialog).visible = not ($FileDialog as FileDialog).visible
+	($SaveDialog as FileDialog).visible = not ($SaveDialog as FileDialog).visible

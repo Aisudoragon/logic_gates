@@ -3,6 +3,7 @@ class_name HighlightLayer extends TileMapLayer
 @export var wire_layer: WireLayer
 
 var _wire_position_buffer: Array[Vector2i]
+var _custom_gate_pins := Vector2i(2, 2)
 
 
 func add_checkpoint() -> void:
@@ -64,6 +65,32 @@ func gate_highlight(gate: EditorMode.Gate) -> void:
 	if gate > 0:
 		grid_position += Vector2i.UP
 	set_pattern(grid_position, gate_pattern)
+
+
+func custom_gate_highlight() -> void:
+	clear()
+	var max_gate_size: int = maxi(_custom_gate_pins.x, _custom_gate_pins.y)
+	var grid_position: Vector2i = _mouse_to_grid() - Vector2i(0, max_gate_size / 2)
+	for y in max_gate_size:
+		var offset := grid_position + Vector2i(0, y)
+		if y < _custom_gate_pins.x:
+			set_cell(offset, 11, Vector2i(0, 1))
+		else:
+			set_cell(offset, 11, Vector2i(2, 1))
+		if y < _custom_gate_pins.y:
+			set_cell(offset + Vector2i.RIGHT, 11, Vector2i(1, 1))
+		else:
+			set_cell(offset + Vector2i.RIGHT, 11, Vector2i(3, 1))
+	set_cell(grid_position, 11, Vector2i(0, 0))
+	set_cell(grid_position + Vector2i.RIGHT, 11, Vector2i(1, 0))
+	if _custom_gate_pins.x >= _custom_gate_pins.y:
+		set_cell(grid_position + Vector2i(0, max_gate_size - 1), 11, Vector2i(0, 2))
+	else:
+		set_cell(grid_position + Vector2i(0, max_gate_size - 1), 11, Vector2i(2, 2))
+	if _custom_gate_pins.y >= _custom_gate_pins.x:
+		set_cell(grid_position + Vector2i(0, max_gate_size - 1) + Vector2i.RIGHT, 11, Vector2i(1, 2))
+	else:
+		set_cell(grid_position + Vector2i(0, max_gate_size - 1) + Vector2i.RIGHT, 11, Vector2i(3, 2))
 
 
 func _wire_highlight_line(from: Vector2i, to: Vector2i, direction: Vector2i) -> void:

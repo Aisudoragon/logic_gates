@@ -6,6 +6,7 @@ var _gate_tiles: Dictionary[Vector2i, int]
 var _gates: Dictionary[int, Wires.GateTile]
 var _custom_gate_tiles: Dictionary[Vector2i, Wires.CustomGateTile]
 var _parent: Wires
+var exits: Dictionary[Vector2i, Vector2i]
 
 var _callable_queue: DoubleLinkedListCallable
 
@@ -52,8 +53,8 @@ func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) ->
 			if grid_position == output:
 				return
 		_callable_queue.push_back(Callable(self, &"_get_into_gate").bind(grid_position))
-		
-		
+
+
 func _spread_wire_through_crossing(grid_position: Vector2i, state: bool, update_id: int,
 		direction: Vector2i) -> void:
 	var this_wire: Wires.WireTile = _wire_crossing_tiles[grid_position].get_axis_wire(direction)
@@ -101,11 +102,15 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 	elif gate_type == EditorMode.Gate.STOP:
 		print("TOUCHED OUTPUT")
 		# TODO exit into outer gate (if possible)
-		var new_coordinate: Vector2i = _custom_gate_tiles[grid_position].swap_coordinate
-		_parent._spread_wire_logic(new_coordinate, _wire_tiles[grid_position].state, _parent._logic_update_id)
-		
+		var exit_coords: Vector2i = exits[grid_position]
+		_parent._spread_wire_logic(exit_coords, _wire_tiles[grid_position].state, _parent._logic_update_id)
+
 	elif gate_type == EditorMode.Gate.CUSTOM:
 		print("Entering custom gate!")
 		# TODO Enter into gate coordinates and propagade signal there
 		#var the_gate: CustomGate = _custom_gate_tiles[grid_position].inner_workings
 		#the_gate._spread_wire_logic(_custom_gate_tiles[grid_position].inner_coordinate, _wire_tiles[grid_position].state, _logic_update_id)
+
+
+func connect_out(coordinates: Vector2i) -> void:
+	pass

@@ -9,6 +9,8 @@ signal change_scene_main_menu()
 
 var mode_selected: EditorMode.Mode = EditorMode.Mode.WIRE
 var gate_selected: EditorMode.Gate = EditorMode.Gate.START
+var highlight := false
+var custom_gate_path: String
 
 
 func _process(_delta: float) -> void:
@@ -32,7 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				wires.place_wire()
 			if event.is_action_pressed(&"destroy"):
 				wire_layer.delete_stuff()
-			if event is InputEventMouseMotion:
+			if event is InputEventMouseMotion and highlight:
 				if Input.is_action_pressed(&"place"):
 					highlight_layer.wire_highlight()
 				else:
@@ -42,11 +44,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		# gate behavior
 		EditorMode.Mode.GATE:
 			if event.is_action_pressed(&"place"):
-				wires.place_gate()
+				if gate_selected == EditorMode.Gate.CUSTOM:
+					wires.place_custom_gate(custom_gate_path)
+					pass
+				else:
+					wires.place_gate()
 			if event.is_action_pressed(&"destroy"):
 				wire_layer.delete_stuff()
-			if event is InputEventMouseMotion:
-				highlight_layer.gate_highlight(gate_selected)
+			if event is InputEventMouseMotion and highlight:
+				if gate_selected == EditorMode.Gate.CUSTOM:
+					highlight_layer.custom_gate_highlight()
+				else:
+					highlight_layer.gate_highlight(gate_selected)
 
 
 func propagade_file_path(path: String) -> void:
@@ -61,8 +70,17 @@ func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.G
 	if mode == EditorMode.Mode.SELECT:
 		highlight_layer.clear()
 	if gate == EditorMode.Gate.CUSTOM:
-		wires.load_custom_gate()
+		highlight = false
+		$WiresInterface/GateDialog.visible = true
+	else:
+		highlight = true
 
 
 func _on_back_button_pressed() -> void:
 	change_scene_main_menu.emit()
+
+
+func _on_gate_dialog_file_selected(path: String) -> void:
+	custom_gate_path = path
+	wires.load_custom_gate(path)
+	highlight = true
