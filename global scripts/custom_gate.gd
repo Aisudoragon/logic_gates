@@ -73,6 +73,8 @@ func _spread_wire_through_crossing(grid_position: Vector2i, state: bool, update_
 
 
 func _get_into_gate(grid_position: Vector2i) -> void:
+	print("Getting through gate")
+
 	var this_gate_tile: Wires.GateTile = _gates[_gate_tiles[grid_position]]
 	var inputs: Array[bool]
 	for input_coordinates: Vector2i in this_gate_tile.inputs:
@@ -110,6 +112,10 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 		# TODO Enter into gate coordinates and propagade signal there
 		#var the_gate: CustomGate = _custom_gate_tiles[grid_position].inner_workings
 		#the_gate._spread_wire_logic(_custom_gate_tiles[grid_position].inner_coordinate, _wire_tiles[grid_position].state, _logic_update_id)
+
+	for index in outputs.size():
+		_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(
+				output_coordinates[index], outputs[index], _parent._logic_update_id))
 
 
 func connect_out(coordinates: Vector2i) -> void:
