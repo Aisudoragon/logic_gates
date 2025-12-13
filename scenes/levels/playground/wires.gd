@@ -230,8 +230,6 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 	elif gate_type == EditorMode.Gate.XNOR:
 		outputs[0] = inputs[0] == inputs[1]
 	elif gate_type == EditorMode.Gate.CUSTOM:
-		print("Entering custom gate!")
-		# TODO Enter into gate coordinates and propagade signal there
 		if not _custom_gate_tiles.has(grid_position):
 			return
 		var the_gate: CustomGate = _custom_gate_tiles[grid_position].inner_workings
@@ -315,7 +313,6 @@ func load_file(path: String) -> bool:
 	update_save_preview()
 	return true
 	# TODO return false in case of failure
-	return false
 
 
 func load_custom_gate(path: String) -> void:
@@ -337,6 +334,7 @@ func place_custom_gate(path: String) -> void:
 	var new_custom_gate := CustomGate.new(_callable_queue, self)
 	_custom_gates.append(new_custom_gate)
 
+	var gates_ids: Array[int]
 	var placement_dictionary: Dictionary = _custom_gate_dict["placement"]
 	# Place grid inside the gate.
 	for tile_string: String in placement_dictionary:
@@ -366,7 +364,6 @@ func place_custom_gate(path: String) -> void:
 	var gate_outputs: Array[Vector2i]
 	# Fill data for all gates inside.
 	for gate: String in loaded_gates_dict:
-		var gate_id: int = _next_free_gate_id
 		var gate_type: EditorMode.Gate = loaded_gates_dict[gate]["gate"]
 		var inputs_inside: Array[Vector2i]
 		for input: String in loaded_gates_dict[gate]["inputs"]:
@@ -383,7 +380,7 @@ func place_custom_gate(path: String) -> void:
 		var new_gate: GateTile = GateTile.new(gate_type)
 		new_gate.inputs = inputs_inside
 		new_gate.outputs = outputs_inside
-		new_custom_gate._gates[gate_id] = new_gate
+		new_custom_gate._gates[int(gate)] = new_gate
 
 	var tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	for tile in tiles:
@@ -399,12 +396,11 @@ func place_custom_gate(path: String) -> void:
 		if atlas_coords.x == 0:
 			inputs.append(tile)
 			_wire_tiles[tile] = WireTile.new(4)
-			_gate_tiles[tile] = next_gate_id
 		elif atlas_coords.x == 1:
 			outputs.append(tile)
 			_wire_tiles[tile] = WireTile.new(1)
-			_gate_tiles[tile] = next_gate_id
 
+		_gate_tiles[tile] = next_gate_id
 		wire_layer.set_cell(tile, 11, atlas_coords)
 
 	inputs.sort()
@@ -415,7 +411,6 @@ func place_custom_gate(path: String) -> void:
 	for input in range(inputs.size()):
 		_custom_gate_tiles[inputs[input]] = CustomGateTile.new(path, new_custom_gate, gate_inputs[input])
 	for output in range(outputs.size()):
-		#_custom_gate_tiles[outputs[output]] = CustomGateTile.new(path, new_custom_gate, outputs[output])
 		new_custom_gate.exits[gate_outputs[output]] = outputs[output]
 
 
