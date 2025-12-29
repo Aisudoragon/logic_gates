@@ -339,6 +339,14 @@ func load_custom_gate(path: String) -> void:
 	# TODO włożyć gdzieś te wejścia/wyjścia
 
 
+func sort_by_y_first(a: Vector2i, b: Vector2i) -> bool:
+	if a.y < b.y:
+		return true
+	if a.y == b.y:
+		return a.x <= b.x
+	return false
+
+
 func place_custom_gate(path: String) -> void:
 	var new_custom_gate := CustomGate.new(_callable_queue, self)
 	_custom_gates.append(new_custom_gate)
@@ -412,10 +420,10 @@ func place_custom_gate(path: String) -> void:
 		_gate_tiles[tile] = next_gate_id
 		wire_layer.set_cell(tile, 11, atlas_coords)
 
-	inputs.sort()
-	outputs.sort()
-	gate_inputs.sort()
-	gate_outputs.sort()
+	inputs.sort_custom(sort_by_y_first)
+	outputs.sort_custom(sort_by_y_first)
+	gate_inputs.sort_custom(sort_by_y_first)
+	gate_outputs.sort_custom(sort_by_y_first)
 
 	for input in range(inputs.size()):
 		_custom_gate_tiles[inputs[input]] = CustomGateTile.new(path, new_custom_gate, gate_inputs[input])
