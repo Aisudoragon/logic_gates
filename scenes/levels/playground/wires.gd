@@ -284,8 +284,17 @@ func load_file(path: String) -> bool:
 		new_gate.outputs = outputs
 		_gates[gate_id] = new_gate
 
-		var min_pos: Vector2i = new_gate.inputs[0]
-		var max_pos: Vector2i = new_gate.inputs[0]
+		var min_pos: Vector2i
+		if new_gate.inputs.is_empty():
+			min_pos = new_gate.outputs[0]
+		else:
+			min_pos = new_gate.inputs[0]
+		var max_pos: Vector2i
+		if new_gate.outputs.is_empty():
+			max_pos = new_gate.inputs[0]
+		else:
+			max_pos = new_gate.outputs[0]
+
 		for input: Vector2i in new_gate.inputs:
 			min_pos.x = min(input.x, min_pos.x)
 			min_pos.y = min(input.y, min_pos.y)
@@ -306,7 +315,7 @@ func load_file(path: String) -> bool:
 			atlas_coords.y = atlas_coords.y + 1
 
 		if gate_type == EditorMode.Gate.START:
-			wire_layer.set_cell(inputs[0], 9, Vector2i.ZERO)
+			wire_layer.set_cell(outputs[0], 9, Vector2i.ZERO)
 		if gate_type == EditorMode.Gate.STOP:
 			wire_layer.set_cell(inputs[0], 10, Vector2i.ZERO)
 
