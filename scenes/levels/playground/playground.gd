@@ -80,6 +80,9 @@ func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.G
 
 func _on_back_button_pressed() -> void:
 	change_scene_main_menu.emit()
+	wires.clear()
+	$Camera2D.position = Vector2.ZERO
+	$Camera2D.zoom = Vector2(1, 1)
 
 
 func _on_gate_dialog_file_selected(path: String) -> void:

@@ -497,6 +497,22 @@ func update_save_preview() -> void:
 	$"../WiresInterface/CodeEdit".text = JSON.stringify(save_dict, "\t")
 
 
+func clear() -> void:
+	_custom_gate_dict.clear()
+	_callable_queue = DoubleLinkedListCallable.new()
+	_next_free_gate_id = 0
+	_logic_update_id = 0
+	_wire_tiles.clear()
+	_wire_crossing_tiles.clear()
+	_gate_tiles.clear()
+	_gates.clear()
+	_custom_gates.clear()
+	_custom_gate_tiles.clear()
+
+	wire_layer.clear()
+	highlight_layer.clear()
+
+
 class WireTile:
 	var state: bool
 	var update_id: int

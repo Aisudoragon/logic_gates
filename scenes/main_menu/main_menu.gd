@@ -14,10 +14,12 @@ func _on_sandbox_button_pressed() -> void:
 
 
 func _on_new_board_button_pressed() -> void:
+	($SandboxButtons as Control).visible = false
 	change_scene_playground.emit("")
 
 
 func _on_load_board_button_pressed() -> void:
+	($SandboxButtons as Control).visible = false
 	($LoadBoardDialog as FileDialog).visible = not ($LoadBoardDialog as FileDialog).visible
 
 
