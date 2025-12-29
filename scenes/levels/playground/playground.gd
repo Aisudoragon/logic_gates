@@ -15,6 +15,8 @@ var custom_gate_path: String
 
 func _process(_delta: float) -> void:
 	wires_interface.update_queue_size(wires._callable_queue.size())
+	wires_interface.visible = visible
+	$Camera2D.anchor_mode = int(visible)
 	pass
 
 
