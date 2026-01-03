@@ -499,45 +499,60 @@ func update_save_preview() -> void:
 
 func delete_stuff() -> void:
 	var grid_position: Vector2i = highlight_layer._mouse_to_grid()
-	if not _gate_tiles.has(grid_position):
+	if _gate_tiles.has(grid_position):
+		var gate_id: int = _gate_tiles[grid_position]
+		var keys_to_remove: Array[Vector2i]
+		for gate_position in _gate_tiles:
+			if _gate_tiles[gate_position] == gate_id:
+				keys_to_remove.append(gate_position)
+		for key in keys_to_remove:
+			_gate_tiles.erase(key)
+
+			var had_wire: bool = _wire_tiles.erase(key)
+			if had_wire:
+				_erase_neighboring_wires(key)
+
+			wire_layer.set_cell(key)
+		_gates.erase(gate_id)
+	elif _wire_tiles.has(grid_position) or _wire_crossing_tiles.has(grid_position):
 		wire_layer.set_cell(grid_position)
 		_wire_tiles.erase(grid_position)
 		_wire_crossing_tiles.erase(grid_position)
 
-		#TODO Zaktulizować sąsiednie kable (usunąć połączenie do tego miejsca)
-		var neighbor_direction_number := 1
-		var neighbor_directions: Array[Vector2i] = [
-			Vector2i.LEFT,
-			Vector2i.UP,
-			Vector2i.RIGHT,
-			Vector2i.DOWN,
-		]
-		for next_neighbor in neighbor_directions:
-			var neighbor: Vector2i = grid_position + next_neighbor
+		_erase_neighboring_wires(grid_position)
+
+
+func _erase_neighboring_wires(grid_position: Vector2i) -> void:
+	var neighbor_direction_number := 1
+	var neighbor_directions: Array[Vector2i] = [
+		Vector2i.LEFT,
+		Vector2i.UP,
+		Vector2i.RIGHT,
+		Vector2i.DOWN,
+	]
+	for next_neighbor in neighbor_directions:
+		var neighbor: Vector2i = grid_position + next_neighbor
+		if _gate_tiles.has(neighbor):
+			continue
+
+		if _wire_tiles.has(neighbor):
+			_wire_tiles[neighbor].direction = _wire_tiles[neighbor].direction & ~neighbor_direction_number
+			wire_layer.set_cell(neighbor, 0, Vector2i(_wire_tiles[neighbor].direction, 0))
+		if _wire_crossing_tiles.has(neighbor):
+			if neighbor_direction_number == 1 or neighbor_direction_number == 4:
+				_wire_tiles[neighbor] = _wire_crossing_tiles[neighbor].vertical_wire
+			else:
+				_wire_tiles[neighbor] = _wire_crossing_tiles[neighbor].horizontal_wire
+			_wire_crossing_tiles.erase(neighbor)
+			wire_layer.set_cell(neighbor, 0, Vector2i(_wire_tiles[neighbor].direction, 0))
+
+			neighbor = neighbor + next_neighbor
 			if _gate_tiles.has(neighbor):
 				continue
+			_wire_tiles[neighbor].direction = _wire_tiles[neighbor].direction & ~neighbor_direction_number
+			wire_layer.set_cell(neighbor, 0, Vector2i(_wire_tiles[neighbor].direction, 0))
 
-			if _wire_tiles.has(neighbor):
-				_wire_tiles[neighbor].direction = _wire_tiles[neighbor].direction & ~neighbor_direction_number
-				wire_layer.set_cell(neighbor, 0, Vector2i(_wire_tiles[neighbor].direction, 0))
-			if _wire_crossing_tiles.has(neighbor):
-				if neighbor_direction_number == 1 or neighbor_direction_number == 4:
-					_wire_tiles[neighbor] = _wire_crossing_tiles[neighbor].vertical_wire
-				else:
-					_wire_tiles[neighbor] = _wire_crossing_tiles[neighbor].horizontal_wire
-				_wire_crossing_tiles.erase(neighbor)
-				wire_layer.set_cell(neighbor, 0, Vector2i(_wire_tiles[neighbor].direction, 0))
-
-				neighbor = neighbor + next_neighbor
-				if _gate_tiles.has(neighbor):
-					continue
-				_wire_tiles[neighbor].direction = _wire_tiles[neighbor].direction & ~neighbor_direction_number
-				wire_layer.set_cell(neighbor, 0, Vector2i(_wire_tiles[neighbor].direction, 0))
-
-			neighbor_direction_number = neighbor_direction_number * 2
-	else:
-		print("Gate tile")
-		#TODO Usunąć całą bramkę oraz kable w niej zawarte
+		neighbor_direction_number = neighbor_direction_number * 2
 
 
 func clear() -> void:

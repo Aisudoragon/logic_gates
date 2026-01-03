@@ -52,7 +52,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				else:
 					wires.place_gate()
 			if event.is_action_pressed(&"destroy"):
-				wire_layer.delete_stuff()
+				wires.delete_stuff()
 			if event is InputEventMouseMotion and highlight:
 				if gate_selected == EditorMode.Gate.CUSTOM:
 					highlight_layer.custom_gate_highlight()
