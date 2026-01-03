@@ -35,14 +35,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			if event.is_action_released(&"place"):
 				wires.place_wire()
 			if event.is_action_pressed(&"destroy"):
-				wire_layer.delete_stuff()
+				wires.delete_stuff()
 			if event is InputEventMouseMotion and highlight:
 				if Input.is_action_pressed(&"place"):
 					highlight_layer.wire_highlight()
 				else:
 					highlight_layer.point_highlight()
 				if Input.is_action_pressed(&"destroy"):
-					wire_layer.delete_stuff()
+					wires.delete_stuff()
 		# gate behavior
 		EditorMode.Mode.GATE:
 			if event.is_action_pressed(&"place"):

@@ -3,15 +3,6 @@ class_name WireLayer extends TileMapLayer
 signal toggle_output(grid_position: Vector2i, state: bool)
 
 
-func delete_stuff() -> void:
-	var grid_position: Vector2i = local_to_map(get_local_mouse_position())
-	#if get_cell_source_id(grid_position) >= 2:
-		#var gate_id: int = _per_cell_gate_id.get(grid_position, -1)
-		#delete_gate(grid_position, gate_id)
-		#return
-	erase_cell(grid_position)
-
-
 func change_wire_crossing() -> void:
 	var grid_position: Vector2i = local_to_map(get_local_mouse_position())
 	if get_cell_source_id(grid_position) == 0 and get_cell_atlas_coords(grid_position).x == 15:
@@ -26,11 +17,6 @@ func create_wire(tiles: Dictionary[Vector2i, Vector2i]) -> void:
 			#continue
 		var atlas_coords: Vector2i = tiles[tile]
 		set_cell(tile, 0, atlas_coords)
-
-
-func delete_wire() -> void:
-	# TODO
-	pass
 
 
 func create_gate(tiles: Dictionary[Vector2i, Dictionary]) -> void:
