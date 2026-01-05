@@ -43,14 +43,117 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 
 func _draw() -> void:
+	var red_lines: PackedVector2Array
+	var green_lines: PackedVector2Array
 	for grid_position in _wire_tiles:
-		var wire_color: Color
-		if _wire_tiles[grid_position].state:
-			wire_color = Color.GREEN
+		if not _gate_tiles.has(grid_position):
+			var wire_direction: int = _wire_tiles[grid_position].direction
+			var wire_state: bool = _wire_tiles[grid_position].state
+			var two_points: PackedVector2Array
+			if wire_direction & EditorMode.Direction.RIGHT:
+				two_points = [
+					grid_position * 64 + Vector2i(32, 32),
+					grid_position * 64 + Vector2i(63, 32),
+				]
+				(green_lines if wire_state else red_lines).append_array(two_points)
+			if wire_direction & EditorMode.Direction.DOWN:
+				two_points = [
+					grid_position * 64 + Vector2i(32, 32),
+					grid_position * 64 + Vector2i(32, 63),
+				]
+				(green_lines if wire_state else red_lines).append_array(two_points)
+			if wire_direction & EditorMode.Direction.LEFT:
+				two_points = [
+					grid_position * 64 + Vector2i(32, 32),
+					grid_position * 64 + Vector2i(1, 32),
+				]
+				(green_lines if wire_state else red_lines).append_array(two_points)
+			if wire_direction & EditorMode.Direction.UP:
+				two_points = [
+					grid_position * 64 + Vector2i(32, 32),
+					grid_position * 64 + Vector2i(32, 1),
+				]
+				(green_lines if wire_state else red_lines).append_array(two_points)
+			if (
+					wire_direction == 3 or wire_direction == 6 or wire_direction == 12
+					or wire_direction == 9
+			):
+				draw_circle(grid_position * 64 + Vector2i(32, 32), 3.5, Color.GREEN if wire_state else Color.RED)
+			if (
+					wire_direction == 7 or wire_direction == 11 or wire_direction == 13
+					or wire_direction == 14 or wire_direction == 15
+			):
+				draw_circle(grid_position * 64 + Vector2i(32, 32), 12, Color.GREEN if wire_state else Color.RED)
+	for grid_position in _wire_crossing_tiles:
+		var points: PackedVector2Array = [
+			grid_position * 64 + Vector2i(0, 32),
+			grid_position * 64 + Vector2i(27, 32),
+			grid_position * 64 + Vector2i(64, 32),
+			grid_position * 64 + Vector2i(37, 32),
+		]
+		if _wire_crossing_tiles[grid_position].horizontal_wire.state:
+			green_lines.append_array(points)
 		else:
-			wire_color = Color.RED
-		wire_color = Color(wire_color, 0.5)
-		draw_rect(Rect2i(grid_position * 64 + Vector2i(8, 8), Vector2i(48, 48)), wire_color)
+			red_lines.append_array(points)
+		points = [
+			grid_position * 64 + Vector2i(32, 0),
+			grid_position * 64 + Vector2i(32, 27),
+			grid_position * 64 + Vector2i(32, 64),
+			grid_position * 64 + Vector2i(32, 37),
+		]
+		if _wire_crossing_tiles[grid_position].vertical_wire.state:
+			green_lines.append_array(points)
+		else:
+			red_lines.append_array(points)
+	for grid_position in _gate_tiles:
+		if not _wire_tiles.has(grid_position):
+			continue
+		var points: PackedVector2Array
+		if _wire_tiles[grid_position].direction == EditorMode.Direction.RIGHT:
+			points = [
+				grid_position * 64 + Vector2i(58, 32),
+				grid_position * 64 + Vector2i(64, 32),
+			]
+			if _wire_tiles[grid_position].state:
+				green_lines.append_array(points)
+				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color.GREEN)
+			else:
+				red_lines.append_array(points)
+				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color.RED)
+		if _wire_tiles[grid_position].direction == EditorMode.Direction.LEFT:
+			points = [
+				grid_position * 64 + Vector2i(0, 32),
+				grid_position * 64 + Vector2i(28, 32),
+			]
+			if _wire_tiles[grid_position].state:
+				green_lines.append_array(points)
+				draw_circle(grid_position * 64 + Vector2i(28, 32), 3.5, Color.GREEN)
+			else:
+				red_lines.append_array(points)
+				draw_circle(grid_position * 64 + Vector2i(28, 32), 3.5, Color.RED)
+
+		if _gates[_gate_tiles[grid_position]].gate == EditorMode.Gate.START:
+			draw_circle(grid_position * 64 + Vector2i(32, 32), 12,
+					Color.GREEN if _wire_tiles[grid_position].state else Color.RED)
+			var two_points: PackedVector2Array = [
+				grid_position * 64 + Vector2i(32, 32),
+				grid_position * 64 + Vector2i(64, 32),
+			]
+			(green_lines if _wire_tiles[grid_position].state else red_lines).append_array(two_points)
+		if _gates[_gate_tiles[grid_position]].gate == EditorMode.Gate.STOP:
+			draw_circle(grid_position * 64 + Vector2i(32, 32), 12,
+					Color.GREEN if _wire_tiles[grid_position].state else Color.RED)
+			var two_points: PackedVector2Array = [
+				grid_position * 64 + Vector2i(32, 32),
+				grid_position * 64 + Vector2i(0, 32),
+			]
+			(green_lines if _wire_tiles[grid_position].state else red_lines).append_array(two_points)
+
+	if not red_lines.is_empty():
+		draw_multiline(red_lines, Color.RED, 7)
+	if not green_lines.is_empty():
+		draw_multiline(green_lines, Color.GREEN, 7)
+
 		#draw_string(ThemeDB.fallback_font, grid_position * 64 + Vector2i(2, 14),
 				#str(_wire_tiles[grid_position].update_id), HORIZONTAL_ALIGNMENT_LEFT, -1, 16,
 				#Color.BLACK)

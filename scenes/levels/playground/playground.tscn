@@ -36,6 +36,7 @@ script = ExtResource("6_4wjdm")
 
 [node name="HighlightLayer" type="TileMapLayer" parent="Wires" node_paths=PackedStringArray("wire_layer")]
 self_modulate = Color(1, 1, 1, 0.521569)
+z_index = -1
 tile_set = ExtResource("4_myh4h")
 collision_enabled = false
 navigation_enabled = false
