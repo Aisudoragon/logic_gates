@@ -90,6 +90,9 @@ func place_gate() -> void:
 	var gate_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	var gate_data_cells: Dictionary[Vector2i, Dictionary]
 	for tile in gate_tiles:
+		_wire_tiles.erase(tile)
+		_wire_crossing_tiles.erase(tile)
+
 		var cell_source_id: int = highlight_layer.get_cell_source_id(tile)
 		var cell_atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
 		gate_data_cells[tile] = {"source_id": cell_source_id, "atlas_coords": cell_atlas_coords}

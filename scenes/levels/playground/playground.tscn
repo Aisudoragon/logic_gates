@@ -48,6 +48,7 @@ script = ExtResource("3_dsu8x")
 wires_interface = NodePath("../WiresInterface")
 
 [node name="WiresInterface" parent="." instance=ExtResource("7_dhyt4")]
+visible = false
 
 [node name="SaveButtons" type="HBoxContainer" parent="WiresInterface"]
 anchors_preset = 5
