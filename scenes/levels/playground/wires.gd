@@ -376,7 +376,8 @@ func load_file(path: String) -> bool:
 
 	var gates_dictionary: Dictionary = everything_dictionary["gates"]
 	for gate: String in gates_dictionary:
-		var gate_id: int = _next_free_gate_id
+		var gate_id: int = int(gate)
+		_next_free_gate_id = gate_id
 		var gate_type: EditorMode.Gate = gates_dictionary[gate]["gate"]
 		var inputs: Array[Vector2i]
 		for input: String in gates_dictionary[gate]["inputs"]:
