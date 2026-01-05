@@ -5,14 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://mlshv5b0su4p" path="res://assets/resources/textures/wire_icon.png" id="2_4grtn"]
 [ext_resource type="Texture2D" uid="uid://bbg8fvon1wmeu" path="res://assets/resources/textures/gates/start.png" id="4_gaxxl"]
 [ext_resource type="Texture2D" uid="uid://civjxmdflhuur" path="res://assets/resources/textures/gates/stop.png" id="5_nc38x"]
-[ext_resource type="Texture2D" uid="uid://dqu2giric734j" path="res://assets/resources/textures/gates/not_gate.png" id="5_wa0ej"]
 [ext_resource type="Texture2D" uid="uid://cm8d2wqkbw8k4" path="res://assets/resources/textures/gates/and_gate.png" id="6_0w0iy"]
+[ext_resource type="Texture2D" uid="uid://dseb00rliib7t" path="res://assets/resources/textures/not_gate_button.png" id="6_nc38x"]
 [ext_resource type="Texture2D" uid="uid://bs2wxo5wart8s" path="res://assets/resources/textures/gates/nand_gate.png" id="7_2lufr"]
 [ext_resource type="Texture2D" uid="uid://5lxq8mfmvj58" path="res://assets/resources/textures/gates/or_gate.png" id="8_rip62"]
 [ext_resource type="Texture2D" uid="uid://bpv830oqtui6i" path="res://assets/resources/textures/gates/nor_gate.png" id="9_4jvg5"]
 [ext_resource type="Texture2D" uid="uid://ddfq6xx07qih5" path="res://assets/resources/textures/gates/xor_gate.png" id="10_3xggy"]
 [ext_resource type="Texture2D" uid="uid://bw6dcg6rj4l22" path="res://assets/resources/textures/gates/xnor_gate.png" id="11_7acij"]
-[ext_resource type="Texture2D" uid="uid://4rrdnmyfbq4h" path="res://assets/resources/textures/gates/custom_gate.png" id="13_nc38x"]
+[ext_resource type="Texture2D" uid="uid://c4ltha80im110" path="res://assets/resources/textures/custom_gate_button.png" id="13_nc38x"]
 
 [node name="WiresInterface" type="CanvasLayer" node_paths=PackedStringArray("debug_coordinates", "debug_queue_size")]
 script = ExtResource("1_ayhpq")
@@ -154,7 +154,7 @@ alignment = 1
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/PlaceNot/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("5_wa0ej")
+texture = ExtResource("6_nc38x")
 expand_mode = 1
 stretch_mode = 5
 

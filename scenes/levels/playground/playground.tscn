@@ -22,11 +22,13 @@ script = ExtResource("2_olfo7")
 camera_2d = NodePath("../Camera2D")
 
 [node name="Wires" type="Node2D" parent="." node_paths=PackedStringArray("wire_layer", "highlight_layer")]
+z_index = 1
 script = ExtResource("4_kqs0i")
 wire_layer = NodePath("WireLayer")
 highlight_layer = NodePath("HighlightLayer")
 
 [node name="WireLayer" type="TileMapLayer" parent="Wires"]
+z_index = -1
 tile_set = ExtResource("4_myh4h")
 collision_enabled = false
 navigation_enabled = false
