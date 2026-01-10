@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed():
+	if event is InputEventMouseButton and event.is_pressed() and anchor_mode == 1:
 		var event_mb: InputEventMouseButton = event
 		if event_mb.button_index == MOUSE_BUTTON_WHEEL_UP:
 			zoom += Vector2(zoomSpeed, zoomSpeed)

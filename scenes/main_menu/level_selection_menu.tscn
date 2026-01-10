@@ -27,19 +27,33 @@ size_flags_vertical = 4
 layout_mode = 2
 
 [node name="PanelContainer2" type="PanelContainer" parent="LevelSelection/HBoxContainer"]
-custom_minimum_size = Vector2(83.975, 0)
 layout_mode = 2
 
-[node name="Back" type="Button" parent="LevelSelection/HBoxContainer/PanelContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Back" type="Button" parent="LevelSelection/HBoxContainer/PanelContainer2/MarginContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Wróć"
+flat = true
 
 [node name="PanelContainer" type="PanelContainer" parent="LevelSelection/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="LevelSelection/HBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="LevelSelection/HBoxContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 52
 text = "ZADANIA"
@@ -55,7 +69,7 @@ layout_mode = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="LevelSelection/PanelContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 2.3
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer"]
@@ -63,16 +77,23 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="LessonButton1" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton1"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton1"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton1/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -80,16 +101,23 @@ text = "[font_size=22]1. Bramki logiczne[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton2" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton2"]
+[node name="MarginContainer2" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton2/MarginContainer2"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -97,16 +125,23 @@ text = "[font_size=22]2. Tablice prawdy[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton3" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton3"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton3"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton3/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -114,17 +149,24 @@ text = "[font_size=22]3. Działanie układu[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton4" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton4"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton4"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton4/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -132,17 +174,24 @@ text = "[font_size=22]4.1. Bramka NOT[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton5" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton5"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton5"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton5/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -150,17 +199,24 @@ text = "[font_size=22]4.2. Bramka AND[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton6" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton6"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton6"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton6/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -168,17 +224,24 @@ text = "[font_size=22]4.3. Bramka OR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton7" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton7"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton7"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton7/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -186,17 +249,24 @@ text = "[font_size=22]4.4. Bramka NAND[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton8" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton8"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton8"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton8/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -204,17 +274,24 @@ text = "[font_size=22]4.5. Bramka NOR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton9" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton9"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton9"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton9/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -222,17 +299,24 @@ text = "[font_size=22]4.6. Bramka XOR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton10" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton10"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton10"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton10/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -240,17 +324,24 @@ text = "[font_size=22]5. Mapa Karnaugh[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton11" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton11"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton11"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton11/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -258,17 +349,24 @@ text = "[font_size=22]6. Hazard[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton12" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton12"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton12"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton12/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -276,17 +374,24 @@ text = "[font_size=22]7. Dodawanie dwóch bitów[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton13" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton13"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton13"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton13/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -294,17 +399,24 @@ text = "[font_size=22]8. Przerzutnik[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton14" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton14"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton14"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton14/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
@@ -312,21 +424,29 @@ text = "[font_size=22]8.1. Przechowywanie danych[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton15" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 90)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 disabled = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton15"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton15"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton15/MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]9. Automaty Moore'a i Mealy'ego[/font_size]"
+text = "[font_size=22]9. Automaty Moore'a
+i Mealy'ego[/font_size]"
 vertical_alignment = 1
 
 [node name="Panel" type="Control" parent="LevelSelection/PanelContainer2/HBoxContainer"]
@@ -358,7 +478,67 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Przejdź do zadania"
 
-[connection signal="pressed" from="LevelSelection/HBoxContainer/PanelContainer2/Back" to="." method="_on_back_pressed"]
+[node name="Introduction" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.80784315)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Introduction"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.5
+offset_top = -219.5
+offset_right = 203.5
+offset_bottom = 219.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="Introduction/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Introduction/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Wprowadzenie"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="Introduction/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Introduction/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="Introduction/VBoxContainer/PanelContainer2/MarginContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In purus libero, mattis vitae nulla non, pretium aliquam enim. In hac habitasse platea dictumst. Curabitur et bibendum lectus, eu interdum turpis. Donec consectetur dui sit amet mauris tempor elementum sit amet at ex. Aliquam semper purus eu neque tincidunt blandit. Mauris in metus vehicula, lobortis orci quis, maximus justo. Phasellus porttitor magna nec ex condimentum viverra. Ut egestas dolor leo, ac elementum urna gravida ac. Pellentesque porttitor scelerisque maximus. Integer lacinia cursus felis vel ullamcorper. "
+autowrap_mode = 3
+
+[node name="PanelContainer3" type="PanelContainer" parent="Introduction/VBoxContainer"]
+layout_mode = 2
+
+[node name="IntroductionButton" type="Button" parent="Introduction/VBoxContainer/PanelContainer3"]
+layout_mode = 2
+text = "Zrozumiano"
+
+[connection signal="pressed" from="LevelSelection/HBoxContainer/PanelContainer2/MarginContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton1" to="." method="_on_lesson_button_1_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton2" to="." method="_on_lesson_button_2_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton3" to="." method="_on_lesson_button_3_pressed"]
@@ -375,3 +555,4 @@ text = "Przejdź do zadania"
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton14" to="." method="_on_lesson_button_14_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/VBoxContainer/LessonButton15" to="." method="_on_lesson_button_15_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/Panel/VBoxContainer2/ProceedButton" to="." method="_on_proceed_button_pressed"]
+[connection signal="pressed" from="Introduction/VBoxContainer/PanelContainer3/IntroductionButton" to="." method="_on_introduction_button_pressed"]

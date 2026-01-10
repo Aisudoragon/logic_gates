@@ -1,10 +1,15 @@
-extends Control
+class_name LevelSelectionMenu extends Control
 
 signal change_scene_main_menu()
 signal change_scene_level_selected(path: String)
 var lesson_selected: int = 0
 @export var lessonExplanation: RichTextLabel
 @export var proceedButton: Button
+
+
+func introduction_visibility(visibility: bool) -> void:
+	($Introduction as ColorRect).visible = visibility
+
 
 func _on_back_pressed() -> void:
 	change_scene_main_menu.emit()
@@ -84,3 +89,9 @@ func _on_lesson_button_15_pressed() -> void:
 
 func _on_proceed_button_pressed() -> void:
 	change_scene_level_selected.emit("lesson_selection%d" % lesson_selected)
+
+
+func _on_introduction_button_pressed() -> void:
+	introduction_visibility(false)
+	SaveProgress.introduction = true
+	SaveProgress.update_save_file()

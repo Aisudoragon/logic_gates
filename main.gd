@@ -1,15 +1,21 @@
 extends Node
 
 @export var main_menu: Control
-@export var level_selection: Control
+@export var level_selection: LevelSelectionMenu
 @export var playground: Node2D
 var loaded_file_path: String
 @onready var current_node: CanvasItem = main_menu
 
 
-func _enter_tree() -> void:
-	if not FileAccess.file_exists(Filepaths.save_progress):
+func _ready() -> void:
+	if not SaveProgress.load_save():
+		print("File not found. Creating new progress file.")
 		SaveProgress.create_save()
+		return
+
+	print("File found.")
+
+	level_selection.introduction_visibility(not SaveProgress.introduction)
 	# TODO zapisywać stan postępów gracza
 
 
