@@ -74,11 +74,7 @@ func _draw() -> void:
 					grid_position * 64 + Vector2i(32, 1),
 				]
 				(green_lines if wire_state else red_lines).append_array(two_points)
-			if (
-					wire_direction == 3 or wire_direction == 6 or wire_direction == 12
-					or wire_direction == 9
-			):
-				draw_circle(grid_position * 64 + Vector2i(32, 32), 3.5, Color.GREEN if wire_state else Color.RED)
+			draw_circle(grid_position * 64 + Vector2i(32, 32), 3.5, Color.GREEN if wire_state else Color.RED)
 			if (
 					wire_direction == 7 or wire_direction == 11 or wire_direction == 13
 					or wire_direction == 14 or wire_direction == 15
