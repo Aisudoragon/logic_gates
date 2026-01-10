@@ -40,7 +40,6 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Wróć"
-flat = true
 
 [node name="PanelContainer" type="PanelContainer" parent="LevelSelection/HBoxContainer"]
 layout_mode = 2

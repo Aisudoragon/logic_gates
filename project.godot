@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Logic gates"
-config/description="Graduation project for University of Rzeszów"
+config/name="Logika"
+config/description="Praca inżynierska dla Uniwersytetu Rzeszowskiego."
 config/version="0.1.0"
 config/tags=PackedStringArray("inżynierska", "uniwersytet")
 run/main_scene="uid://c0bc822k0vyym"
@@ -95,3 +95,4 @@ locale/locale_filter_mode=0
 [rendering]
 
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.25037092, 0.30070704, 0.4128224, 1)
