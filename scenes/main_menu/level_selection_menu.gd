@@ -95,3 +95,7 @@ func _on_introduction_button_pressed() -> void:
 	introduction_visibility(false)
 	SaveProgress.introduction = true
 	SaveProgress.update_save_file()
+
+
+func _on_reintroduce_button_pressed() -> void:
+	introduction_visibility(true)
