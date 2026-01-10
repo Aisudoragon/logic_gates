@@ -10,6 +10,9 @@ var dragSensitivity: float = 1.0
 
 
 func _process(delta: float) -> void:
+	if not anchor_mode == 1:
+		return
+
 	var direction: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	position += camera_speed * direction / zoom * delta
 	if direction:
