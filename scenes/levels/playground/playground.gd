@@ -28,7 +28,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	match mode_selected:
 		EditorMode.Mode.SELECT:
 			if event.is_action_pressed(&"place"):
-				wire_layer.toggle_start_gate()
+				if not wires.is_sandbox and not wires.untouchable_tiles.has(highlight_layer._mouse_to_grid()):
+					wire_layer.toggle_start_gate()
 		EditorMode.Mode.WIRE:
 			if event.is_action_pressed(&"place") or event.is_action_pressed(&"special"):
 				highlight_layer.add_checkpoint()
@@ -76,6 +77,7 @@ func load_level(id: int) -> void:
 	match id:
 		1:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
+			wires.untouchable_tiles = [Vector2i(1, -1), Vector2i(5, -1)]
 			wires.is_sandbox = false
 			objective_text.text = """[center][font_size=28]Zadanie 1[/font_size][/center]
 
@@ -114,6 +116,9 @@ func _on_back_button_2_pressed() -> void:
 	$WiresInterface/SaveButtons/SaveButton.visible = true
 	$ObjectiveLayer.visible = false
 	change_scene_level_selection.emit()
+	wires.clear()
+	$Camera2D.position = Vector2.ZERO
+	$Camera2D.zoom = Vector2(1, 1)
 
 
 func _on_gate_dialog_file_selected(path: String) -> void:

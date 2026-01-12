@@ -25,6 +25,7 @@ var _custom_gate_tiles: Dictionary[Vector2i, CustomGateTile]
 
 var is_sandbox: bool = false
 var dimension_limits: Array[Vector2i]
+var untouchable_tiles: Array[Vector2i]
 
 
 func _process(_delta: float) -> void:
@@ -664,6 +665,9 @@ func update_save_preview() -> void:
 
 func delete_stuff() -> void:
 	var grid_position: Vector2i = highlight_layer._mouse_to_grid()
+	if not is_sandbox:
+		if untouchable_tiles.has(grid_position):
+			return
 	if _gate_tiles.has(grid_position):
 		var gate_id: int = _gate_tiles[grid_position]
 		var keys_to_remove: Array[Vector2i]

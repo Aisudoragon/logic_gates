@@ -117,6 +117,7 @@ access = 1
 filters = PackedStringArray("*.circuit")
 
 [node name="ObjectiveLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="ObjectiveLayer"]
 offset_left = 28.0
