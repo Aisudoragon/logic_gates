@@ -6,42 +6,66 @@ class_name WiresInterface extends CanvasLayer
 signal mode_selected(mode: EditorMode.Mode, gate: EditorMode.Gate)
 
 
-func disable_buttons(bitmask: int) -> void:
+func enable_buttons(bitmask: int) -> void:
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceCustom.visible = false
+	else:
+		$HBoxContainer/PlaceCustom.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceXnor.visible = false
+	else:
+		$HBoxContainer/PlaceXnor.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceXor.visible = false
+	else:
+		$HBoxContainer/PlaceXor.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceNor.visible = false
+	else:
 		$HBoxContainer/PlaceNor.visible = false
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceOr.visible = false
+	else:
+		$HBoxContainer/PlaceOr.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceNand.visible = false
+	else:
+		$HBoxContainer/PlaceNand.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceAnd.visible = false
+	else:
+		$HBoxContainer/PlaceAnd.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceNot.visible = false
+	else:
+		$HBoxContainer/PlaceNot.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceEnd.visible = false
+	else:
+		$HBoxContainer/PlaceEnd.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceStart.visible = false
+	else:
+		$HBoxContainer/PlaceStart.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/DrawWire.visible = false
+	else:
+		$HBoxContainer/DrawWire.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/SelectThings.visible = false
+	else:
+		$HBoxContainer/SelectThings.visible = true
 
 
 func update_coordinates(mouse_pos: Vector2i) -> void:

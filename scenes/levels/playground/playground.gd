@@ -84,7 +84,7 @@ func load_level(id: int) -> void:
 Na początek coś prostego.
 [ul][color=red]Połącz oba końce w jeden kabel[/color][/ul]"""
 			helpful_text.text = """Kliknij opcję "KABEL", przytrzymaj przycisk myszy na jednym końcu i przeciągnij do drugiego końca."""
-			wires_interface.disable_buttons(0b1100_0000_0000)
+			wires_interface.enable_buttons(0b1100_0000_0000)
 			wires.load_file("res://scenes/levels/level_1.json")
 		_:
 			print("Invalid level selected. How?")
@@ -115,6 +115,7 @@ func _on_back_button_2_pressed() -> void:
 	$WiresInterface/SaveButtons/BackButton2.visible = false
 	$WiresInterface/SaveButtons/SaveButton.visible = true
 	$ObjectiveLayer.visible = false
+	wires_interface.enable_buttons(0b1111_1111_1111)
 	change_scene_level_selection.emit()
 	wires.clear()
 	$Camera2D.position = Vector2.ZERO
