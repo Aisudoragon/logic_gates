@@ -23,6 +23,9 @@ var _gates: Dictionary[int, GateTile]
 var _custom_gates: Array[CustomGate]
 var _custom_gate_tiles: Dictionary[Vector2i, CustomGateTile]
 
+var is_sandbox: bool = false
+var dimension_limits: Array[Vector2i]
+
 
 func _process(_delta: float) -> void:
 	process_queue(_queue_executes_per_frame)
@@ -150,6 +153,51 @@ func _draw() -> void:
 	if not green_lines.is_empty():
 		draw_multiline(green_lines, Color.GREEN, 7)
 
+	if not is_sandbox:
+		var high_number := 15000
+		var upper_left: Vector2i = dimension_limits[0] * 64
+		var bottom_right: Vector2i = dimension_limits[1] * 64
+		# Upper left shadow
+		draw_rect(Rect2i(
+				Vector2i(-high_number, -high_number),
+				Vector2i(high_number, high_number) - upper_left.abs()),
+				Color(Color.BLACK, 0.2))
+		# Up shadow
+		draw_rect(Rect2i(
+				Vector2i(upper_left.x, -high_number),
+				Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number - absi(upper_left.y))),
+				Color(Color.BLACK, 0.2))
+		# Upper right shadow
+		draw_rect(Rect2i(
+				Vector2i(bottom_right.x + 64, -high_number),
+				Vector2i(high_number, high_number - absi(upper_left.y))),
+				Color(Color.BLACK, 0.2))
+		# Right shadow
+		draw_rect(Rect2i(
+				Vector2i(bottom_right.x + 64, upper_left.y),
+				Vector2i(high_number, absi(upper_left.y) + absi(bottom_right.y) + 64)),
+				Color(Color.BLACK, 0.2))
+		# Bottom right shadow
+		draw_rect(Rect2i(
+				(bottom_right + Vector2i(64, 64)),
+				Vector2i(high_number, high_number)),
+				Color(Color.BLACK, 0.2))
+		# Down shadow
+		draw_rect(Rect2i(
+				Vector2i(upper_left.x, bottom_right.y + 64),
+				Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number)),
+				Color(Color.BLACK, 0.2))
+		# Bottom left shadow
+		draw_rect(Rect2i(
+				Vector2i(-high_number, bottom_right.y + 64),
+				Vector2i(high_number - absi(upper_left.x), high_number)),
+				Color(Color.BLACK, 0.2))
+		# Left shadow
+		draw_rect(Rect2i(
+				Vector2i(-high_number, upper_left.y),
+				Vector2i(high_number - absi(upper_left.x), (absi(upper_left.y) + absi(bottom_right.y) + 64))),
+				Color(Color.BLACK, 0.2))
+
 		#draw_string(ThemeDB.fallback_font, grid_position * 64 + Vector2i(2, 14),
 				#str(_wire_tiles[grid_position].update_id), HORIZONTAL_ALIGNMENT_LEFT, -1, 16,
 				#Color.BLACK)
@@ -175,6 +223,16 @@ func place_wire() -> void:
 	for tile in wire_tiles:
 		if _gate_tiles.has(tile):
 			continue
+		if not is_sandbox:
+			var wire_coodinates: Vector2i = tile
+			if (
+					wire_coodinates.x < dimension_limits[0].x
+					or wire_coodinates.y < dimension_limits[0].y
+					or wire_coodinates.x > dimension_limits[1].x
+					or wire_coodinates.y > dimension_limits[1].y
+			):
+				continue
+
 		wire_types[tile] = highlight_layer.get_cell_atlas_coords(tile)
 
 		var tile_data: TileData = highlight_layer.get_cell_tile_data(tile)
@@ -534,6 +592,10 @@ func place_custom_gate(path: String) -> void:
 		new_custom_gate.exits[gate_outputs[output]] = outputs[output]
 
 
+func level_dimension_limiter(left_up: Vector2i, bottom_right: Vector2i) -> void:
+	dimension_limits = [left_up, bottom_right]
+
+
 func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
 	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(grid_position, state,
 			_logic_update_id))
@@ -615,10 +677,10 @@ func delete_stuff() -> void:
 			if had_wire:
 				_erase_neighboring_wires(key)
 
-			wire_layer.set_cell(key)
+			wire_layer.erase_cell(key)
 		_gates.erase(gate_id)
 	elif _wire_tiles.has(grid_position) or _wire_crossing_tiles.has(grid_position):
-		wire_layer.set_cell(grid_position)
+		wire_layer.erase_cell(grid_position)
 		_wire_tiles.erase(grid_position)
 		_wire_crossing_tiles.erase(grid_position)
 

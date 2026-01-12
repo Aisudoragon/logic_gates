@@ -524,6 +524,7 @@ text = "
 [center]Wybierz zadanie, aby lepiej się z nim zapoznać.[/center]"
 
 [node name="ProceedButton" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/MarginContainer/Panel"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Przejdź do zadania"

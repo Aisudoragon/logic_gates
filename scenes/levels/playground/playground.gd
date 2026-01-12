@@ -1,4 +1,4 @@
-extends Node2D
+class_name Playground extends Node2D
 
 @export var wire_layer: WireLayer
 @export var highlight_layer: HighlightLayer
@@ -63,6 +63,17 @@ func _unhandled_input(event: InputEvent) -> void:
 func propagade_file_path(path: String) -> void:
 	wires.load_file(path)
 	$WiresInterface/SaveButtons.save_path = path
+
+
+func load_level(id: int) -> void:
+	match id:
+		1:
+			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
+			wires.load_file("res://scenes/levels/level_1.json")
+		_:
+			wires.level_dimension_limiter(Vector2i(-5, -5), Vector2i(5, 5))
+			wires.load_file("res://scenes/levels/level_1.json")
+			print("Invalid level selected. How?")
 
 
 func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.Gate) -> void:

@@ -2,7 +2,7 @@ extends Node
 
 @export var main_menu: Control
 @export var level_selection: LevelSelectionMenu
-@export var playground: Node2D
+@export var playground: Playground
 var loaded_file_path: String
 @onready var current_node: CanvasItem = main_menu
 
@@ -37,8 +37,15 @@ func _on_change_scene_level_selection() -> void:
 func _on_change_scene_playground(path: String) -> void:
 	if path:
 		playground.propagade_file_path(path)
+	playground.wires.is_sandbox = true
 	_change_scene(playground)
 
 
 func _on_change_scene_options() -> void:
 	pass
+
+
+func _on_level_selection_menu_change_scene_level_selected(id: int) -> void:
+	playground.load_level(id)
+	playground.wires.is_sandbox = false
+	_change_scene(playground)
