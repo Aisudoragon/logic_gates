@@ -47,5 +47,4 @@ func _on_change_scene_options() -> void:
 
 func _on_level_selection_menu_change_scene_level_selected(id: int) -> void:
 	playground.load_level(id)
-	playground.wires.is_sandbox = false
 	_change_scene(playground)

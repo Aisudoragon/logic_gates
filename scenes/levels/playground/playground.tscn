@@ -10,12 +10,14 @@
 [ext_resource type="PackedScene" uid="uid://ba0bl16fuws1s" path="res://scenes/interfaces/wires_interface.tscn" id="7_dhyt4"]
 [ext_resource type="Script" uid="uid://d1utmmnuycrv6" path="res://scenes/levels/playground/save_buttons.gd" id="9_k3bpp"]
 
-[node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface")]
+[node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text")]
 script = ExtResource("1_ywb2o")
 wire_layer = NodePath("Wires/WireLayer")
 highlight_layer = NodePath("Wires/HighlightLayer")
 wires = NodePath("Wires")
 wires_interface = NodePath("WiresInterface")
+objective_text = NodePath("ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/ObjectiveText")
+helpful_text = NodePath("ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/HelpfulText")
 
 [node name="GridLines" type="Node2D" parent="." node_paths=PackedStringArray("camera_2d")]
 script = ExtResource("2_olfo7")
@@ -51,7 +53,6 @@ script = ExtResource("3_dsu8x")
 wires_interface = NodePath("../WiresInterface")
 
 [node name="WiresInterface" parent="." instance=ExtResource("7_dhyt4")]
-visible = false
 
 [node name="SaveButtons" type="HBoxContainer" parent="WiresInterface"]
 anchors_preset = 5
@@ -68,6 +69,12 @@ script = ExtResource("9_k3bpp")
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Wyjście (bez zapisywania)"
+
+[node name="BackButton2" type="Button" parent="WiresInterface/SaveButtons"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Powrót"
 
 [node name="SaveButton" type="Button" parent="WiresInterface/SaveButtons"]
 layout_mode = 2
@@ -109,58 +116,59 @@ display_mode = 1
 access = 1
 filters = PackedStringArray("*.circuit")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
+[node name="ObjectiveLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 50.0
-offset_top = -20.0
-offset_right = 90.0
-offset_bottom = 20.0
-grow_vertical = 2
-size_flags_horizontal = 0
+[node name="PanelContainer" type="PanelContainer" parent="ObjectiveLayer"]
+offset_left = 28.0
+offset_top = 31.0
+offset_right = 294.0
+offset_bottom = 504.0
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -269.0
-offset_right = 248.0
-offset_bottom = 269.0
-grow_vertical = 2
+[node name="MarginContainer" type="MarginContainer" parent="ObjectiveLayer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ObjectiveLayer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "Zadanie"
-horizontal_alignment = 1
-
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/PanelContainer/VBoxContainer"]
+[node name="ObjectiveText" type="RichTextLabel" parent="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
-text = "Rozpiska różnych celów do zrobienia, np:
+text = "[center][font_size=28]Zadanie 1[/font_size][/center]
 
-[ul][color=green]Połącz kable[/color]
-[color=red]Przełącz wszystkie wejścia na stan włączony[/color][/ul]"
+Na początek coś prostego.
+[ul][color=red]Połącz oba końce w jeden kabel[/color][/ul]"
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/PanelContainer/VBoxContainer"]
+[node name="FinishButton" type="Button" parent="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Wypróbuj rozwiązanie"
+
+[node name="HSeparator" type="HSeparator" parent="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HelpButton" type="Button" parent="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Pomoc"
+
+[node name="HelpfulText" type="RichTextLabel" parent="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+bbcode_enabled = true
+text = "Kliknij opcję \"KABEL\", przytrzymaj przycisk myszy na jednym końcu i przeciągnij do drugiego końca."
 
 [connection signal="toggle_output" from="Wires/WireLayer" to="Wires" method="_on_wire_layer_toggle_output"]
 [connection signal="mode_selected" from="WiresInterface" to="." method="_on_wires_interface_mode_selected"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="WiresInterface/SaveButtons/BackButton2" to="." method="_on_back_button_2_pressed"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/SaveButton" to="WiresInterface/SaveButtons" method="_on_save_button_pressed"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/SaveAsButton" to="WiresInterface/SaveButtons" method="_on_save_as_button_pressed"]
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="Wires" method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="WiresInterface/SaveButtons" method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="WiresInterface/GateDialog" to="." method="_on_gate_dialog_file_selected"]
+[connection signal="pressed" from="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/HelpButton" to="." method="_on_help_button_pressed"]

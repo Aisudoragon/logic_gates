@@ -6,6 +6,44 @@ class_name WiresInterface extends CanvasLayer
 signal mode_selected(mode: EditorMode.Mode, gate: EditorMode.Gate)
 
 
+func disable_buttons(bitmask: int) -> void:
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceCustom.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceXnor.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceXor.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceNor.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceOr.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceNand.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceAnd.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceNot.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceEnd.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/PlaceStart.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/DrawWire.visible = false
+	bitmask = bitmask >> 1
+	if bitmask & 1 == 0:
+		$HBoxContainer/SelectThings.visible = false
+
+
 func update_coordinates(mouse_pos: Vector2i) -> void:
 	debug_coordinates.text = "%d, %d" % [mouse_pos.x, mouse_pos.y]
 

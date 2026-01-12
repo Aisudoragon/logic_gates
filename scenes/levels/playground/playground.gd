@@ -4,8 +4,11 @@ class_name Playground extends Node2D
 @export var highlight_layer: HighlightLayer
 @export var wires: Wires
 @export var wires_interface: WiresInterface
+@export var objective_text: RichTextLabel
+@export var helpful_text: RichTextLabel
 
 signal change_scene_main_menu()
+signal change_scene_level_selection()
 
 var mode_selected: EditorMode.Mode = EditorMode.Mode.WIRE
 var gate_selected: EditorMode.Gate = EditorMode.Gate.START
@@ -66,13 +69,22 @@ func propagade_file_path(path: String) -> void:
 
 
 func load_level(id: int) -> void:
+	$WiresInterface/SaveButtons/BackButton.visible = false
+	$WiresInterface/SaveButtons/BackButton2.visible = true
+	$WiresInterface/SaveButtons/SaveButton.visible = false
+	$ObjectiveLayer.visible = true
 	match id:
 		1:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
+			wires.is_sandbox = false
+			objective_text.text = """[center][font_size=28]Zadanie 1[/font_size][/center]
+
+Na początek coś prostego.
+[ul][color=red]Połącz oba końce w jeden kabel[/color][/ul]"""
+			helpful_text.text = """Kliknij opcję "KABEL", przytrzymaj przycisk myszy na jednym końcu i przeciągnij do drugiego końca."""
+			wires_interface.disable_buttons(0b1100_0000_0000)
 			wires.load_file("res://scenes/levels/level_1.json")
 		_:
-			wires.level_dimension_limiter(Vector2i(-5, -5), Vector2i(5, 5))
-			wires.load_file("res://scenes/levels/level_1.json")
 			print("Invalid level selected. How?")
 
 
@@ -96,7 +108,19 @@ func _on_back_button_pressed() -> void:
 	$Camera2D.zoom = Vector2(1, 1)
 
 
+func _on_back_button_2_pressed() -> void:
+	$WiresInterface/SaveButtons/BackButton.visible = true
+	$WiresInterface/SaveButtons/BackButton2.visible = false
+	$WiresInterface/SaveButtons/SaveButton.visible = true
+	$ObjectiveLayer.visible = false
+	change_scene_level_selection.emit()
+
+
 func _on_gate_dialog_file_selected(path: String) -> void:
 	custom_gate_path = path
 	wires.load_custom_gate(path)
 	highlight = true
+
+
+func _on_help_button_pressed() -> void:
+	helpful_text.visible = not helpful_text.visible

@@ -25,4 +25,5 @@ visible = false
 [connection signal="change_scene_playground" from="MainMenu" to="." method="_on_change_scene_playground"]
 [connection signal="change_scene_level_selected" from="LevelSelectionMenu" to="." method="_on_level_selection_menu_change_scene_level_selected"]
 [connection signal="change_scene_main_menu" from="LevelSelectionMenu" to="." method="_on_change_scene_main_menu"]
+[connection signal="change_scene_level_selection" from="Playground" to="." method="_on_change_scene_level_selection"]
 [connection signal="change_scene_main_menu" from="Playground" to="." method="_on_change_scene_main_menu"]
