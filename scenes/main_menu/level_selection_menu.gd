@@ -28,7 +28,7 @@ Występują w niej również działania takie jak:
 [ul][char=AC] [char=2014] negacja (nie).[/ul]
 Każda operacja będzie dokładniej wyjaśniona w swoich lekcjach. Jest to niezwykle ważny temat, który jest nieodzłączną częścią układów.
 
-W tej lekcji zostanie wytłumaczone odczytywanie tablic prawdy, oraz jak działa i układać układ scalony.
+W tej lekcji zostanie wytłumaczone odczytywanie tablic prawdy, oraz jak wygląda układ scalony.
 
 Tablica prawdy składa się z trzech elementów, które mogą (nie muszą) pojawić się wielokrotnie:
 
