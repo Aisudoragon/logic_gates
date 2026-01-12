@@ -1,7 +1,7 @@
 class_name LevelSelectionMenu extends Control
 
 signal change_scene_main_menu()
-signal change_scene_level_selected(path: String)
+signal change_scene_level_selected(id: int)
 var lesson_selected: int = 0
 @export var lessonExplanation: RichTextLabel
 @export var proceedButton: Button
@@ -16,8 +16,50 @@ func _on_back_pressed() -> void:
 
 
 func _on_lesson_button_1_pressed() -> void:
-	var buffer_text: String = """[font_size=25]Krótkie wprowadzenie do dziedziny (tekst z Wikipedii jako przykład)[/font_size][br]
-[left]Bramka logiczna – element konstrukcyjny maszyn i mechanizmów (dziś zazwyczaj: układ scalony, choć te same funkcje można zrealizować również za pomocą dyskretnych elementów elektronicznych, a także w sferze innych rozwiązań technicznych, np. hydrauliki czy pneumatyki), realizujący fizycznie pewną prostą funkcję logiczną, której argumenty (zmienne logiczne) oraz sama funkcja mogą przybierać jedną z dwóch wartości, np. 0 lub 1 (zob. algebra Boole’a).[/left]"""
+	var buffer_text: String = """
+[font_size=28][center]Witaj w twojej pierwszej lekcji![/center][/font_size]
+[hr]
+Na sam początek przypomnimy w skrócie algebrę Boole'a.
+[ul]Dana zmienna (np. [i]a[/i]) może mieć tylko jedną z dwóch wartości: 0 lub 1.[/ul]
+[ul]1 jest prawdą, 0 jest fałszem.[/ul]
+Występują w niej również działania takie jak:
+[ul][char=2227] [char=2014] alternatywa (lub),[/ul]
+[ul][char=2228] [char=2014] koniunkcja (i),[/ul]
+[ul][char=AC] [char=2014] negacja (nie).[/ul]
+Każda operacja będzie dokładniej wyjaśniona w swoich lekcjach. Jest to niezwykle ważny temat, który jest nieodzłączną częścią układów.
+
+W tej lekcji zostanie wytłumaczone odczytywanie tablic prawdy, oraz jak działa i układać układ scalony.
+
+Tablica prawdy składa się z trzech elementów, które mogą (nie muszą) pojawić się wielokrotnie:
+
+[center][table=6,center]
+[cell border=white padding=1,0,1,5][b]zmienna[/b][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]zmienna[/color][/cell]
+[cell border=white padding=1,0,1,5][b]wyrażenie[/b][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]wyrażenie[/color][/cell]
+[cell border=white padding=1,0,1,5][b]wartość[/b][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
+[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
+[/table][/center]
+
+zmienna [char=2014] reprezentuje dany symbol. Np. a.
+wyrażenie [char=2014] reprezentuje pewne działanie. Np. a[char=2227]b.
+wartość [char=2014] reprezentuje 0 lub 1.
+
+Przykłady poprawnych tablic będą zaprezentowane w nastepnych lekcjach (oraz prostsza wersja w tej lekcji). Teraz pora na odrobinę praktyki. Na początek coś prostego!
+[hr]
+W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (koniec) układu. Na planszy będą się znajdować obydwa zakończenia. Wystarczy je połączyć kablem!"""
 	lessonExplanation.text = buffer_text
 	proceedButton.visible = true
 	lesson_selected = 1
@@ -88,7 +130,7 @@ func _on_lesson_button_15_pressed() -> void:
 
 
 func _on_proceed_button_pressed() -> void:
-	change_scene_level_selected.emit("lesson_selection%d" % lesson_selected)
+	change_scene_level_selected.emit(lesson_selected)
 
 
 func _on_introduction_button_pressed() -> void:
