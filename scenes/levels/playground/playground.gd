@@ -6,6 +6,7 @@ class_name Playground extends Node2D
 @export var wires_interface: WiresInterface
 @export var objective_text: RichTextLabel
 @export var helpful_text: RichTextLabel
+@export var finish_button: Button
 
 signal change_scene_main_menu()
 signal change_scene_level_selection()
@@ -125,6 +126,8 @@ func _on_back_button_2_pressed() -> void:
 	change_scene_level_selection.emit()
 	wires.clear()
 	wires.untouchable_tiles.clear()
+	finish_button.disabled = false
+	finish_button.text = "Wypróbuj rozwiązanie"
 	$Camera2D.position = Vector2.ZERO
 	$Camera2D.zoom = Vector2(1, 1)
 
@@ -150,6 +153,8 @@ func _on_finish_button_pressed() -> void:
 	var proper_answers: Array[bool]
 	match level_selected:
 		1:
+			finish_button.text = "Testowanie..."
+			finish_button.disabled = true
 			await get_tree().create_timer(.25).timeout
 			var exit_1: bool = wires._wire_tiles[wires._gate_tiles.find_key(end_gates_id[0])].state
 			proper_answers.append(
@@ -160,14 +165,25 @@ func _on_finish_button_pressed() -> void:
 			exit_1 = wires._wire_tiles[wires._gate_tiles.find_key(end_gates_id[0])].state
 			proper_answers.append(
 					true if exit_1 else false)
+
+			if proper_answers[0] == true and proper_answers[1] == true:
+				finish_button.text = "Ukończono!"
+				objective_text.text = """[center][font_size=28]Zadanie 1[/font_size][/center]
+
+Na początek coś prostego.
+[ul][color=green]Połącz oba końce w jeden kabel[/color][/ul]"""
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
 		_:
 			print("Trying to finish invalid level. How?")
 	for correct in proper_answers:
 		if not correct:
-			print("Źle :(")
+			print("Źle.")
+
 			for gate_id in start_gates_id:
 				if wires._wire_tiles[wires._gate_tiles.find_key(gate_id)].state == false:
 					continue
 				wire_layer.toggle_start_for_level(wires._gate_tiles.find_key(gate_id))
 			return
-	print("Dobrze! :)")
+	print("Dobrze!")

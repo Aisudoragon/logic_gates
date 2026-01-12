@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ba0bl16fuws1s" path="res://scenes/interfaces/wires_interface.tscn" id="7_dhyt4"]
 [ext_resource type="Script" uid="uid://d1utmmnuycrv6" path="res://scenes/levels/playground/save_buttons.gd" id="9_k3bpp"]
 
-[node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text")]
+[node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text", "finish_button")]
 script = ExtResource("1_ywb2o")
 wire_layer = NodePath("Wires/WireLayer")
 highlight_layer = NodePath("Wires/HighlightLayer")
@@ -18,6 +18,7 @@ wires = NodePath("Wires")
 wires_interface = NodePath("WiresInterface")
 objective_text = NodePath("ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/ObjectiveText")
 helpful_text = NodePath("ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/HelpfulText")
+finish_button = NodePath("ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/FinishButton")
 
 [node name="GridLines" type="Node2D" parent="." node_paths=PackedStringArray("camera_2d")]
 script = ExtResource("2_olfo7")
