@@ -172,4 +172,5 @@ text = "Kliknij opcję \"KABEL\", przytrzymaj przycisk myszy na jednym końcu i 
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="Wires" method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="WiresInterface/SaveButtons" method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="WiresInterface/GateDialog" to="." method="_on_gate_dialog_file_selected"]
+[connection signal="pressed" from="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/FinishButton" to="." method="_on_finish_button_pressed"]
 [connection signal="pressed" from="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/HelpButton" to="." method="_on_help_button_pressed"]

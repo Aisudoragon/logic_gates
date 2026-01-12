@@ -15,6 +15,9 @@ var gate_selected: EditorMode.Gate = EditorMode.Gate.START
 var highlight := false
 var custom_gate_path: String
 
+var level_selected: int
+var checking_sequence: Array[Vector2i]
+
 
 func _process(_delta: float) -> void:
 	wires_interface.update_queue_size(wires._callable_queue.size())
@@ -28,8 +31,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	match mode_selected:
 		EditorMode.Mode.SELECT:
 			if event.is_action_pressed(&"place"):
-				if not wires.is_sandbox and not wires.untouchable_tiles.has(highlight_layer._mouse_to_grid()):
-					wire_layer.toggle_start_gate()
+				if wires.is_sandbox and not wires.untouchable_tiles.has(highlight_layer._mouse_to_grid()):
+						wire_layer.toggle_start_gate()
 		EditorMode.Mode.WIRE:
 			if event.is_action_pressed(&"place") or event.is_action_pressed(&"special"):
 				highlight_layer.add_checkpoint()
@@ -79,11 +82,13 @@ func load_level(id: int) -> void:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
 			wires.untouchable_tiles = [Vector2i(1, -1), Vector2i(5, -1)]
 			wires.is_sandbox = false
+			level_selected = 1
+			checking_sequence = [Vector2i(1, -1)]
 			objective_text.text = """[center][font_size=28]Zadanie 1[/font_size][/center]
 
 Na początek coś prostego.
 [ul][color=red]Połącz oba końce w jeden kabel[/color][/ul]"""
-			helpful_text.text = """Kliknij opcję "KABEL", przytrzymaj przycisk myszy na jednym końcu i przeciągnij do drugiego końca."""
+			helpful_text.text = """Kliknij przycisk "KABEL", przytrzymaj lewy przycisk myszy na jednym końcu i przeciągnij do drugiego końca."""
 			wires_interface.enable_buttons(0b1100_0000_0000)
 			wires.load_file("res://scenes/levels/level_1.json")
 		_:
@@ -116,8 +121,10 @@ func _on_back_button_2_pressed() -> void:
 	$WiresInterface/SaveButtons/SaveButton.visible = true
 	$ObjectiveLayer.visible = false
 	wires_interface.enable_buttons(0b1111_1111_1111)
+	level_selected = 0
 	change_scene_level_selection.emit()
 	wires.clear()
+	wires.untouchable_tiles.clear()
 	$Camera2D.position = Vector2.ZERO
 	$Camera2D.zoom = Vector2(1, 1)
 
@@ -130,3 +137,37 @@ func _on_gate_dialog_file_selected(path: String) -> void:
 
 func _on_help_button_pressed() -> void:
 	helpful_text.visible = not helpful_text.visible
+
+
+func _on_finish_button_pressed() -> void:
+	var start_gates_id: Array[int]
+	var end_gates_id: Array[int]
+	for gate_id in wires._gates:
+		if wires._gates[gate_id].gate == EditorMode.Gate.START:
+			start_gates_id.append(gate_id)
+		if wires._gates[gate_id].gate == EditorMode.Gate.STOP:
+			end_gates_id.append(gate_id)
+	var proper_answers: Array[bool]
+	match level_selected:
+		1:
+			await get_tree().create_timer(.25).timeout
+			var exit_1: bool = wires._wire_tiles[wires._gate_tiles.find_key(end_gates_id[0])].state
+			proper_answers.append(
+					true if not exit_1 else false)
+			await get_tree().create_timer(.25).timeout
+			wire_layer.toggle_start_for_level(wires._gate_tiles.find_key(start_gates_id[0]))
+			await wires.queue_cleared
+			exit_1 = wires._wire_tiles[wires._gate_tiles.find_key(end_gates_id[0])].state
+			proper_answers.append(
+					true if exit_1 else false)
+		_:
+			print("Trying to finish invalid level. How?")
+	for correct in proper_answers:
+		if not correct:
+			print("Źle :(")
+			for gate_id in start_gates_id:
+				if wires._wire_tiles[wires._gate_tiles.find_key(gate_id)].state == false:
+					continue
+				wire_layer.toggle_start_for_level(wires._gate_tiles.find_key(gate_id))
+			return
+	print("Dobrze! :)")

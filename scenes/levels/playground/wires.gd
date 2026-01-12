@@ -6,6 +6,9 @@ class_name Wires extends Node2D
 var _place_wire_checkpoints: Array[Vector2i]
 var _custom_gate_dict: Dictionary
 
+signal queue_cleared()
+var queue_cleared_before: bool
+
 var _queue_executes_per_frame := 1
 var _callable_queue := DoubleLinkedListCallable.new()
 var _next_free_gate_id := 0:
@@ -292,9 +295,15 @@ func place_gate() -> void:
 func process_queue(iterations: int) -> void:
 	if _callable_queue.is_empty():
 		#queue_redraw()
+		if not queue_cleared_before:
+			queue_cleared_before = true
+			queue_cleared.emit()
 		return
 	for i in range(iterations):
+		queue_cleared_before = false
 		if _callable_queue.is_empty():
+			queue_cleared_before = true
+			queue_cleared.emit()
 			return
 		var action: Callable = _callable_queue.pop_front()
 		if action is Callable:

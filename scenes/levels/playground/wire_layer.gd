@@ -48,3 +48,11 @@ func toggle_start_gate() -> void:
 	var state: bool = not get_cell_alternative_tile(grid_mouse_position)
 	set_cell(grid_mouse_position, 9, Vector2i(0, 0), state)
 	toggle_output.emit(grid_mouse_position, state)
+
+
+func toggle_start_for_level(grid_position: Vector2i) -> void:
+	if not get_cell_source_id(grid_position) == 9:
+		return
+	var state: bool = not get_cell_alternative_tile(grid_position)
+	set_cell(grid_position, 9, Vector2i(0, 0), state)
+	toggle_output.emit(grid_position, state)
