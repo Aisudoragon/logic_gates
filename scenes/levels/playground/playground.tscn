@@ -56,28 +56,31 @@ wires_interface = NodePath("../WiresInterface")
 [node name="WiresInterface" parent="." instance=ExtResource("7_dhyt4")]
 
 [node name="SaveButtons" type="HBoxContainer" parent="WiresInterface"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -57.0
-offset_right = 57.0
-offset_bottom = 40.0
-grow_horizontal = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -705.0
+offset_top = 13.0
+offset_right = -12.0
+offset_bottom = 66.0
+grow_horizontal = 0
 size_flags_horizontal = 4
+alignment = 2
 script = ExtResource("9_k3bpp")
 
 [node name="BackButton" type="Button" parent="WiresInterface/SaveButtons"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Wyjście (bez zapisywania)"
 
 [node name="BackButton2" type="Button" parent="WiresInterface/SaveButtons"]
-visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Powrót"
 
 [node name="SaveButton" type="Button" parent="WiresInterface/SaveButtons"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Zapisz"
@@ -118,7 +121,6 @@ access = 1
 filters = PackedStringArray("*.circuit")
 
 [node name="ObjectiveLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="ObjectiveLayer"]
 offset_left = 28.0

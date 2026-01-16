@@ -11,8 +11,8 @@ class_name Playground extends Node2D
 signal change_scene_main_menu()
 signal change_scene_level_selection()
 
-var mode_selected: EditorMode.Mode = EditorMode.Mode.WIRE
-var gate_selected: EditorMode.Gate = EditorMode.Gate.START
+var mode_selected: EditorMode.Mode = EditorMode.Mode.SELECT
+var gate_selected: EditorMode.Gate = EditorMode.Gate.AND
 var highlight := false
 var custom_gate_path: String
 
@@ -84,7 +84,6 @@ func load_level(id: int) -> void:
 			wires.untouchable_tiles = [Vector2i(1, -1), Vector2i(5, -1)]
 			wires.is_sandbox = false
 			level_selected = 1
-			checking_sequence = [Vector2i(1, -1)]
 			objective_text.text = """[center][font_size=28]Zadanie 1[/font_size][/center]
 
 Na początek coś prostego.
@@ -92,8 +91,35 @@ Na początek coś prostego.
 			helpful_text.text = """Kliknij przycisk "KABEL", przytrzymaj lewy przycisk myszy na jednym końcu i przeciągnij do drugiego końca."""
 			wires_interface.enable_buttons(0b1100_0000_0000)
 			wires.load_file("res://scenes/levels/level_1.json")
+		2:
+			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
+			wires.untouchable_tiles = [Vector2i(-1, -1), Vector2i(5, -1)]
+			wires.is_sandbox = false
+			level_selected = 2
+			wires_interface.enable_buttons(0b1100_1000_0000)
+			wires.load_file("res://scenes/levels/level_2.json")
 		_:
 			print("Invalid level selected. How?")
+
+
+func reset_playground_state() -> void:
+	$Camera2D.position = Vector2.ZERO
+	$Camera2D.zoom = Vector2(1, 1)
+	wires_interface.enable_buttons(0b1111_1111_1111)
+	mode_selected = EditorMode.Mode.SELECT
+	gate_selected = EditorMode.Gate.AND
+	wires.clear()
+
+	level_selected = 0
+	wires.untouchable_tiles.clear()
+	checking_sequence.clear()
+	finish_button.disabled = false
+	finish_button.text = "Wypróbuj rozwiązanie"
+	$WiresInterface/SaveButtons/BackButton.visible = true
+	$WiresInterface/SaveButtons/BackButton2.visible = false
+	$WiresInterface/SaveButtons/SaveButton.visible = true
+	$ObjectiveLayer.visible = false
+
 
 
 func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.Gate) -> void:
@@ -111,25 +137,12 @@ func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.G
 
 func _on_back_button_pressed() -> void:
 	change_scene_main_menu.emit()
-	wires.clear()
-	$Camera2D.position = Vector2.ZERO
-	$Camera2D.zoom = Vector2(1, 1)
+	reset_playground_state()
 
 
 func _on_back_button_2_pressed() -> void:
-	$WiresInterface/SaveButtons/BackButton.visible = true
-	$WiresInterface/SaveButtons/BackButton2.visible = false
-	$WiresInterface/SaveButtons/SaveButton.visible = true
-	$ObjectiveLayer.visible = false
-	wires_interface.enable_buttons(0b1111_1111_1111)
-	level_selected = 0
 	change_scene_level_selection.emit()
-	wires.clear()
-	wires.untouchable_tiles.clear()
-	finish_button.disabled = false
-	finish_button.text = "Wypróbuj rozwiązanie"
-	$Camera2D.position = Vector2.ZERO
-	$Camera2D.zoom = Vector2(1, 1)
+	reset_playground_state()
 
 
 func _on_gate_dialog_file_selected(path: String) -> void:
@@ -179,11 +192,13 @@ Na początek coś prostego.
 			print("Trying to finish invalid level. How?")
 	for correct in proper_answers:
 		if not correct:
-			print("Źle.")
-
 			for gate_id in start_gates_id:
 				if wires._wire_tiles[wires._gate_tiles.find_key(gate_id)].state == false:
 					continue
 				wire_layer.toggle_start_for_level(wires._gate_tiles.find_key(gate_id))
 			return
 	print("Dobrze!")
+	match level_selected:
+		1:
+			SaveProgress.level_1 = true
+			SaveProgress.update_save_file()

@@ -13,10 +13,13 @@ func introduction_visibility(visibility: bool) -> void:
 
 func _on_back_pressed() -> void:
 	change_scene_main_menu.emit()
+	lessonExplanation.text = "[center]Wybierz zadanie, aby lepiej się z nim zapoznać.[/center]"
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	proceedButton.visible = false
 
 
 func _on_lesson_button_1_pressed() -> void:
-	var buffer_text: String = """
+	lessonExplanation.text = """
 [font_size=28][center]Witaj w twojej pierwszej lekcji![/center][/font_size]
 [hr]
 Na sam początek przypomnimy w skrócie algebrę Boole'a.
@@ -60,23 +63,21 @@ wartość [char=2014] reprezentuje 0 lub 1.
 Przykłady poprawnych tablic będą zaprezentowane w nastepnych lekcjach (oraz prostsza wersja w tej lekcji). Teraz pora na odrobinę praktyki. Na początek coś prostego!
 [hr]
 W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (koniec) układu. Na planszy będą się znajdować obydwa zakończenia. Wystarczy je połączyć kablem!"""
-	lessonExplanation.text = buffer_text
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 1
 
 
 func _on_lesson_button_2_pressed() -> void:
-	var buffer_text: String = """[font_size=25]Wytłumaczenie na czym polegają tablicy prawdy oraz kilka przykładów[/font_size][br]
+	lessonExplanation.text = """[font_size=25]Wytłumaczenie na czym polegają tablicy prawdy oraz kilka przykładów[/font_size][br]
 [left]Tutaj to będzie zobrazowane przez obrazki (by nie formatować tego tekstem)[/left]"""
-	lessonExplanation.text = buffer_text
 	proceedButton.visible = true
 	lesson_selected = 2
 
 
 func _on_lesson_button_3_pressed() -> void:
-	var buffer_text: String = """[font_size=25]Wstęp tutaj będzie krótki[/font_size][br]
+	lessonExplanation.text = """[font_size=25]Wstęp tutaj będzie krótki[/font_size][br]
 [left]Zadania na układach będą bardziej sprawdzane na żywo[/left]"""
-	lessonExplanation.text = buffer_text
 	proceedButton.visible = true
 	lesson_selected = 3
 
