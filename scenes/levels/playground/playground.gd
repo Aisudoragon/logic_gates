@@ -16,8 +16,8 @@ var gate_selected: EditorMode.Gate = EditorMode.Gate.AND
 var highlight := false
 var custom_gate_path: String
 
+var help_message: Array[String]
 var level_selected: int
-var checking_sequence: Array[Vector2i]
 
 
 func _process(_delta: float) -> void:
@@ -33,7 +33,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		EditorMode.Mode.SELECT:
 			if event.is_action_pressed(&"place"):
 				if wires.is_sandbox and not wires.untouchable_tiles.has(highlight_layer._mouse_to_grid()):
-						wire_layer.toggle_start_gate()
+						wires.toggle_output()
 		EditorMode.Mode.WIRE:
 			if event.is_action_pressed(&"place") or event.is_action_pressed(&"special"):
 				highlight_layer.add_checkpoint()
@@ -78,16 +78,19 @@ func load_level(id: int) -> void:
 	$WiresInterface/SaveButtons/BackButton2.visible = true
 	$WiresInterface/SaveButtons/SaveButton.visible = false
 	$ObjectiveLayer.visible = true
+	help_message.resize(4)
 	match id:
 		1:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
 			wires.untouchable_tiles = [Vector2i(1, -1), Vector2i(5, -1)]
 			wires.is_sandbox = false
 			level_selected = 1
-			objective_text.text = """[center][font_size=28]Zadanie 1[/font_size][/center]
+			help_message[0] = """[center][font_size=28]Zadanie 1[/font_size][/center]
 
 Na początek coś prostego.
-[ul][color=red]Połącz oba końce w jeden kabel[/color][/ul]"""
+[ul][color=red]Połącz oba końce w jeden kabel[/color][/ul]
+
+Na końcu każdego takiego streszczenia pojawi się tablica prawdy, która zostanie uzupełniona po wypróbowaniu rozwiązania."""
 			helpful_text.text = """Kliknij przycisk "KABEL", przytrzymaj lewy przycisk myszy na jednym końcu i przeciągnij do drugiego końca."""
 			wires_interface.enable_buttons(0b1100_0000_0000)
 			wires.load_file("res://scenes/levels/level_1.json")
@@ -101,6 +104,20 @@ Na początek coś prostego.
 		_:
 			print("Invalid level selected. How?")
 
+	var table_headers: Array[String]
+	for gate in wires._gates:
+		if wires._gates[gate].gate == EditorMode.Gate.START:
+			# TODO wykorzystać nazwy wejść i wyjść
+			table_headers.append("a")
+		if wires._gates[gate].gate == EditorMode.Gate.STOP:
+			table_headers.append("wyjście")
+	help_message[1] = "\n\n[center][table=%d,center]" % table_headers.size()
+	for cell in table_headers:
+		help_message[1] = help_message[1] + "[cell border=white][b]%s[/b][/cell]" % cell
+	help_message[3] = "[/table][/center]"
+
+	objective_text.text = help_message[0] + help_message[1] + help_message[3]
+
 
 func reset_playground_state() -> void:
 	$Camera2D.position = Vector2.ZERO
@@ -112,7 +129,6 @@ func reset_playground_state() -> void:
 
 	level_selected = 0
 	wires.untouchable_tiles.clear()
-	checking_sequence.clear()
 	finish_button.disabled = false
 	finish_button.text = "Wypróbuj rozwiązanie"
 	$WiresInterface/SaveButtons/BackButton.visible = true
@@ -156,47 +172,60 @@ func _on_help_button_pressed() -> void:
 
 
 func _on_finish_button_pressed() -> void:
-	var start_gates_id: Array[int]
-	var end_gates_id: Array[int]
+	var start_gates: Array[Vector2i]
+	var end_gates: Array[Vector2i]
 	for gate_id in wires._gates:
 		if wires._gates[gate_id].gate == EditorMode.Gate.START:
-			start_gates_id.append(gate_id)
+			start_gates.append(wires._gate_tiles.find_key(gate_id))
 		if wires._gates[gate_id].gate == EditorMode.Gate.STOP:
-			end_gates_id.append(gate_id)
-	var proper_answers: Array[bool]
+			end_gates.append(wires._gate_tiles.find_key(gate_id))
+
+	help_message[2] = ""
+
+	finish_button.text = "Testowanie..."
+	finish_button.disabled = true
+
+	var guesses: Array[bool]
+	var truth_table_content: Array[bool]
+
+	for start in range(2 ** start_gates.size()):
+		await get_tree().create_timer(.25).timeout
+
+		for gate in range(start_gates.size() - 1, -1, -1):
+			wires.set_output(start_gates[gate], start >> gate & 1)
+			help_message[2] = help_message[2] + "[cell border=white]%d[/cell]" % (start >> gate & 1)
+			objective_text.text = help_message[0] + help_message[1] + help_message[2] + help_message[3]
+		await wires.queue_cleared
+
+		for gate in start_gates:
+			truth_table_content.append(wires._wire_tiles[gate].state)
+		for gate in end_gates:
+			truth_table_content.append(wires._wire_tiles[gate].state)
+			guesses.append(wires._wire_tiles[gate].state)
+			help_message[2] = help_message[2] + "[cell border=white]%d[/cell]" % int(wires._wire_tiles[gate].state)
+			objective_text.text = help_message[0] + help_message[1] + help_message[2] + help_message[3]
+	print(truth_table_content)
+
 	match level_selected:
 		1:
-			finish_button.text = "Testowanie..."
-			finish_button.disabled = true
-			await get_tree().create_timer(.25).timeout
-			var exit_1: bool = wires._wire_tiles[wires._gate_tiles.find_key(end_gates_id[0])].state
-			proper_answers.append(
-					true if not exit_1 else false)
-			await get_tree().create_timer(.25).timeout
-			wire_layer.toggle_start_for_level(wires._gate_tiles.find_key(start_gates_id[0]))
-			await wires.queue_cleared
-			exit_1 = wires._wire_tiles[wires._gate_tiles.find_key(end_gates_id[0])].state
-			proper_answers.append(
-					true if exit_1 else false)
-
-			if proper_answers[0] == true and proper_answers[1] == true:
+			if guesses[0] == false and guesses[1] == true:
 				finish_button.text = "Ukończono!"
-				objective_text.text = """[center][font_size=28]Zadanie 1[/font_size][/center]
+				help_message[0] = """[center][font_size=28]Zadanie 1[/font_size][/center]
 
 Na początek coś prostego.
-[ul][color=green]Połącz oba końce w jeden kabel[/color][/ul]"""
+[ul][color=green]Połącz oba końce w jeden kabel[/color][/ul]
+
+Na końcu każdego takiego streszczenia pojawi się tablica prawdy, która zostanie uzupełniona po wypróbowaniu rozwiązania."""
+				objective_text.text = help_message[0] + help_message[1] + help_message[2] + help_message[3]
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
 		_:
 			print("Trying to finish invalid level. How?")
-	for correct in proper_answers:
-		if not correct:
-			for gate_id in start_gates_id:
-				if wires._wire_tiles[wires._gate_tiles.find_key(gate_id)].state == false:
-					continue
-				wire_layer.toggle_start_for_level(wires._gate_tiles.find_key(gate_id))
-			return
+	if not finish_button.text == "Ukończono!":
+		for gate in start_gates:
+			wires.set_output(gate, false)
+		return
 	print("Dobrze!")
 	match level_selected:
 		1:

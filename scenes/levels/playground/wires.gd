@@ -7,7 +7,6 @@ var _place_wire_checkpoints: Array[Vector2i]
 var _custom_gate_dict: Dictionary
 
 signal queue_cleared()
-var queue_cleared_before: bool
 
 var _queue_executes_per_frame := 1
 var _callable_queue := DoubleLinkedListCallable.new()
@@ -295,14 +294,10 @@ func place_gate() -> void:
 func process_queue(iterations: int) -> void:
 	if _callable_queue.is_empty():
 		#queue_redraw()
-		if not queue_cleared_before:
-			queue_cleared_before = true
-			queue_cleared.emit()
+		queue_cleared.emit()
 		return
 	for i in range(iterations):
-		queue_cleared_before = false
 		if _callable_queue.is_empty():
-			queue_cleared_before = true
 			queue_cleared.emit()
 			return
 		var action: Callable = _callable_queue.pop_front()
@@ -606,9 +601,18 @@ func level_dimension_limiter(left_up: Vector2i, bottom_right: Vector2i) -> void:
 	dimension_limits = [left_up, bottom_right]
 
 
-func _on_wire_layer_toggle_output(grid_position: Vector2i, state: bool) -> void:
+func toggle_output() -> void:
+	var grid_mouse_position: Vector2i = wire_layer.local_to_map(get_local_mouse_position())
+	if _gate_tiles.has(grid_mouse_position):
+		if _gates[_gate_tiles[grid_mouse_position]].gate == EditorMode.Gate.START:
+			var state: bool = not _wire_tiles[grid_mouse_position].state
+			set_output(grid_mouse_position, state)
+
+
+func set_output(grid_position: Vector2i, state: bool) -> void:
 	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(grid_position, state,
 			_logic_update_id))
+	wire_layer.set_start_gate(grid_position, state)
 
 
 func _on_file_dialog_file_selected(path: String) -> void:

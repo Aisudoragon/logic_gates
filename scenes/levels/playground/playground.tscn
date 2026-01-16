@@ -69,18 +69,17 @@ alignment = 2
 script = ExtResource("9_k3bpp")
 
 [node name="BackButton" type="Button" parent="WiresInterface/SaveButtons"]
-visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Wyjście (bez zapisywania)"
 
 [node name="BackButton2" type="Button" parent="WiresInterface/SaveButtons"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Powrót"
 
 [node name="SaveButton" type="Button" parent="WiresInterface/SaveButtons"]
-visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Zapisz"
@@ -121,6 +120,7 @@ access = 1
 filters = PackedStringArray("*.circuit")
 
 [node name="ObjectiveLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="ObjectiveLayer"]
 offset_left = 28.0
