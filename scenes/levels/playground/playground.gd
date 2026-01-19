@@ -125,7 +125,7 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 			table_headers.append("Wyjście")
 	help_message[1] = "\n\n[center][table=%d,center]" % table_headers.size()
 	for cell in table_headers:
-		help_message[1] = help_message[1] + "[cell border=white][b]%s[/b][/cell]" % cell
+		help_message[1] += "[cell border=white][b]%s[/b][/cell]" % cell
 
 	objective_text.text = help_message[0] + help_message[1] % "red"
 
@@ -205,7 +205,7 @@ func _on_finish_button_pressed() -> void:
 		for gate in range(start_gates.size() - 1, -1, -1):
 			wires.set_output(start_gates[gate], start >> gate & 1)
 			print("Setting %s to %d" % [start_gates[gate], start >> gate & 1])
-			help_message[2] = help_message[2] + "[cell border=white]%d[/cell]" % (start >> gate & 1)
+			help_message[2] += "[cell border=white]%d[/cell]" % (start >> gate & 1)
 			objective_text.text = buffer_objective + help_message[2]
 		await wires.queue_cleared
 
@@ -214,7 +214,7 @@ func _on_finish_button_pressed() -> void:
 		for gate in end_gates:
 			truth_table_content.append(wires._wire_tiles[gate].state)
 			guesses.append(wires._wire_tiles[gate].state)
-			help_message[2] = help_message[2] + "[cell border=white]%d[/cell]" % int(wires._wire_tiles[gate].state)
+			help_message[2] += "[cell border=white]%d[/cell]" % int(wires._wire_tiles[gate].state)
 			objective_text.text = buffer_objective + help_message[2]
 	print(truth_table_content)
 

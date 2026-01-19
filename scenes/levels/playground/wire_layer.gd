@@ -17,6 +17,10 @@ func create_wire(tiles: Dictionary[Vector2i, Vector2i]) -> void:
 		set_cell(tile, 0, atlas_coords)
 
 
+func set_wire(tile: Vector2i, direction: int) -> void:
+	set_cell(tile, 0, Vector2i(direction, 0))
+
+
 func create_gate(tiles: Dictionary[Vector2i, Dictionary]) -> void:
 	for tile in tiles:
 		var source_id: int = tiles[tile]["source_id"]

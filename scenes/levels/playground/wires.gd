@@ -223,6 +223,7 @@ func place_wire() -> void:
 	update_save_preview()
 
 	var wire_types: Dictionary[Vector2i, Vector2i]
+	var valid_tiles: Array[Vector2i]
 	for tile in wire_tiles:
 		if _gate_tiles.has(tile):
 			continue
@@ -242,8 +243,59 @@ func place_wire() -> void:
 		assert(tile_data, "What, how, huh?")
 		var connected_directions: int = tile_data.get_custom_data("connected_directions")
 		_wire_tiles[tile] = WireTile.new(connected_directions)
+		valid_tiles.append(tile)
 	wire_layer.create_wire(wire_types)
 	highlight_layer.clear_position_buffer()
+	for tile in valid_tiles:
+		if (
+				(not _wire_tiles.has(tile + Vector2i.RIGHT)
+				or not _wire_tiles[tile + Vector2i.RIGHT].direction & EditorMode.Direction.LEFT)
+				and not _wire_crossing_tiles.has(tile + Vector2i.RIGHT)
+		):
+			_wire_tiles[tile].direction &= ~EditorMode.Direction.RIGHT
+		elif (
+				_gate_tiles.has(tile + Vector2i.RIGHT)
+				and _wire_tiles.has(tile + Vector2i.RIGHT)
+				and _wire_tiles[tile + Vector2i.RIGHT].direction & EditorMode.Direction.LEFT
+		):
+			_wire_tiles[tile].direction |= EditorMode.Direction.RIGHT
+		if (
+				(not _wire_tiles.has(tile + Vector2i.DOWN)
+				or not _wire_tiles[tile + Vector2i.DOWN].direction & EditorMode.Direction.UP)
+				and not _wire_crossing_tiles.has(tile + Vector2i.DOWN)
+		):
+			_wire_tiles[tile].direction &= ~EditorMode.Direction.DOWN
+		elif (
+				_gate_tiles.has(tile + Vector2i.DOWN)
+				and _wire_tiles.has(tile + Vector2i.DOWN)
+				and _wire_tiles[tile + Vector2i.DOWN].direction & EditorMode.Direction.UP
+		):
+			_wire_tiles[tile].direction |= EditorMode.Direction.DOWN
+		if (
+				(not _wire_tiles.has(tile + Vector2i.LEFT)
+				or not _wire_tiles[tile + Vector2i.LEFT].direction & EditorMode.Direction.RIGHT)
+				and not _wire_crossing_tiles.has(tile + Vector2i.LEFT)
+		):
+			_wire_tiles[tile].direction &= ~EditorMode.Direction.LEFT
+		elif (
+				_gate_tiles.has(tile + Vector2i.LEFT)
+				and _wire_tiles.has(tile + Vector2i.LEFT)
+				and _wire_tiles[tile + Vector2i.LEFT].direction & EditorMode.Direction.RIGHT
+		):
+			_wire_tiles[tile].direction |= EditorMode.Direction.LEFT
+		if (
+				(not _wire_tiles.has(tile + Vector2i.UP)
+				or not _wire_tiles[tile + Vector2i.UP].direction & EditorMode.Direction.DOWN)
+				and not _wire_crossing_tiles.has(tile + Vector2i.UP)
+		):
+			_wire_tiles[tile].direction &= ~EditorMode.Direction.UP
+		elif (
+				_gate_tiles.has(tile + Vector2i.DOWN)
+				and _wire_tiles.has(tile + Vector2i.DOWN)
+				and _wire_tiles[tile + Vector2i.DOWN].direction & EditorMode.Direction.UP
+		):
+			_wire_tiles[tile].direction |= EditorMode.Direction.DOWN
+		wire_layer.set_wire(tile, _wire_tiles[tile].direction)
 
 
 func place_gate() -> void:
