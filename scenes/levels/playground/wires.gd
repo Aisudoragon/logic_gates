@@ -208,6 +208,7 @@ func _draw() -> void:
 
 func place_wire() -> void:
 	var wire_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
+	highlight_layer.clear_position_buffer()
 	if wire_tiles.size() == 1:
 		if _wire_tiles.has(wire_tiles[0]) and _wire_tiles[wire_tiles[0]].direction == 15:
 			_wire_tiles.erase(wire_tiles[0])
@@ -221,6 +222,16 @@ func place_wire() -> void:
 		return
 
 	update_save_preview()
+
+	var sources: Array[Vector2i]
+	for tile in wire_tiles:
+		var inputs_found: Array[Vector2i] = check_for_connected_sources(tile)
+		for input in inputs_found:
+			if not sources.has(input):
+				sources.append(input)
+	if sources.size() >= 2:
+		return
+	# TODO check for legality here
 
 	var wire_types: Dictionary[Vector2i, Vector2i]
 	var valid_tiles: Array[Vector2i]
@@ -248,7 +259,6 @@ func place_wire() -> void:
 		_wire_tiles[tile] = WireTile.new(connected_directions)
 		valid_tiles.append(tile)
 	wire_layer.create_wire(wire_types)
-	highlight_layer.clear_position_buffer()
 	for tile in valid_tiles:
 		update_wire_for_neighbors(tile)
 
@@ -274,7 +284,6 @@ func update_wire_for_neighbors(tile: Vector2i) -> void:
 		):
 			_wire_tiles[tile].direction &= ~directions_from[index]
 			update_signal(tile)
-			#check_for_laws(tile)
 		# Add connection
 		elif (
 				_gate_tiles.has(neighbor)
@@ -282,14 +291,36 @@ func update_wire_for_neighbors(tile: Vector2i) -> void:
 				and _wire_tiles[neighbor].direction & directions_to[index]
 		):
 			_wire_tiles[tile].direction |= directions_from[index]
+			if _wire_tiles[neighbor].state:
+				_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, true,
+						_logic_update_id))
 
 	wire_layer.set_wire(tile, _wire_tiles[tile].direction)
 
 
-func check_for_laws(tile: Vector2i) -> bool:
+func check_for_connected_sources(tile: Vector2i) -> Array[Vector2i]:
 	var sources: Array[Vector2i]
-	#TODO Finish this function
-	return true
+	var wires: Array[Vector2i]
+	var wire_spread: Array[Vector2i] = [tile]
+
+	while not wire_spread.is_empty():
+		var check_tile: Vector2i = wire_spread.pop_front()
+		if _gate_tiles.has(check_tile) and _wire_tiles[check_tile].direction == EditorMode.Direction.RIGHT:
+			sources.append(check_tile)
+
+		if not _wire_tiles.has(check_tile):
+			continue
+		if _wire_tiles[check_tile].direction & EditorMode.Direction.RIGHT and not wires.has(check_tile + Vector2i.RIGHT):
+			wire_spread.append(check_tile + Vector2i.RIGHT)
+		if _wire_tiles[check_tile].direction & EditorMode.Direction.DOWN and not wires.has(check_tile + Vector2i.DOWN):
+			wire_spread.append(check_tile + Vector2i.DOWN)
+		if _wire_tiles[check_tile].direction & EditorMode.Direction.LEFT and not wires.has(check_tile + Vector2i.LEFT):
+			wire_spread.append(check_tile + Vector2i.LEFT)
+		if _wire_tiles[check_tile].direction & EditorMode.Direction.UP and not wires.has(check_tile + Vector2i.UP):
+			wire_spread.append(check_tile + Vector2i.UP)
+
+		wires.push_back(check_tile)
+	return sources
 
 
 func update_signal(tile: Vector2i) -> void:
@@ -314,7 +345,7 @@ func update_signal(tile: Vector2i) -> void:
 		#if wires.size() > 25:
 			#print("Smaller")
 			#wires.resize(10)
-		wires.push_front(check_tile)
+		wires.push_back(check_tile)
 	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, false, _logic_update_id))
 
 
