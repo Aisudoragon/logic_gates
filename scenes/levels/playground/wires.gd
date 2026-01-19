@@ -247,55 +247,33 @@ func place_wire() -> void:
 	wire_layer.create_wire(wire_types)
 	highlight_layer.clear_position_buffer()
 	for tile in valid_tiles:
+		update_wire_for_neighbors(tile)
+
+
+func update_wire_for_neighbors(tile: Vector2i) -> void:
+	var directions: Array[Vector2i] = [
+		Vector2i.RIGHT,
+		Vector2i.DOWN,
+		Vector2i.LEFT,
+		Vector2i.UP,
+	]
+	var directions_to: Array[int] = [4, 8, 1, 2]
+	var directions_from: Array[int] = [1, 2, 4, 8]
+	for index in range(4):
+		var neighbor: Vector2i = tile + directions[index]
 		if (
-				(not _wire_tiles.has(tile + Vector2i.RIGHT)
-				or not _wire_tiles[tile + Vector2i.RIGHT].direction & EditorMode.Direction.LEFT)
-				and not _wire_crossing_tiles.has(tile + Vector2i.RIGHT)
+				(not _wire_tiles.has(neighbor)
+				or not _wire_tiles[neighbor].direction & directions_to[index])
+				and not _wire_crossing_tiles.has(neighbor)
 		):
-			_wire_tiles[tile].direction &= ~EditorMode.Direction.RIGHT
+			_wire_tiles[tile].direction &= ~directions_from[index]
 		elif (
-				_gate_tiles.has(tile + Vector2i.RIGHT)
-				and _wire_tiles.has(tile + Vector2i.RIGHT)
-				and _wire_tiles[tile + Vector2i.RIGHT].direction & EditorMode.Direction.LEFT
+				_gate_tiles.has(neighbor)
+				and _wire_tiles.has(neighbor)
+				and _wire_tiles[neighbor].direction & directions_to[index]
 		):
-			_wire_tiles[tile].direction |= EditorMode.Direction.RIGHT
-		if (
-				(not _wire_tiles.has(tile + Vector2i.DOWN)
-				or not _wire_tiles[tile + Vector2i.DOWN].direction & EditorMode.Direction.UP)
-				and not _wire_crossing_tiles.has(tile + Vector2i.DOWN)
-		):
-			_wire_tiles[tile].direction &= ~EditorMode.Direction.DOWN
-		elif (
-				_gate_tiles.has(tile + Vector2i.DOWN)
-				and _wire_tiles.has(tile + Vector2i.DOWN)
-				and _wire_tiles[tile + Vector2i.DOWN].direction & EditorMode.Direction.UP
-		):
-			_wire_tiles[tile].direction |= EditorMode.Direction.DOWN
-		if (
-				(not _wire_tiles.has(tile + Vector2i.LEFT)
-				or not _wire_tiles[tile + Vector2i.LEFT].direction & EditorMode.Direction.RIGHT)
-				and not _wire_crossing_tiles.has(tile + Vector2i.LEFT)
-		):
-			_wire_tiles[tile].direction &= ~EditorMode.Direction.LEFT
-		elif (
-				_gate_tiles.has(tile + Vector2i.LEFT)
-				and _wire_tiles.has(tile + Vector2i.LEFT)
-				and _wire_tiles[tile + Vector2i.LEFT].direction & EditorMode.Direction.RIGHT
-		):
-			_wire_tiles[tile].direction |= EditorMode.Direction.LEFT
-		if (
-				(not _wire_tiles.has(tile + Vector2i.UP)
-				or not _wire_tiles[tile + Vector2i.UP].direction & EditorMode.Direction.DOWN)
-				and not _wire_crossing_tiles.has(tile + Vector2i.UP)
-		):
-			_wire_tiles[tile].direction &= ~EditorMode.Direction.UP
-		elif (
-				_gate_tiles.has(tile + Vector2i.DOWN)
-				and _wire_tiles.has(tile + Vector2i.DOWN)
-				and _wire_tiles[tile + Vector2i.DOWN].direction & EditorMode.Direction.UP
-		):
-			_wire_tiles[tile].direction |= EditorMode.Direction.DOWN
-		wire_layer.set_wire(tile, _wire_tiles[tile].direction)
+			_wire_tiles[tile].direction |= directions_from[index]
+	wire_layer.set_wire(tile, _wire_tiles[tile].direction)
 
 
 func place_gate() -> void:
@@ -307,6 +285,7 @@ func place_gate() -> void:
 
 		_wire_tiles.erase(tile)
 		_wire_crossing_tiles.erase(tile)
+		_update_neighboring_wires(tile)
 
 		var cell_source_id: int = highlight_layer.get_cell_source_id(tile)
 		var cell_atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
@@ -323,6 +302,7 @@ func place_gate() -> void:
 			_wire_tiles[gate_tiles[0]] = WireTile.new(4)
 			_gates[new_gate_id].inputs.append(gate_tiles[0])
 		_gate_tiles[gate_tiles[0]] = new_gate_id
+		_update_neighboring_wires(gate_tiles[0])
 	else:
 		for tile in gate_tiles:
 			_gate_tiles[tile] = new_gate_id
@@ -331,6 +311,7 @@ func place_gate() -> void:
 					or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(0, 2)
 			):
 				_wire_tiles[tile] = WireTile.new(4)
+				_update_neighboring_wires(tile)
 				_gates[new_gate_id].inputs.append(tile)
 			elif (
 					highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1)
@@ -338,6 +319,7 @@ func place_gate() -> void:
 					and highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 0))
 			):
 				_wire_tiles[tile] = WireTile.new(1)
+				_update_neighboring_wires(tile)
 				_gates[new_gate_id].outputs.append(tile)
 	wire_layer.create_gate(gate_data_cells)
 
@@ -745,7 +727,7 @@ func delete_stuff() -> void:
 
 			var had_wire: bool = _wire_tiles.erase(key)
 			if had_wire:
-				_erase_neighboring_wires(key)
+				_update_neighboring_wires(key)
 
 			wire_layer.erase_cell(key)
 		_gates.erase(gate_id)
@@ -754,40 +736,25 @@ func delete_stuff() -> void:
 		_wire_tiles.erase(grid_position)
 		_wire_crossing_tiles.erase(grid_position)
 
-		_erase_neighboring_wires(grid_position)
+		_update_neighboring_wires(grid_position)
 
 
-func _erase_neighboring_wires(grid_position: Vector2i) -> void:
-	var neighbor_direction_number := 1
+func _update_neighboring_wires(grid_position: Vector2i) -> void:
 	var neighbor_directions: Array[Vector2i] = [
-		Vector2i.LEFT,
-		Vector2i.UP,
 		Vector2i.RIGHT,
 		Vector2i.DOWN,
+		Vector2i.LEFT,
+		Vector2i.UP,
 	]
 	for next_neighbor in neighbor_directions:
-		var neighbor: Vector2i = grid_position + next_neighbor
-		if _gate_tiles.has(neighbor):
+		var neighbor_tile: Vector2i = grid_position + next_neighbor
+		if _gate_tiles.has(neighbor_tile):
 			continue
-
-		if _wire_tiles.has(neighbor):
-			_wire_tiles[neighbor].direction = _wire_tiles[neighbor].direction & ~neighbor_direction_number
-			wire_layer.set_cell(neighbor, 0, Vector2i(_wire_tiles[neighbor].direction, 0))
-		if _wire_crossing_tiles.has(neighbor):
-			if neighbor_direction_number == 1 or neighbor_direction_number == 4:
-				_wire_tiles[neighbor] = _wire_crossing_tiles[neighbor].vertical_wire
-			else:
-				_wire_tiles[neighbor] = _wire_crossing_tiles[neighbor].horizontal_wire
-			_wire_crossing_tiles.erase(neighbor)
-			wire_layer.set_cell(neighbor, 0, Vector2i(_wire_tiles[neighbor].direction, 0))
-
-			neighbor = neighbor + next_neighbor
-			if _gate_tiles.has(neighbor):
-				continue
-			_wire_tiles[neighbor].direction = _wire_tiles[neighbor].direction & ~neighbor_direction_number
-			wire_layer.set_cell(neighbor, 0, Vector2i(_wire_tiles[neighbor].direction, 0))
-
-		neighbor_direction_number = neighbor_direction_number * 2
+		if _wire_crossing_tiles.has(neighbor_tile):
+			_wire_crossing_tiles.erase(neighbor_tile)
+			_wire_tiles[neighbor_tile] = WireTile.new(15)
+		if _wire_tiles.has(neighbor_tile):
+			update_wire_for_neighbors(neighbor_tile)
 
 
 func clear() -> void:
