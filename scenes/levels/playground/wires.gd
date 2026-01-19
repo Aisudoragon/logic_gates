@@ -273,6 +273,10 @@ func update_wire_for_neighbors(tile: Vector2i) -> void:
 				and _wire_tiles[neighbor].direction & directions_to[index]
 		):
 			_wire_tiles[tile].direction |= directions_from[index]
+
+		if _wire_tiles.has(neighbor) and _wire_tiles[neighbor].direction & directions_to[index] and _wire_tiles[neighbor].state:
+			_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, true,
+			_logic_update_id))
 	wire_layer.set_wire(tile, _wire_tiles[tile].direction)
 
 
@@ -348,6 +352,8 @@ func _add_checkpoint_to_wire() -> void:
 
 
 func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) -> void:
+	if not _wire_tiles.has(grid_position):
+		return
 	var this_wire_tile: WireTile = _wire_tiles[grid_position]
 	if this_wire_tile.state == state:
 		return
