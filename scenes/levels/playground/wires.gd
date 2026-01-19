@@ -225,10 +225,14 @@ func place_wire() -> void:
 
 	var sources: Array[Vector2i]
 	for tile in wire_tiles:
+		#if _gate_tiles.has(tile):
+			#continue
 		var inputs_found: Array[Vector2i] = check_for_connected_sources(tile)
 		for input in inputs_found:
 			if not sources.has(input):
 				sources.append(input)
+	print(wire_tiles)
+	print(sources)
 	if sources.size() >= 2:
 		return
 	# TODO check for legality here
@@ -305,7 +309,11 @@ func check_for_connected_sources(tile: Vector2i) -> Array[Vector2i]:
 
 	while not wire_spread.is_empty():
 		var check_tile: Vector2i = wire_spread.pop_front()
-		if _gate_tiles.has(check_tile) and _wire_tiles[check_tile].direction == EditorMode.Direction.RIGHT:
+		if (
+				_gate_tiles.has(check_tile)
+				and _wire_tiles.has(check_tile)
+				and _wire_tiles[check_tile].direction == EditorMode.Direction.RIGHT
+			):
 			sources.append(check_tile)
 
 		if not _wire_tiles.has(check_tile):
@@ -481,6 +489,8 @@ func _spread_wire_through_crossing(grid_position: Vector2i, state: bool, update_
 
 
 func _get_into_gate(grid_position: Vector2i) -> void:
+	if not _gate_tiles.has(grid_position):
+		return
 	var this_gate_tile: GateTile = _gates[_gate_tiles[grid_position]]
 	var inputs: Array[bool]
 	for input_coordinates: Vector2i in this_gate_tile.inputs:
