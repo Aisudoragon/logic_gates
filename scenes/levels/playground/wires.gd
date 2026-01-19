@@ -250,6 +250,9 @@ func place_gate() -> void:
 	var gate_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	var gate_data_cells: Dictionary[Vector2i, Dictionary]
 	for tile in gate_tiles:
+		if _gate_tiles.has(tile) or untouchable_tiles.has(tile):
+			return
+
 		_wire_tiles.erase(tile)
 		_wire_crossing_tiles.erase(tile)
 
@@ -257,8 +260,6 @@ func place_gate() -> void:
 		var cell_atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
 		gate_data_cells[tile] = {"source_id": cell_source_id, "atlas_coords": cell_atlas_coords}
 
-		if _gate_tiles.has(tile):
-			return
 	# HACK change it later to soomething that supports custom gates
 	var new_gate_id: int = _next_free_gate_id
 	_gates[new_gate_id] = GateTile.new(highlight_layer.get_cell_source_id(gate_tiles[0]) - 2)

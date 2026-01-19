@@ -69,8 +69,38 @@ W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (konie
 
 
 func _on_lesson_button_2_pressed() -> void:
-	lessonExplanation.text = """[font_size=25]Wytłumaczenie na czym polegają tablicy prawdy oraz kilka przykładów[/font_size][br]
-[left]Tutaj to będzie zobrazowane przez obrazki (by nie formatować tego tekstem)[/left]"""
+	lessonExplanation.text = """
+[font_size=28][center]Bramka AND[/center][/font_size]
+[hr]
+Pora skorzystać z pierwszej bramki, AND (i).
+[i]Jeśli nie wiesz jak działają bramki logiczne to ta lekcja wprowadzi Cię w trybie ekspresowym w ich działanie.[/i]
+
+Posiada ona dwa wejścia i jedno wyjście. Działa tak samo jak koniunkcja w algebrze Boole'a, tzn. Że na wejściu, jeśli obydwa sygnały są pozytywne, to tylko wtedy na wyjściu również będzie pozytywny.
+Można to przedstawić na tablicy prawdy w taki sposób:
+
+[center][table=3,center]
+[cell border=white padding=1,0,1,5][b] A [/b][/cell]
+[cell border=white padding=1,0,1,5][b] B [/b][/cell]
+[cell border=white padding=1,0,1,5][b]Wyjście[/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[/table][/center]
+
+[i]A, oraz B są wejściami do bramki. Wyjście mówi samo za siebie.[/i]
+
+[hr]
+Następne kilka zadań wprowadzą Cię po kolei w każdą, dostępną bramkę logiczną. W tej lekcji, zobaczysz jak się taką wstawia do układu, oraz jak ją połączyć."""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 2
 

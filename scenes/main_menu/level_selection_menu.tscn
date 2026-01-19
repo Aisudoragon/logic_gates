@@ -130,13 +130,12 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]1. Bramki logiczne[/font_size]"
+text = "[font_size=22]1. Układ scalony[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton2" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-disabled = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton2"]
 layout_mode = 1
@@ -155,7 +154,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]2. Tablice prawdy[/font_size]"
+text = "[font_size=22]2. Bramka AND[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton3" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
