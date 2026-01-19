@@ -242,6 +242,9 @@ func place_wire() -> void:
 		var tile_data: TileData = highlight_layer.get_cell_tile_data(tile)
 		assert(tile_data, "What, how, huh?")
 		var connected_directions: int = tile_data.get_custom_data("connected_directions")
+		if _wire_tiles.has(tile) and _wire_tiles[tile].state:
+			_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, true,
+			_logic_update_id))
 		_wire_tiles[tile] = WireTile.new(connected_directions)
 		valid_tiles.append(tile)
 	wire_layer.create_wire(wire_types)
@@ -251,6 +254,8 @@ func place_wire() -> void:
 
 
 func update_wire_for_neighbors(tile: Vector2i) -> void:
+	if not _wire_tiles.has(tile):
+		return
 	var directions: Array[Vector2i] = [
 		Vector2i.RIGHT,
 		Vector2i.DOWN,
@@ -261,12 +266,16 @@ func update_wire_for_neighbors(tile: Vector2i) -> void:
 	var directions_from: Array[int] = [1, 2, 4, 8]
 	for index in range(4):
 		var neighbor: Vector2i = tile + directions[index]
+		# Delete connection
 		if (
-				(not _wire_tiles.has(neighbor)
+				_wire_tiles[tile].direction & directions_from[index]
+				and (not _wire_tiles.has(neighbor)
 				or not _wire_tiles[neighbor].direction & directions_to[index])
-				and not _wire_crossing_tiles.has(neighbor)
 		):
 			_wire_tiles[tile].direction &= ~directions_from[index]
+			update_signal(tile)
+			#check_for_laws(tile)
+		# Add connection
 		elif (
 				_gate_tiles.has(neighbor)
 				and _wire_tiles.has(neighbor)
@@ -274,10 +283,39 @@ func update_wire_for_neighbors(tile: Vector2i) -> void:
 		):
 			_wire_tiles[tile].direction |= directions_from[index]
 
-		if _wire_tiles.has(neighbor) and _wire_tiles[neighbor].direction & directions_to[index] and _wire_tiles[neighbor].state:
-			_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, true,
-			_logic_update_id))
 	wire_layer.set_wire(tile, _wire_tiles[tile].direction)
+
+
+func check_for_laws(tile: Vector2i) -> bool:
+	var sources: Array[Vector2i]
+	#TODO Finish this function
+	return true
+
+
+func update_signal(tile: Vector2i) -> void:
+	var wires: Array[Vector2i]
+	var wire_spread: Array[Vector2i] = [tile]
+	while not wire_spread.is_empty():
+		var check_tile: Vector2i = wire_spread.pop_front()
+		if _gate_tiles.has(check_tile) and _wire_tiles[check_tile].direction == EditorMode.Direction.RIGHT:
+			return
+
+		if not _wire_tiles.has(check_tile):
+			continue
+		if _wire_tiles[check_tile].direction & EditorMode.Direction.RIGHT and not wires.has(check_tile + Vector2i.RIGHT):
+			wire_spread.append(check_tile + Vector2i.RIGHT)
+		if _wire_tiles[check_tile].direction & EditorMode.Direction.DOWN and not wires.has(check_tile + Vector2i.DOWN):
+			wire_spread.append(check_tile + Vector2i.DOWN)
+		if _wire_tiles[check_tile].direction & EditorMode.Direction.LEFT and not wires.has(check_tile + Vector2i.LEFT):
+			wire_spread.append(check_tile + Vector2i.LEFT)
+		if _wire_tiles[check_tile].direction & EditorMode.Direction.UP and not wires.has(check_tile + Vector2i.UP):
+			wire_spread.append(check_tile + Vector2i.UP)
+
+		#if wires.size() > 25:
+			#print("Smaller")
+			#wires.resize(10)
+		wires.push_front(check_tile)
+	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, false, _logic_update_id))
 
 
 func place_gate() -> void:
@@ -316,6 +354,9 @@ func place_gate() -> void:
 			):
 				_wire_tiles[tile] = WireTile.new(4)
 				_update_neighboring_wires(tile)
+				if _wire_tiles.has(tile + Vector2i.LEFT):
+					_wire_tiles[tile].state = _wire_tiles[tile + Vector2i.LEFT].state
+				_callable_queue.push_back(Callable(self, &"_get_into_gate").bind(tile))
 				_gates[new_gate_id].inputs.append(tile)
 			elif (
 					highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1)
