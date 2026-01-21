@@ -25,7 +25,7 @@ func enable_buttons(bitmask: int) -> void:
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceNor.visible = false
 	else:
-		$HBoxContainer/PlaceNor.visible = false
+		$HBoxContainer/PlaceNor.visible = true
 	bitmask = bitmask >> 1
 	if bitmask & 1 == 0:
 		$HBoxContainer/PlaceOr.visible = false

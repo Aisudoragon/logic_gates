@@ -110,6 +110,10 @@ func _wire_highlight_line(from: Vector2i, to: Vector2i, direction: Vector2i) -> 
 
 func _update_tile_wire_direction(grid_position: Vector2i, direction_vector: Vector2i,
 		add := true) -> void:
+	if ($".." as Wires)._wire_tiles.has(grid_position) and not _wire_position_buffer.has(grid_position):
+		set_cell(grid_position, 0, Vector2i(15, 1))
+		return
+
 	var tile_data: TileData = wire_layer.get_cell_tile_data(grid_position)
 	var directions: int
 	if tile_data:

@@ -137,6 +137,12 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 			help_message[0] = ""
 			wires.load_file("res://scenes/levels/level_7_8.json")
 			helpful_text.text = ""
+		9:
+			wires.level_dimension_limiter(Vector2i(-5, -6), Vector2i(9, 5))
+			wires_interface.enable_buttons(0b1111_1111_1000)
+			help_message[0] = ""
+			wires.load_file("res://scenes/levels/level_9.json")
+			helpful_text.text = ""
 		_:
 			print("Invalid level selected. How?")
 
@@ -317,14 +323,22 @@ func _on_finish_button_pressed() -> void:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
 				objective_text.text = buffer_objective % "red"
+		9:
+			if guesses[0] and not guesses[1] and not guesses[2] and guesses[3]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
 		_:
 			print("Trying to finish invalid level. How?")
-	if not finish_button.text == "Ukończono!":
-		for gate in start_gates:
-			wires.set_output(gate, false)
-		return
-	print("Dobrze!")
-	match level_selected:
-		1:
-			SaveProgress.level_1 = true
-			SaveProgress.update_save_file()
+	#if not finish_button.text == "Ukończono!":
+		#for gate in start_gates:
+			#wires.set_output(gate, false)
+		#return
+	#print("Dobrze!")
+	#match level_selected:
+		#1:
+			#SaveProgress.level_1 = true
+			#SaveProgress.update_save_file()

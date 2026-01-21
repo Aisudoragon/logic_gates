@@ -190,7 +190,16 @@ Dodać cel zadania"""
 
 
 func _on_lesson_button_9_pressed() -> void:
-	pass # Replace with function body.
+	lessonExplanation.text = """
+[font_size=28][center]Bramka SR Latch[/center][/font_size]
+[hr]
+Dodać opis zadania.
+
+[hr]
+Dodać cel zadania"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 9
 
 
 func _on_lesson_button_10_pressed() -> void:

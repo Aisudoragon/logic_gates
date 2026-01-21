@@ -304,7 +304,6 @@ vertical_alignment = 1
 [node name="LessonButton9" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-disabled = true
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton9"]
 layout_mode = 1
@@ -323,7 +322,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]...[/font_size]"
+text = "[font_size=22]3. SR Latch[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton10" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
@@ -348,7 +347,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]5. Mapa Karnaugh[/font_size]"
+text = "[font_size=22]...[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton11" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
