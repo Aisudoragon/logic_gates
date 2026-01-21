@@ -231,8 +231,6 @@ func place_wire() -> void:
 		for input in inputs_found:
 			if not sources.has(input):
 				sources.append(input)
-	print(wire_tiles)
-	print(sources)
 	if sources.size() >= 2:
 		return
 	# TODO check for legality here
@@ -361,7 +359,14 @@ func place_gate() -> void:
 	var gate_tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	var gate_data_cells: Dictionary[Vector2i, Dictionary]
 	for tile in gate_tiles:
-		if _gate_tiles.has(tile) or untouchable_tiles.has(tile):
+		if (
+				_gate_tiles.has(tile) or untouchable_tiles.has(tile)
+				or (not is_sandbox
+				and (tile.x < dimension_limits[0].x
+				or tile.y < dimension_limits[0].y
+				or tile.x > dimension_limits[1].x
+				or tile.y > dimension_limits[1].y))
+		):
 			return
 
 		_wire_tiles.erase(tile)

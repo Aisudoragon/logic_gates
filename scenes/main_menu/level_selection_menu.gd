@@ -106,30 +106,87 @@ Następne kilka zadań wprowadzą Cię po kolei w każdą, dostępną bramkę lo
 
 
 func _on_lesson_button_3_pressed() -> void:
-	lessonExplanation.text = """[font_size=25]Wstęp tutaj będzie krótki[/font_size][br]
-[left]Zadania na układach będą bardziej sprawdzane na żywo[/left]"""
+	lessonExplanation.text = """
+[font_size=28][center]Bramka NOT[/center][/font_size]
+[hr]
+Następna bramka, NOT (nie).
+
+Ta bramka posiada jedno wejście i jedno wyjście. Ta bramka służy do odwrócenia sygnału. To znaczy, jeśli na wejściu jest sygnał 0, to na wyjściu jest sygnał 1 i na odwrót.
+
+[hr]
+W tej lekcji sprawdzisz działanie bramki NOT."""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 3
 
 
 func _on_lesson_button_4_pressed() -> void:
-	pass # Replace with function body.
+	lessonExplanation.text = """
+[font_size=28][center]Bramka NAND[/center][/font_size]
+[hr]
+Dodać opis zadania.
+
+[hr]
+Dodać cel zadania"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 4
 
 
 func _on_lesson_button_5_pressed() -> void:
-	pass # Replace with function body.
+	lessonExplanation.text = """
+[font_size=28][center]Bramka OR[/center][/font_size]
+[hr]
+Dodać opis zadania.
+Dostajesz NAND do zrobienia, lmao.
+
+[hr]
+Dodać cel zadania"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 5
 
 
 func _on_lesson_button_6_pressed() -> void:
-	pass # Replace with function body.
+	lessonExplanation.text = """
+[font_size=28][center]Bramka NOR[/center][/font_size]
+[hr]
+Dodać opis zadania.
+Dostajesz NAND do zrobienia, lmao.
+
+[hr]
+Dodać cel zadania"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 6
 
 
 func _on_lesson_button_7_pressed() -> void:
-	pass # Replace with function body.
+	lessonExplanation.text = """
+[font_size=28][center]Bramka XOR[/center][/font_size]
+[hr]
+Dodać opis zadania.
+Dostajesz NAND do zrobienia, lmao.
+
+[hr]
+Dodać cel zadania"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 7
 
 
 func _on_lesson_button_8_pressed() -> void:
-	pass # Replace with function body.
+	lessonExplanation.text = """
+[font_size=28][center]Bramka XNOR[/center][/font_size]
+[hr]
+Dodać opis zadania.
+Dostajesz NAND do zrobienia, lmao.
+
+[hr]
+Dodać cel zadania"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 8
 
 
 func _on_lesson_button_9_pressed() -> void:

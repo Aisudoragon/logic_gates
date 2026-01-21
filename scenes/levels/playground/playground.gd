@@ -24,7 +24,6 @@ func _process(_delta: float) -> void:
 	wires_interface.update_queue_size(wires._callable_queue.size())
 	wires_interface.visible = visible
 	$Camera2D.anchor_mode = int(visible)
-	pass
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -80,10 +79,10 @@ func load_level(id: int) -> void:
 	$ObjectiveLayer.visible = true
 	help_message.resize(3)
 	wires.is_sandbox = false
+	level_selected = id
 	match id:
 		1:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
-			level_selected = 1
 			wires_interface.enable_buttons(0b1100_0000_0000)
 			help_message[0] = """[center][font_size=28]Zadanie 1[/font_size][/center]
 
@@ -96,13 +95,48 @@ Przyszłe zadania [i]mogą[/i] wymagać, aby była wygenerowana w konkretny spos
 			wires.load_file("res://scenes/levels/level_1.json")
 		2:
 			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
-			level_selected = 2
 			wires_interface.enable_buttons(0b1100_0100_0000)
-			help_message[0] = """[center][font_size=28]Zadanie 2[/font_size][/center]
+			help_message[0] = """[center][font_size=28]Zadanie 2.1[/font_size][/center]
+
+Tutaj również prosto. Stwórz układ przy pomocy bramki.
+[ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul]
+
+Możesz zauważyć, że po wykonaniu poprawnie zadania, zostanie wygenerowana tablica prawdy taka sama jak w rozpisie lekcji."""
+			wires.load_file("res://scenes/levels/level_2.json")
+			helpful_text.text = """Kliknij przycisk bramki "AND", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia."""
+		3:
+			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
+			wires_interface.enable_buttons(0b1100_1000_0000)
+			help_message[0] = """[center][font_size=28]Zadanie 2.2[/font_size][/center]
 
 Tutaj również prosto. Stwórz układ przy pomocy bramki.
 [ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul]"""
-			wires.load_file("res://scenes/levels/level_2.json")
+			wires.load_file("res://scenes/levels/level_3.json")
+			helpful_text.text = """Kliknij przycisk bramki "AND", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia."""
+		4:
+			wires.level_dimension_limiter(Vector2i(-4, -3), Vector2i(8, 1))
+			wires_interface.enable_buttons(0b1100_1100_0000)
+			help_message[0] = ""
+			wires.load_file("res://scenes/levels/level_4.json")
+			helpful_text.text = ""
+		5:
+			wires.level_dimension_limiter(Vector2i(-4, -4), Vector2i(7, 2))
+			wires_interface.enable_buttons(0b1100_0010_0000)
+			help_message[0] = ""
+			wires.load_file("res://scenes/levels/level_5.json")
+			helpful_text.text = ""
+		6:
+			wires.level_dimension_limiter(Vector2i(-6, -4), Vector2i(9, 2))
+			wires_interface.enable_buttons(0b1100_0010_0000)
+			help_message[0] = ""
+			wires.load_file("res://scenes/levels/level_6.json")
+			helpful_text.text = ""
+		7, 8:
+			wires.level_dimension_limiter(Vector2i(-8, -4), Vector2i(11, 2))
+			wires_interface.enable_buttons(0b1100_0010_0000)
+			help_message[0] = ""
+			wires.load_file("res://scenes/levels/level_7_8.json")
+			helpful_text.text = ""
 		_:
 			print("Invalid level selected. How?")
 
@@ -204,7 +238,6 @@ func _on_finish_button_pressed() -> void:
 
 		for gate in range(start_gates.size() - 1, -1, -1):
 			wires.set_output(start_gates[gate], start >> gate & 1)
-			print("Setting %s to %d" % [start_gates[gate], start >> gate & 1])
 			help_message[2] += "[cell border=white]%d[/cell]" % (start >> gate & 1)
 			objective_text.text = buffer_objective + help_message[2]
 		await wires.queue_cleared
@@ -216,7 +249,6 @@ func _on_finish_button_pressed() -> void:
 			guesses.append(wires._wire_tiles[gate].state)
 			help_message[2] += "[cell border=white]%d[/cell]" % int(wires._wire_tiles[gate].state)
 			objective_text.text = buffer_objective + help_message[2]
-	print(truth_table_content)
 
 	buffer_objective = buffer_objective + help_message[2]
 
@@ -231,6 +263,54 @@ func _on_finish_button_pressed() -> void:
 				objective_text.text = buffer_objective % "red"
 		2:
 			if not guesses[0] and not guesses[1] and not guesses[2] and guesses[3]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
+		3:
+			if guesses[0] and not guesses[1]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
+		4:
+			if guesses[0] and guesses[1] and guesses[2] and not guesses[3]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
+		5:
+			if not guesses[0] and guesses[1] and guesses[2] and guesses[3]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
+		6:
+			if guesses[0] and not guesses[1] and not guesses[2] and not guesses[3]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
+		7:
+			if not guesses[0] and guesses[1] and guesses[2] and not guesses[3]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
+		8:
+			if guesses[0] and not guesses[1] and not guesses[2] and guesses[3]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
 			else:

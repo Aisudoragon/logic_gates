@@ -154,13 +154,12 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]2. Bramka AND[/font_size]"
+text = "[font_size=22]2.1. Bramka AND[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton3" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-disabled = true
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton3"]
 layout_mode = 1
@@ -179,13 +178,12 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]3. Działanie układu[/font_size]"
+text = "[font_size=22]2.2. Bramka NOT[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton4" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-disabled = true
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton4"]
 layout_mode = 1
@@ -204,13 +202,12 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]4.1. Bramka NOT[/font_size]"
+text = "[font_size=22]2.3. Bramka NAND[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton5" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-disabled = true
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton5"]
 layout_mode = 1
@@ -229,13 +226,12 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]4.2. Bramka AND[/font_size]"
+text = "[font_size=22]2.4. Bramka OR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton6" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-disabled = true
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton6"]
 layout_mode = 1
@@ -254,13 +250,12 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]4.3. Bramka OR[/font_size]"
+text = "[font_size=22]2.5. Bramka NOR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton7" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-disabled = true
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton7"]
 layout_mode = 1
@@ -279,13 +274,12 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]4.4. Bramka NAND[/font_size]"
+text = "[font_size=22]2.6. Bramka XOR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton8" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-disabled = true
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton8"]
 layout_mode = 1
@@ -304,7 +298,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]4.5. Bramka NOR[/font_size]"
+text = "[font_size=22]2.7. Bramka XNOR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton9" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
@@ -329,7 +323,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]4.6. Bramka XOR[/font_size]"
+text = "[font_size=22]...[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton10" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
