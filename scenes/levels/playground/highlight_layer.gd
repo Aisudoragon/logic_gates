@@ -110,9 +110,19 @@ func _wire_highlight_line(from: Vector2i, to: Vector2i, direction: Vector2i) -> 
 
 func _update_tile_wire_direction(grid_position: Vector2i, direction_vector: Vector2i,
 		add := true) -> void:
-	if ($".." as Wires)._wire_tiles.has(grid_position) and not _wire_position_buffer.has(grid_position):
-		set_cell(grid_position, 0, Vector2i(15, 1))
-		return
+	var direction_from_vector := (
+	EditorMode.Direction.RIGHT if direction_vector == Vector2i.RIGHT
+	else EditorMode.Direction.DOWN if direction_vector == Vector2i.DOWN
+	else EditorMode.Direction.LEFT if direction_vector == Vector2i.LEFT
+	else EditorMode.Direction.UP)
+	if (
+			($".." as Wires)._wire_tiles.has(grid_position) and not _wire_position_buffer.has(grid_position)
+			and (($".." as Wires)._wire_tiles[grid_position].direction == EditorMode.Direction.RIGHT | EditorMode.Direction.LEFT
+			or ($".." as Wires)._wire_tiles[grid_position].direction == EditorMode.Direction.DOWN | EditorMode.Direction.UP)
+	):
+		if not ($".." as Wires)._wire_tiles[grid_position].direction & direction_from_vector:
+			set_cell(grid_position, 0, Vector2i(15, 1))
+			return
 
 	var tile_data: TileData = wire_layer.get_cell_tile_data(grid_position)
 	var directions: int
@@ -121,12 +131,6 @@ func _update_tile_wire_direction(grid_position: Vector2i, direction_vector: Vect
 	tile_data = get_cell_tile_data(grid_position)
 	if tile_data:
 		directions |= tile_data.get_custom_data("connected_directions")
-	var direction_from_vector := (
-			EditorMode.Direction.RIGHT if direction_vector == Vector2i.RIGHT
-			else EditorMode.Direction.DOWN if direction_vector == Vector2i.DOWN
-			else EditorMode.Direction.LEFT if direction_vector == Vector2i.LEFT
-			else EditorMode.Direction.UP if direction_vector == Vector2i.UP
-			else 0)
 	if add:
 		directions |= direction_from_vector
 	else:
