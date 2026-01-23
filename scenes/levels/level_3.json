@@ -5,14 +5,16 @@
 			"inputs": [],
 			"outputs": [
 				"(0, -1)"
-			]
+			],
+			"name": "A"
 		},
 		"2": {
 			"gate": 8,
 			"inputs": [
 				"(6, -1)"
 			],
-			"outputs": []
+			"outputs": [],
+			"name": "Wyjście"
 		}
 	},
 	"placement": {

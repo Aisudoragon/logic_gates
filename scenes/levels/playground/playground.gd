@@ -19,14 +19,56 @@ var custom_gate_path: String
 var help_message: Array[String]
 var level_selected: int
 
+#Camera stuff
+@export var camera: Camera2D
+@export var zoomSpeed: float = 0.025
+@export var camera_speed: float = 1000.0
+var direction := Vector2.ZERO
 
-func _process(_delta: float) -> void:
+var zoomMin: float = 0.05
+var zoomMax: float = 2.0
+var dragSensitivity: float = 1.0
+
+
+func _process(delta: float) -> void:
 	wires_interface.update_queue_size(wires._callable_queue.size())
 	wires_interface.visible = visible
-	$Camera2D.anchor_mode = int(visible)
+
+	camera.anchor_mode = int(visible)
+
+	camera.position += camera_speed * direction / camera.zoom * delta
+	if not wires.is_sandbox:
+		var dimenions: Array[Vector2i] = wires.dimension_limits
+		if camera.position.x < dimenions[0].x * 64:
+			camera.position.x = dimenions[0].x * 64
+		elif camera.position.x > dimenions[1].x * 64:
+			camera.position.x = dimenions[1].x * 64
+		if camera.position.y < dimenions[0].y * 64:
+			camera.position.y = dimenions[0].y * 64
+		elif camera.position.y > dimenions[1].y * 64:
+			camera.position.y = dimenions[1].y * 64
+	if direction:
+		queue_redraw()
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Camera
+	if camera.anchor_mode == 1:
+		if event is InputEventMouseButton and event.is_pressed():
+			var event_mb: InputEventMouseButton = event
+			if event_mb.button_index == MOUSE_BUTTON_WHEEL_UP:
+				camera.zoom += Vector2(zoomSpeed, zoomSpeed)
+			elif event_mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				camera.zoom -= Vector2(zoomSpeed, zoomSpeed)
+			camera.zoom = clamp(camera.zoom, Vector2(zoomMin, zoomMin), Vector2(zoomMax, zoomMax))
+
+		if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
+			var event_mm: InputEventMouseMotion = event
+			camera.position -= event_mm.relative * dragSensitivity / camera.zoom
+
+		direction = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
+
+	# Editor
 	wires_interface.update_coordinates(highlight_layer._mouse_to_grid())
 	match mode_selected:
 		EditorMode.Mode.SELECT:
@@ -159,10 +201,9 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 	var table_headers: Array[String]
 	for gate in wires._gates:
 		if wires._gates[gate].gate == EditorMode.Gate.START:
-			# TODO wykorzystać nazwy wejść i wyjść
-			table_headers.append(str(wires._gate_tiles.find_key(gate)))
+			table_headers.append(" " + wires._gates[gate].display_name + " ")
 		if wires._gates[gate].gate == EditorMode.Gate.STOP:
-			table_headers.append("Wyjście")
+			table_headers.append(" " + wires._gates[gate].display_name + " ")
 	help_message[1] = "\n\n[center][table=%d,center]" % table_headers.size()
 	for cell in table_headers:
 		help_message[1] += "[cell border=white][b]%s[/b][/cell]" % cell

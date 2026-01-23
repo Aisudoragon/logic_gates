@@ -5,28 +5,32 @@
 			"inputs": [],
 			"outputs": [
 				"(-3, -4)"
-			]
+			],
+			"name": "A"
 		},
 		"4": {
 			"gate": 7,
 			"inputs": [],
 			"outputs": [
 				"(-3, 3)"
-			]
+			],
+			"name": "B"
 		},
 		"5": {
 			"gate": 8,
 			"inputs": [
 				"(7, -4)"
 			],
-			"outputs": []
+			"outputs": [],
+			"name": "Q"
 		},
 		"6": {
 			"gate": 8,
 			"inputs": [
 				"(7, 3)"
 			],
-			"outputs": []
+			"outputs": [],
+			"name": "Q'"
 		}
 	},
 	"placement": {

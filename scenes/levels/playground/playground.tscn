@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://vxc7l235kxff"]
+[gd_scene load_steps=11 format=3 uid="uid://vxc7l235kxff"]
 
 [ext_resource type="Script" uid="uid://ddrbmlbq6sk85" path="res://scenes/levels/playground/playground.gd" id="1_ywb2o"]
 [ext_resource type="Script" uid="uid://bh6pxtvechol" path="res://scenes/levels/playground/grid_lines.gd" id="2_olfo7"]
@@ -9,8 +9,9 @@
 [ext_resource type="Script" uid="uid://nxyr8hqa0lkw" path="res://scenes/levels/playground/highlight_layer.gd" id="6_k3bpp"]
 [ext_resource type="PackedScene" uid="uid://ba0bl16fuws1s" path="res://scenes/interfaces/wires_interface.tscn" id="7_dhyt4"]
 [ext_resource type="Script" uid="uid://d1utmmnuycrv6" path="res://scenes/levels/playground/save_buttons.gd" id="9_k3bpp"]
+[ext_resource type="Script" uid="uid://djeigehoc35yq" path="res://scenes/levels/playground/gate_name_window.gd" id="10_4wjdm"]
 
-[node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text", "finish_button")]
+[node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text", "finish_button", "camera")]
 script = ExtResource("1_ywb2o")
 wire_layer = NodePath("Wires/WireLayer")
 highlight_layer = NodePath("Wires/HighlightLayer")
@@ -19,6 +20,7 @@ wires_interface = NodePath("WiresInterface")
 objective_text = NodePath("ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/ObjectiveText")
 helpful_text = NodePath("ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/HelpfulText")
 finish_button = NodePath("ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/FinishButton")
+camera = NodePath("Camera2D")
 
 [node name="GridLines" type="Node2D" parent="." node_paths=PackedStringArray("camera_2d")]
 script = ExtResource("2_olfo7")
@@ -119,6 +121,40 @@ display_mode = 1
 access = 1
 filters = PackedStringArray("*.circuit")
 
+[node name="GateNameWindow" type="Control" parent="WiresInterface"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -20.0
+offset_right = 86.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_4wjdm")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WiresInterface/GateNameWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="LineEdit" parent="WiresInterface/GateNameWindow/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Nazwa"
+max_length = 10
+
+[node name="Button" type="Button" parent="WiresInterface/GateNameWindow/HBoxContainer"]
+layout_mode = 2
+text = "Zapisz"
+
 [node name="ObjectiveLayer" type="CanvasLayer" parent="."]
 visible = false
 
@@ -175,5 +211,6 @@ text = "Kliknij opcję \"KABEL\", przytrzymaj przycisk myszy na jednym końcu i 
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="Wires" method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="WiresInterface/SaveButtons" method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="WiresInterface/GateDialog" to="." method="_on_gate_dialog_file_selected"]
+[connection signal="pressed" from="WiresInterface/GateNameWindow/HBoxContainer/Button" to="WiresInterface/GateNameWindow" method="_on_button_pressed"]
 [connection signal="pressed" from="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/FinishButton" to="." method="_on_finish_button_pressed"]
 [connection signal="pressed" from="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/HelpButton" to="." method="_on_help_button_pressed"]

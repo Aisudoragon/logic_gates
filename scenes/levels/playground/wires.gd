@@ -25,7 +25,7 @@ var _gates: Dictionary[int, GateTile]
 var _custom_gates: Array[CustomGate]
 var _custom_gate_tiles: Dictionary[Vector2i, CustomGateTile]
 
-var is_sandbox: bool = false
+var is_sandbox: bool = true
 var dimension_limits: Array[Vector2i]
 var untouchable_tiles: Array[Vector2i]
 
@@ -107,10 +107,12 @@ func _draw() -> void:
 			green_lines.append_array(points)
 		else:
 			red_lines.append_array(points)
+	var gates: Dictionary[Vector2i, GateTile]
 	for grid_position in _gate_tiles:
 		if not _wire_tiles.has(grid_position):
 			continue
 		var points: PackedVector2Array
+		# Input
 		if _wire_tiles[grid_position].direction == EditorMode.Direction.RIGHT:
 			points = [
 				grid_position * 64 + Vector2i(58, 32),
@@ -122,6 +124,7 @@ func _draw() -> void:
 			else:
 				red_lines.append_array(points)
 				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color.RED)
+		# Output
 		if _wire_tiles[grid_position].direction == EditorMode.Direction.LEFT:
 			points = [
 				grid_position * 64 + Vector2i(0, 32),
@@ -142,6 +145,8 @@ func _draw() -> void:
 				grid_position * 64 + Vector2i(64, 32),
 			]
 			(green_lines if _wire_tiles[grid_position].state else red_lines).append_array(two_points)
+
+			gates[grid_position] = _gates[_gate_tiles[grid_position]]
 		if _gates[_gate_tiles[grid_position]].gate == EditorMode.Gate.STOP:
 			draw_circle(grid_position * 64 + Vector2i(32, 32), 12,
 					Color.GREEN if _wire_tiles[grid_position].state else Color.RED)
@@ -150,6 +155,8 @@ func _draw() -> void:
 				grid_position * 64 + Vector2i(0, 32),
 			]
 			(green_lines if _wire_tiles[grid_position].state else red_lines).append_array(two_points)
+
+			gates[grid_position] = _gates[_gate_tiles[grid_position]]
 
 	if not red_lines.is_empty():
 		draw_multiline(red_lines, Color.RED, 7)
@@ -201,9 +208,17 @@ func _draw() -> void:
 				Vector2i(high_number - absi(upper_left.x), (absi(upper_left.y) + absi(bottom_right.y) + 64))),
 				Color(Color.BLACK, 0.2))
 
-		#draw_string(ThemeDB.fallback_font, grid_position * 64 + Vector2i(2, 14),
-				#str(_wire_tiles[grid_position].update_id), HORIZONTAL_ALIGNMENT_LEFT, -1, 16,
-				#Color.BLACK)
+	for gate in gates:
+		if gates[gate].gate == EditorMode.Gate.START:
+			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
+					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15, Color.BLACK)
+			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
+					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100)
+		else:
+			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
+					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15, Color.BLACK)
+			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
+					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100)
 
 
 func place_wire() -> void:
@@ -374,6 +389,8 @@ func place_gate() -> void:
 			_gates[new_gate_id].inputs.append(gate_tiles[0])
 		_gate_tiles[gate_tiles[0]] = new_gate_id
 		_update_neighboring_wires(gate_tiles[0])
+		$"../WiresInterface/GateNameWindow".visible = true
+		$"../WiresInterface/GateNameWindow".edit_gate_name(_gates[new_gate_id])
 	else:
 		for tile in gate_tiles:
 			_gate_tiles[tile] = new_gate_id
@@ -562,10 +579,12 @@ func load_file(path: String) -> bool:
 		var outputs: Array[Vector2i]
 		for output: String in gates_dictionary[gate]["outputs"]:
 			outputs.append(str_to_var("Vector2i" + output))
+		var display_name: String = gates_dictionary[gate]["name"]
 
 		var new_gate: GateTile = GateTile.new(gate_type)
 		new_gate.inputs = inputs
 		new_gate.outputs = outputs
+		new_gate.display_name = display_name
 		_gates[gate_id] = new_gate
 
 		var min_pos: Vector2i
@@ -901,6 +920,7 @@ class GateTile:
 	var gate: EditorMode.Gate
 	var inputs: Array[Vector2i]
 	var outputs: Array[Vector2i]
+	var display_name: String
 
 
 	func _init(new_gate_type: EditorMode.Gate) -> void:
@@ -912,6 +932,7 @@ class GateTile:
 			"gate": gate,
 			"inputs": inputs,
 			"outputs": outputs,
+			"name": display_name
 		}
 
 
