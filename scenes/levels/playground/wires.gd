@@ -305,9 +305,7 @@ func update_signal(tile: Vector2i) -> void:
 	var wire_spread: Array[Vector2i] = [tile]
 	while not wire_spread.is_empty():
 		var check_tile: Vector2i = wire_spread.pop_front()
-		print("Testing %s" % check_tile)
 		if _gate_tiles.has(check_tile) and _wire_tiles[check_tile].direction == EditorMode.Direction.RIGHT:
-			print("Got gate")
 			return
 
 		if not _wire_tiles.has(check_tile) and not _wire_crossing_tiles.has(check_tile):

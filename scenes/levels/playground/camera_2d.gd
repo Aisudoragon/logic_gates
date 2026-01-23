@@ -15,6 +15,15 @@ func _process(delta: float) -> void:
 
 	var direction: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
 	position += camera_speed * direction / zoom * delta
+	var dimenions: Array[Vector2i] = ($"../Wires" as Wires).dimension_limits
+	if position.x < dimenions[0].x * 64:
+		position.x = dimenions[0].x * 64
+	elif position.x > dimenions[1].x * 64:
+		position.x = dimenions[1].x * 64
+	if position.y < dimenions[0].y * 64:
+		position.y = dimenions[0].y * 64
+	elif position.y > dimenions[1].y * 64:
+		position.y = dimenions[1].y * 64
 	if direction:
 		queue_redraw()
 

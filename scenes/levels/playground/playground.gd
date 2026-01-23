@@ -92,7 +92,7 @@ Na początek coś prostego.
 Na końcu każdego takiego streszczenia pojawi się tablica prawdy, która zostanie uzupełniona po wypróbowaniu rozwiązania.
 Przyszłe zadania [i]mogą[/i] wymagać, aby była wygenerowana w konkretny sposób."""
 			helpful_text.text = """Kliknij przycisk "KABEL", przytrzymaj lewy przycisk myszy na jednym końcu i przeciągnij do drugiego końca."""
-			wires.load_file("res://scenes/levels/level_1.json")
+			wires.load_file(Filepaths.file_path_to_level(1))
 		2:
 			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
 			wires_interface.enable_buttons(0b1100_0100_0000)
@@ -102,7 +102,7 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 [ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul]
 
 Możesz zauważyć, że po wykonaniu poprawnie zadania, zostanie wygenerowana tablica prawdy taka sama jak w rozpisie lekcji."""
-			wires.load_file("res://scenes/levels/level_2.json")
+			wires.load_file(Filepaths.file_path_to_level(2))
 			helpful_text.text = """Kliknij przycisk bramki "AND", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia."""
 		3:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
@@ -111,37 +111,37 @@ Możesz zauważyć, że po wykonaniu poprawnie zadania, zostanie wygenerowana ta
 
 Tutaj również prosto. Stwórz układ przy pomocy bramki.
 [ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul]"""
-			wires.load_file("res://scenes/levels/level_3.json")
+			wires.load_file(Filepaths.file_path_to_level(3))
 			helpful_text.text = """Kliknij przycisk bramki "AND", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia."""
 		4:
 			wires.level_dimension_limiter(Vector2i(-4, -3), Vector2i(8, 1))
 			wires_interface.enable_buttons(0b1100_1100_0000)
 			help_message[0] = ""
-			wires.load_file("res://scenes/levels/level_4.json")
+			wires.load_file(Filepaths.file_path_to_level(4))
 			helpful_text.text = ""
 		5:
 			wires.level_dimension_limiter(Vector2i(-4, -4), Vector2i(7, 2))
 			wires_interface.enable_buttons(0b1100_0010_0000)
 			help_message[0] = ""
-			wires.load_file("res://scenes/levels/level_5.json")
+			wires.load_file(Filepaths.file_path_to_level(5))
 			helpful_text.text = ""
 		6:
 			wires.level_dimension_limiter(Vector2i(-6, -4), Vector2i(9, 2))
 			wires_interface.enable_buttons(0b1100_0010_0000)
 			help_message[0] = ""
-			wires.load_file("res://scenes/levels/level_6.json")
+			wires.load_file(Filepaths.file_path_to_level(6))
 			helpful_text.text = ""
 		7, 8:
 			wires.level_dimension_limiter(Vector2i(-8, -4), Vector2i(11, 2))
 			wires_interface.enable_buttons(0b1100_0010_0000)
 			help_message[0] = ""
-			wires.load_file("res://scenes/levels/level_7_8.json")
+			wires.load_file(Filepaths.file_path_to_level(7))
 			helpful_text.text = ""
 		9:
 			wires.level_dimension_limiter(Vector2i(-5, -6), Vector2i(9, 5))
 			wires_interface.enable_buttons(0b1111_1111_1000)
 			help_message[0] = ""
-			wires.load_file("res://scenes/levels/level_9.json")
+			wires.load_file(Filepaths.file_path_to_level(9))
 			helpful_text.text = ""
 		_:
 			print("Invalid level selected. How?")
