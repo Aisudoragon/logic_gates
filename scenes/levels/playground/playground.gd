@@ -119,6 +119,7 @@ func load_level(id: int) -> void:
 	$WiresInterface/SaveButtons/BackButton.visible = false
 	$WiresInterface/SaveButtons/BackButton2.visible = true
 	$WiresInterface/SaveButtons/SaveButton.visible = false
+	$WiresInterface/SaveButtons/ResetLevelButton.visible = true
 	$ObjectiveLayer.visible = true
 	help_message.resize(3)
 	wires.is_sandbox = false
@@ -224,6 +225,7 @@ func reset_playground_state() -> void:
 	$WiresInterface/SaveButtons/BackButton.visible = true
 	$WiresInterface/SaveButtons/BackButton2.visible = false
 	$WiresInterface/SaveButtons/SaveButton.visible = true
+	$WiresInterface/SaveButtons/ResetLevelButton.visible = false
 	$ObjectiveLayer.visible = false
 
 
@@ -380,3 +382,8 @@ func _on_finish_button_pressed() -> void:
 		for gate in start_gates:
 			wires.set_output(gate, false)
 		return
+
+
+func _on_reset_level_button_pressed() -> void:
+	wires.clear()
+	wires.load_file(Filepaths.file_path_to_level(level_selected))
