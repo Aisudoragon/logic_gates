@@ -29,6 +29,15 @@ static func update_save_file() -> void:
 		printerr("Couldn't save progress to file")
 
 
+static func ensure_directory_available() -> void:
+	var dir: DirAccess = DirAccess.open("user://.levels")
+	if not dir:
+		var error: Error = DirAccess.make_dir_absolute("user://.levels")
+		if error:
+			printerr("Couldn't create directory")
+
+
+
 static func create_save() -> void:
 	update_save_file()
 

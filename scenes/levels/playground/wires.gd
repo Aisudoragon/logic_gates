@@ -752,7 +752,7 @@ func set_output(grid_position: Vector2i, state: bool) -> void:
 	wire_layer.set_start_gate(grid_position, state)
 
 
-func _on_file_dialog_file_selected(path: String) -> void:
+func save_circuit(path: String) -> void:
 	var placement_dict: Dictionary[Vector2i, Dictionary]
 	var success: bool
 	for tile in _wire_tiles:
@@ -782,6 +782,10 @@ func _on_file_dialog_file_selected(path: String) -> void:
 	var saved: bool = FileAccess.open(path, FileAccess.WRITE).store_string(JSON.stringify(save_dict, "\t"))
 	if not saved:
 		printerr("Couldn't save file: " + path)
+
+
+func _on_file_dialog_file_selected(path: String) -> void:
+	save_circuit(path)
 
 
 func update_save_preview() -> void:

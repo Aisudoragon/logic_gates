@@ -115,14 +115,14 @@ func propagade_file_path(path: String) -> void:
 
 
 func load_level(id: int) -> void:
+	level_selected = id
 	$WiresInterface/SaveButtons/BackButton.visible = false
 	$WiresInterface/SaveButtons/BackButton2.visible = true
 	$WiresInterface/SaveButtons/SaveButton.visible = false
 	$ObjectiveLayer.visible = true
 	help_message.resize(3)
 	wires.is_sandbox = false
-	level_selected = id
-	match id:
+	match level_selected:
 		1:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
 			wires_interface.enable_buttons(0b1100_0000_0000)
@@ -134,7 +134,6 @@ Na początek coś prostego.
 Na końcu każdego takiego streszczenia pojawi się tablica prawdy, która zostanie uzupełniona po wypróbowaniu rozwiązania.
 Przyszłe zadania [i]mogą[/i] wymagać, aby była wygenerowana w konkretny sposób."""
 			helpful_text.text = """Kliknij przycisk "KABEL", przytrzymaj lewy przycisk myszy na jednym końcu i przeciągnij do drugiego końca."""
-			wires.load_file(Filepaths.file_path_to_level(1))
 		2:
 			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
 			wires_interface.enable_buttons(0b1100_0100_0000)
@@ -144,7 +143,6 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 [ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul]
 
 Możesz zauważyć, że po wykonaniu poprawnie zadania, zostanie wygenerowana tablica prawdy taka sama jak w rozpisie lekcji."""
-			wires.load_file(Filepaths.file_path_to_level(2))
 			helpful_text.text = """Kliknij przycisk bramki "AND", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia."""
 		3:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
@@ -153,40 +151,36 @@ Możesz zauważyć, że po wykonaniu poprawnie zadania, zostanie wygenerowana ta
 
 Tutaj również prosto. Stwórz układ przy pomocy bramki.
 [ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul]"""
-			wires.load_file(Filepaths.file_path_to_level(3))
 			helpful_text.text = """Kliknij przycisk bramki "AND", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia."""
 		4:
 			wires.level_dimension_limiter(Vector2i(-4, -3), Vector2i(8, 1))
 			wires_interface.enable_buttons(0b1100_1100_0000)
 			help_message[0] = ""
-			wires.load_file(Filepaths.file_path_to_level(4))
 			helpful_text.text = ""
 		5:
 			wires.level_dimension_limiter(Vector2i(-4, -4), Vector2i(7, 2))
 			wires_interface.enable_buttons(0b1100_0010_0000)
 			help_message[0] = ""
-			wires.load_file(Filepaths.file_path_to_level(5))
 			helpful_text.text = ""
 		6:
 			wires.level_dimension_limiter(Vector2i(-6, -4), Vector2i(9, 2))
 			wires_interface.enable_buttons(0b1100_0010_0000)
 			help_message[0] = ""
-			wires.load_file(Filepaths.file_path_to_level(6))
 			helpful_text.text = ""
 		7, 8:
 			wires.level_dimension_limiter(Vector2i(-8, -4), Vector2i(11, 2))
 			wires_interface.enable_buttons(0b1100_0010_0000)
 			help_message[0] = ""
-			wires.load_file(Filepaths.file_path_to_level(7))
 			helpful_text.text = ""
 		9:
 			wires.level_dimension_limiter(Vector2i(-5, -6), Vector2i(9, 5))
 			wires_interface.enable_buttons(0b1111_1111_1000)
 			help_message[0] = ""
-			wires.load_file(Filepaths.file_path_to_level(9))
 			helpful_text.text = ""
 		_:
 			print("Invalid level selected. How?")
+
+	wires.load_file(Filepaths.file_path_to_level(level_selected))
 
 	wires.untouchable_tiles = wires._wire_tiles.keys()
 	for tile in wires._gate_tiles:
@@ -209,6 +203,10 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 		help_message[1] += "[cell border=white][b]%s[/b][/cell]" % cell
 
 	objective_text.text = help_message[0] + help_message[1] % "red"
+
+	var file_path: String = Filepaths.levels_dir_path(level_selected)
+	if FileAccess.file_exists(file_path):
+		wires.load_file(file_path)
 
 
 func reset_playground_state() -> void:
@@ -304,6 +302,10 @@ func _on_finish_button_pressed() -> void:
 			if not guesses[0] and guesses[1]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_1 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(1))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
@@ -374,12 +376,7 @@ func _on_finish_button_pressed() -> void:
 				objective_text.text = buffer_objective % "red"
 		_:
 			print("Trying to finish invalid level. How?")
-	#if not finish_button.text == "Ukończono!":
-		#for gate in start_gates:
-			#wires.set_output(gate, false)
-		#return
-	#print("Dobrze!")
-	#match level_selected:
-		#1:
-			#SaveProgress.level_1 = true
-			#SaveProgress.update_save_file()
+	if not finish_button.text == "Ukończono!":
+		for gate in start_gates:
+			wires.set_output(gate, false)
+		return
