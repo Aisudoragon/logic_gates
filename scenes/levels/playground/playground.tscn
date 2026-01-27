@@ -228,6 +228,7 @@ text = "Kliknij opcję \"KABEL\", przytrzymaj przycisk myszy na jednym końcu i 
 
 [connection signal="toggle_output" from="Wires/WireLayer" to="Wires" method="_on_wire_layer_toggle_output"]
 [connection signal="mode_selected" from="WiresInterface" to="." method="_on_wires_interface_mode_selected"]
+[connection signal="play_ui_sound" from="WiresInterface/SaveButtons" to="." method="send_signal_for_ui_sound"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/BackButton2" to="." method="_on_back_button_2_pressed"]
 [connection signal="pressed" from="WiresInterface/SaveButtons/ResetLevelButton" to="." method="_on_reset_level_button_pressed"]

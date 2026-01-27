@@ -2,6 +2,7 @@ class_name LevelSelectionMenu extends Control
 
 signal change_scene_main_menu()
 signal change_scene_level_selected(id: int)
+signal play_ui_sound()
 var lesson_selected: int = 0
 @export var lessonExplanation: RichTextLabel
 @export var proceedButton: Button
@@ -76,6 +77,8 @@ W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (konie
 	proceedButton.visible = true
 	lesson_selected = 1
 
+	play_ui_sound.emit()
+
 
 func _on_lesson_button_2_pressed() -> void:
 	lessonExplanation.text = """
@@ -113,6 +116,8 @@ Następne kilka zadań wprowadzą Cię po kolei w każdą, dostępną bramkę lo
 	proceedButton.visible = true
 	lesson_selected = 2
 
+	play_ui_sound.emit()
+
 
 func _on_lesson_button_3_pressed() -> void:
 	lessonExplanation.text = """
@@ -128,6 +133,8 @@ W tej lekcji sprawdzisz działanie bramki NOT."""
 	proceedButton.visible = true
 	lesson_selected = 3
 
+	play_ui_sound.emit()
+
 
 func _on_lesson_button_4_pressed() -> void:
 	lessonExplanation.text = """
@@ -140,6 +147,8 @@ Dodać cel zadania"""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 4
+
+	play_ui_sound.emit()
 
 
 func _on_lesson_button_5_pressed() -> void:
@@ -155,6 +164,8 @@ Dodać cel zadania"""
 	proceedButton.visible = true
 	lesson_selected = 5
 
+	play_ui_sound.emit()
+
 
 func _on_lesson_button_6_pressed() -> void:
 	lessonExplanation.text = """
@@ -168,6 +179,8 @@ Dodać cel zadania"""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 6
+
+	play_ui_sound.emit()
 
 
 func _on_lesson_button_7_pressed() -> void:
@@ -183,6 +196,8 @@ Dodać cel zadania"""
 	proceedButton.visible = true
 	lesson_selected = 7
 
+	play_ui_sound.emit()
+
 
 func _on_lesson_button_8_pressed() -> void:
 	lessonExplanation.text = """
@@ -197,6 +212,8 @@ Dodać cel zadania"""
 	proceedButton.visible = true
 	lesson_selected = 8
 
+	play_ui_sound.emit()
+
 
 func _on_lesson_button_9_pressed() -> void:
 	lessonExplanation.text = """
@@ -210,29 +227,13 @@ Dodać cel zadania"""
 	proceedButton.visible = true
 	lesson_selected = 9
 
+	play_ui_sound.emit()
+
 
 func _on_lesson_button_10_pressed() -> void:
 	pass # Replace with function body.
 
-
-func _on_lesson_button_11_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_lesson_button_12_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_lesson_button_13_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_lesson_button_14_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_lesson_button_15_pressed() -> void:
-	pass # Replace with function body.
+	play_ui_sound.emit()
 
 
 func _on_proceed_button_pressed() -> void:
@@ -244,6 +245,10 @@ func _on_introduction_button_pressed() -> void:
 	SaveProgress.introduction = true
 	SaveProgress.update_save_file()
 
+	play_ui_sound.emit()
+
 
 func _on_reintroduce_button_pressed() -> void:
 	introduction_visibility(true)
+
+	play_ui_sound.emit()

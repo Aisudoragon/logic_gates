@@ -10,6 +10,7 @@ class_name Playground extends Node2D
 
 signal change_scene_main_menu()
 signal change_scene_level_selection()
+signal play_ui_sound()
 
 var mode_selected: EditorMode.Mode = EditorMode.Mode.SELECT
 var gate_selected: EditorMode.Gate = EditorMode.Gate.AND
@@ -245,6 +246,8 @@ func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.G
 	else:
 		highlight = true
 
+	play_ui_sound.emit()
+
 
 func _on_back_button_pressed() -> void:
 	change_scene_main_menu.emit()
@@ -261,12 +264,18 @@ func _on_gate_dialog_file_selected(path: String) -> void:
 	wires.load_custom_gate(path)
 	highlight = true
 
+	play_ui_sound.emit()
+
 
 func _on_help_button_pressed() -> void:
 	helpful_text.visible = not helpful_text.visible
 
+	play_ui_sound.emit()
+
 
 func _on_finish_button_pressed() -> void:
+	play_ui_sound.emit()
+
 	var start_gates: Array[Vector2i]
 	var end_gates: Array[Vector2i]
 	for gate_id in wires._gates:
@@ -301,6 +310,8 @@ func _on_finish_button_pressed() -> void:
 			objective_text.text = buffer_objective + help_message[2]
 
 	buffer_objective = buffer_objective + help_message[2]
+
+	print(guesses)
 
 	match level_selected:
 		1:
@@ -400,7 +411,7 @@ func _on_finish_button_pressed() -> void:
 				finish_button.disabled = false
 				objective_text.text = buffer_objective % "red"
 		9:
-			if guesses[0] and not guesses[1] and not guesses[2] and guesses[3]:
+			if guesses[1] and not guesses[2] and not guesses[3]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
 				SaveProgress.level_9 = true
@@ -419,6 +430,15 @@ func _on_finish_button_pressed() -> void:
 		return
 
 
+func send_signal_for_ui_sound() -> void:
+	play_ui_sound.emit()
+
+
 func _on_reset_level_button_pressed() -> void:
 	wires.clear()
-	wires.load_file(Filepaths.file_path_to_level(level_selected))
+	if level_selected == 8:
+		wires.load_file(Filepaths.file_path_to_level(7))
+	else:
+		wires.load_file(Filepaths.file_path_to_level(level_selected))
+
+	play_ui_sound.emit()

@@ -4,6 +4,7 @@ extends Node
 @export var main_menu: Control
 @export var level_selection: LevelSelectionMenu
 @export var playground: Playground
+@export var audio_player: AudioStreamPlayer
 var loaded_file_path: String
 @onready var current_node: CanvasItem = main_menu
 
@@ -21,6 +22,8 @@ func _change_scene(new_node: CanvasItem) -> void:
 	current_node = new_node
 
 	background_image.visible = not playground.visible
+
+	play_ui_sound()
 
 
 func _on_change_scene_main_menu() -> void:
@@ -56,3 +59,12 @@ func _on_level_selection_menu_change_scene_level_selected(id: int) -> void:
 	playground.load_level(id)
 	playground.wires.is_sandbox = false
 	_change_scene(playground)
+
+
+func play_ui_sound() -> void:
+	audio_player.pitch_scale = randf_range(0.7, 1.0)
+	audio_player.play()
+
+
+func _on_play_ui_sound() -> void:
+	play_ui_sound()

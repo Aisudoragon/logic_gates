@@ -1,17 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://c0bc822k0vyym"]
+[gd_scene load_steps=7 format=3 uid="uid://c0bc822k0vyym"]
 
 [ext_resource type="Script" uid="uid://ba0y2kjqmgjte" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bqjqp3bx6wejp" path="res://scenes/main_menu/main_menu.tscn" id="2_h2yge"]
 [ext_resource type="Texture2D" uid="uid://5g1bbekhuer6" path="res://assets/resources/textures/background.png" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://vxc7l235kxff" path="res://scenes/levels/playground/playground.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://eycv6dmcnbo8" path="res://scenes/main_menu/level_selection_menu.tscn" id="4_lquwl"]
+[ext_resource type="AudioStream" uid="uid://c3vnduwm4t5a2" path="res://assets/click4.ogg" id="6_7mycd"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("background_image", "main_menu", "level_selection", "playground")]
+[node name="Main" type="Node" node_paths=PackedStringArray("background_image", "main_menu", "level_selection", "playground", "audio_player")]
 script = ExtResource("1_0xm2m")
 background_image = NodePath("Background")
 main_menu = NodePath("MainMenu")
 level_selection = NodePath("LevelSelectionMenu")
 playground = NodePath("Playground")
+audio_player = NodePath("AudioPlayer")
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.13333334)
@@ -27,10 +29,15 @@ visible = false
 [node name="Playground" parent="." instance=ExtResource("3_1bvp3")]
 visible = false
 
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_7mycd")
+
 [connection signal="change_scene_level_selection" from="MainMenu" to="." method="_on_change_scene_level_selection"]
-[connection signal="change_scene_options" from="MainMenu" to="." method="_on_change_scene_options"]
 [connection signal="change_scene_playground" from="MainMenu" to="." method="_on_change_scene_playground"]
+[connection signal="play_ui_sound" from="MainMenu" to="." method="_on_play_ui_sound"]
 [connection signal="change_scene_level_selected" from="LevelSelectionMenu" to="." method="_on_level_selection_menu_change_scene_level_selected"]
 [connection signal="change_scene_main_menu" from="LevelSelectionMenu" to="." method="_on_change_scene_main_menu"]
+[connection signal="play_ui_sound" from="LevelSelectionMenu" to="." method="_on_play_ui_sound"]
 [connection signal="change_scene_level_selection" from="Playground" to="." method="_on_change_scene_level_selection"]
 [connection signal="change_scene_main_menu" from="Playground" to="." method="_on_change_scene_main_menu"]
+[connection signal="play_ui_sound" from="Playground" to="." method="_on_play_ui_sound"]
