@@ -425,9 +425,14 @@ func _on_finish_button_pressed() -> void:
 		_:
 			print("Trying to finish invalid level. How?")
 	if not finish_button.text == "Ukończono!":
+		$LevelObjectiveAudioPlayer.stream = AudioStreamOggVorbis.load_from_file("res://assets/Sounds/error_006.ogg")
+		$LevelObjectiveAudioPlayer.play()
 		for gate in start_gates:
 			wires.set_output(gate, false)
 		return
+	else:
+		$LevelObjectiveAudioPlayer.stream = AudioStreamOggVorbis.load_from_file("res://assets/Sounds/confirmation_002.ogg")
+		$LevelObjectiveAudioPlayer.play()
 
 
 func send_signal_for_ui_sound() -> void:

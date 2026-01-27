@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://5g1bbekhuer6" path="res://assets/resources/textures/background.png" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://vxc7l235kxff" path="res://scenes/levels/playground/playground.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://eycv6dmcnbo8" path="res://scenes/main_menu/level_selection_menu.tscn" id="4_lquwl"]
-[ext_resource type="AudioStream" uid="uid://c3vnduwm4t5a2" path="res://assets/click4.ogg" id="6_7mycd"]
+[ext_resource type="AudioStream" uid="uid://c3vnduwm4t5a2" path="res://assets/Sounds/click4.ogg" id="6_7mycd"]
 
 [node name="Main" type="Node" node_paths=PackedStringArray("background_image", "main_menu", "level_selection", "playground", "audio_player")]
 script = ExtResource("1_0xm2m")

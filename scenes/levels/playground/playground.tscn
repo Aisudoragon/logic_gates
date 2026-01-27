@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://vxc7l235kxff"]
+[gd_scene load_steps=13 format=3 uid="uid://vxc7l235kxff"]
 
 [ext_resource type="Script" uid="uid://ddrbmlbq6sk85" path="res://scenes/levels/playground/playground.gd" id="1_ywb2o"]
 [ext_resource type="Script" uid="uid://bh6pxtvechol" path="res://scenes/levels/playground/grid_lines.gd" id="2_olfo7"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://d1utmmnuycrv6" path="res://scenes/levels/playground/save_buttons.gd" id="9_k3bpp"]
 [ext_resource type="Script" uid="uid://djeigehoc35yq" path="res://scenes/levels/playground/gate_name_window.gd" id="10_4wjdm"]
 [ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://my_button_theme.tres" id="10_xv8nk"]
+[ext_resource type="AudioStream" uid="uid://dtn05s8a8igqv" path="res://assets/Sounds/confirmation_002.ogg" id="12_rsso6"]
 
 [node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text", "finish_button", "camera")]
 script = ExtResource("1_ywb2o")
@@ -225,6 +226,9 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
 bbcode_enabled = true
 text = "Kliknij opcję \"KABEL\", przytrzymaj przycisk myszy na jednym końcu i przeciągnij do drugiego końca."
+
+[node name="LevelObjectiveAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_rsso6")
 
 [connection signal="toggle_output" from="Wires/WireLayer" to="Wires" method="_on_wire_layer_toggle_output"]
 [connection signal="mode_selected" from="WiresInterface" to="." method="_on_wires_interface_mode_selected"]
