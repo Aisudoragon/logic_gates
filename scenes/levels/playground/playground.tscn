@@ -184,10 +184,13 @@ text = "Zapisz"
 visible = false
 
 [node name="PanelContainer" type="PanelContainer" parent="ObjectiveLayer"]
+anchors_preset = 9
+anchor_bottom = 1.0
 offset_left = 28.0
 offset_top = 31.0
 offset_right = 294.0
-offset_bottom = 504.0
+offset_bottom = -144.0
+grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="ObjectiveLayer/PanelContainer"]
 layout_mode = 2

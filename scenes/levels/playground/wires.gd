@@ -473,8 +473,6 @@ func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) ->
 				continue
 			_callable_queue.push_back(Callable(self, &"_spread_wire_through_crossing").bind(
 					next_tile_position, state, update_id, directions_dict[direction]))
-		else:
-			push_error("%d direction is set but nothing is in %s" % [direction, next_tile_position])
 
 	if _gate_tiles.has(grid_position):
 		for output: Vector2i in _gates[_gate_tiles[grid_position]].outputs:

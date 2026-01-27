@@ -440,6 +440,7 @@ func send_signal_for_ui_sound() -> void:
 
 
 func _on_reset_level_button_pressed() -> void:
+	load_level(level_selected)
 	wires.clear()
 	if level_selected == 8:
 		wires.load_file(Filepaths.file_path_to_level(7))
