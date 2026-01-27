@@ -1,5 +1,6 @@
 extends Node
 
+@export var background_image: Sprite2D
 @export var main_menu: Control
 @export var level_selection: LevelSelectionMenu
 @export var playground: Playground
@@ -24,6 +25,8 @@ func _change_scene(new_node: CanvasItem) -> void:
 	new_node.visible = true
 
 	current_node = new_node
+
+	background_image.visible = not playground.visible
 
 
 func _on_change_scene_main_menu() -> void:
