@@ -136,20 +136,15 @@ filters = PackedStringArray("*.circuit")
 [node name="GateNameWindow" type="Control" parent="WiresInterface"]
 visible = false
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -86.0
-offset_top = -20.0
-offset_right = 86.0
-offset_bottom = 20.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_4wjdm")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="WiresInterface/GateNameWindow"]
+[node name="PanelContainer" type="PanelContainer" parent="WiresInterface/GateNameWindow"]
+modulate = Color(1, 1, 1, 0.61960787)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -157,15 +152,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="HBoxContainer" type="HBoxContainer" parent="WiresInterface/GateNameWindow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -247.0
+offset_top = -37.5
+offset_right = 247.0
+offset_bottom = 37.5
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="TextEdit" type="LineEdit" parent="WiresInterface/GateNameWindow/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 48
 placeholder_text = "Nazwa"
 max_length = 10
 
 [node name="Button" type="Button" parent="WiresInterface/GateNameWindow/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("10_xv8nk")
+theme_override_font_sizes/font_size = 48
 text = "Zapisz"
 
 [node name="ObjectiveLayer" type="CanvasLayer" parent="."]
