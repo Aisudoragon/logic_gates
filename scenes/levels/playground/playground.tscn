@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://vxc7l235kxff"]
+[gd_scene load_steps=12 format=3 uid="uid://vxc7l235kxff"]
 
 [ext_resource type="Script" uid="uid://ddrbmlbq6sk85" path="res://scenes/levels/playground/playground.gd" id="1_ywb2o"]
 [ext_resource type="Script" uid="uid://bh6pxtvechol" path="res://scenes/levels/playground/grid_lines.gd" id="2_olfo7"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ba0bl16fuws1s" path="res://scenes/interfaces/wires_interface.tscn" id="7_dhyt4"]
 [ext_resource type="Script" uid="uid://d1utmmnuycrv6" path="res://scenes/levels/playground/save_buttons.gd" id="9_k3bpp"]
 [ext_resource type="Script" uid="uid://djeigehoc35yq" path="res://scenes/levels/playground/gate_name_window.gd" id="10_4wjdm"]
+[ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://my_button_theme.tres" id="10_xv8nk"]
 
 [node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text", "finish_button", "camera")]
 script = ExtResource("1_ywb2o")
@@ -72,28 +73,33 @@ script = ExtResource("9_k3bpp")
 
 [node name="BackButton" type="Button" parent="WiresInterface/SaveButtons"]
 layout_mode = 2
+theme = ExtResource("10_xv8nk")
 theme_override_font_sizes/font_size = 32
 text = "Wyjście (bez zapisywania)"
 
 [node name="BackButton2" type="Button" parent="WiresInterface/SaveButtons"]
 visible = false
 layout_mode = 2
+theme = ExtResource("10_xv8nk")
 theme_override_font_sizes/font_size = 32
 text = "Powrót"
 
 [node name="ResetLevelButton" type="Button" parent="WiresInterface/SaveButtons"]
 visible = false
 layout_mode = 2
+theme = ExtResource("10_xv8nk")
 theme_override_font_sizes/font_size = 32
 text = "Zresetuj"
 
 [node name="SaveButton" type="Button" parent="WiresInterface/SaveButtons"]
 layout_mode = 2
+theme = ExtResource("10_xv8nk")
 theme_override_font_sizes/font_size = 32
 text = "Zapisz"
 
 [node name="SaveAsButton" type="Button" parent="WiresInterface/SaveButtons"]
 layout_mode = 2
+theme = ExtResource("10_xv8nk")
 theme_override_font_sizes/font_size = 32
 text = "Zapisz jako"
 
@@ -159,6 +165,7 @@ max_length = 10
 
 [node name="Button" type="Button" parent="WiresInterface/GateNameWindow/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("10_xv8nk")
 text = "Zapisz"
 
 [node name="ObjectiveLayer" type="CanvasLayer" parent="."]

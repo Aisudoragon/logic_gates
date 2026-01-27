@@ -6,6 +6,15 @@ var lesson_selected: int = 0
 @export var lessonExplanation: RichTextLabel
 @export var proceedButton: Button
 
+@onready var lesson_button_2: Button = %LessonButton2
+@onready var lesson_button_3: Button = %LessonButton3
+@onready var lesson_button_4: Button = %LessonButton4
+@onready var lesson_button_5: Button = %LessonButton5
+@onready var lesson_button_6: Button = %LessonButton6
+@onready var lesson_button_7: Button = %LessonButton7
+@onready var lesson_button_8: Button = %LessonButton8
+@onready var lesson_button_9: Button = %LessonButton9
+@onready var lesson_button_10: Button = %LessonButton10
 
 func introduction_visibility(visibility: bool) -> void:
 	($Introduction as ColorRect).visible = visibility

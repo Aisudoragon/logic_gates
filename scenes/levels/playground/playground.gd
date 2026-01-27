@@ -181,7 +181,10 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 		_:
 			print("Invalid level selected. How?")
 
-	wires.load_file(Filepaths.file_path_to_level(level_selected))
+	if level_selected == 8:
+		wires.load_file(Filepaths.file_path_to_level(7))
+	else:
+		wires.load_file(Filepaths.file_path_to_level(level_selected))
 
 	wires.untouchable_tiles = wires._wire_tiles.keys()
 	for tile in wires._gate_tiles:
@@ -316,6 +319,10 @@ func _on_finish_button_pressed() -> void:
 			if not guesses[0] and not guesses[1] and not guesses[2] and guesses[3]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_2 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(2))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
@@ -324,6 +331,10 @@ func _on_finish_button_pressed() -> void:
 			if guesses[0] and not guesses[1]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_3 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(3))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
@@ -332,6 +343,10 @@ func _on_finish_button_pressed() -> void:
 			if guesses[0] and guesses[1] and guesses[2] and not guesses[3]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_4 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(4))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
@@ -340,6 +355,10 @@ func _on_finish_button_pressed() -> void:
 			if not guesses[0] and guesses[1] and guesses[2] and guesses[3]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_5 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(5))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
@@ -348,6 +367,10 @@ func _on_finish_button_pressed() -> void:
 			if guesses[0] and not guesses[1] and not guesses[2] and not guesses[3]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_6 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(6))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
@@ -356,6 +379,10 @@ func _on_finish_button_pressed() -> void:
 			if not guesses[0] and guesses[1] and guesses[2] and not guesses[3]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_7 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(7))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
@@ -364,6 +391,10 @@ func _on_finish_button_pressed() -> void:
 			if guesses[0] and not guesses[1] and not guesses[2] and guesses[3]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_8 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(8))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
@@ -372,6 +403,10 @@ func _on_finish_button_pressed() -> void:
 			if guesses[0] and not guesses[1] and not guesses[2] and guesses[3]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_9 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(9))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false

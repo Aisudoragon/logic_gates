@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://eycv6dmcnbo8"]
+[gd_scene load_steps=3 format=3 uid="uid://eycv6dmcnbo8"]
 
 [ext_resource type="Script" uid="uid://dhr6wvdo7srs7" path="res://scenes/main_menu/level_selection_menu.gd" id="1_d8w7r"]
+[ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://my_button_theme.tres" id="2_hvryv"]
 
 [node name="LevelSelectionMenu" type="Control" node_paths=PackedStringArray("lessonExplanation", "proceedButton")]
 layout_mode = 3
@@ -38,6 +39,7 @@ theme_override_constants/margin_bottom = 5
 
 [node name="Back" type="Button" parent="LevelSelection/HBoxContainer/PanelContainer2/MarginContainer"]
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 theme_override_font_sizes/font_size = 38
 text = "Wróć"
 
@@ -87,6 +89,7 @@ size_flags_horizontal = 3
 [node name="ReintroduceButton" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ReintroduceButton"]
 layout_mode = 1
@@ -112,6 +115,7 @@ vertical_alignment = 1
 [node name="LessonButton1" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton1"]
 layout_mode = 1
@@ -134,8 +138,10 @@ text = "[font_size=22]1. Układ scalony[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton2" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer2" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton2"]
 layout_mode = 1
@@ -158,8 +164,10 @@ text = "[font_size=22]2.1. Bramka AND[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton3" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton3"]
 layout_mode = 1
@@ -182,8 +190,10 @@ text = "[font_size=22]2.2. Bramka NOT[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton4" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton4"]
 layout_mode = 1
@@ -206,8 +216,10 @@ text = "[font_size=22]2.3. Bramka NAND[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton5" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton5"]
 layout_mode = 1
@@ -230,8 +242,10 @@ text = "[font_size=22]2.4. Bramka OR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton6" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton6"]
 layout_mode = 1
@@ -254,8 +268,10 @@ text = "[font_size=22]2.5. Bramka NOR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton7" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton7"]
 layout_mode = 1
@@ -278,8 +294,10 @@ text = "[font_size=22]2.6. Bramka XOR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton8" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton8"]
 layout_mode = 1
@@ -302,8 +320,10 @@ text = "[font_size=22]2.7. Bramka XNOR[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton9" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton9"]
 layout_mode = 1
@@ -326,8 +346,10 @@ text = "[font_size=22]3. SR Latch[/font_size]"
 vertical_alignment = 1
 
 [node name="LessonButton10" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 disabled = true
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton10"]
@@ -348,132 +370,6 @@ size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
 text = "[font_size=22]...[/font_size]"
-vertical_alignment = 1
-
-[node name="LessonButton11" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-disabled = true
-
-[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton11"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton11/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 1
-bbcode_enabled = true
-text = "[font_size=22]6. Hazard[/font_size]"
-vertical_alignment = 1
-
-[node name="LessonButton12" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-disabled = true
-
-[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton12"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton12/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 1
-bbcode_enabled = true
-text = "[font_size=22]7. Dodawanie dwóch bitów[/font_size]"
-vertical_alignment = 1
-
-[node name="LessonButton13" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-disabled = true
-
-[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton13"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton13/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 1
-bbcode_enabled = true
-text = "[font_size=22]8. Przerzutnik[/font_size]"
-vertical_alignment = 1
-
-[node name="LessonButton14" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-disabled = true
-
-[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton14"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton14/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 1
-bbcode_enabled = true
-text = "[font_size=22]8.1. Przechowywanie danych[/font_size]"
-vertical_alignment = 1
-
-[node name="LessonButton15" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-disabled = true
-
-[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton15"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton15/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 1
-bbcode_enabled = true
-text = "[font_size=22]9. Automaty Moore'a
-i Mealy'ego[/font_size]"
 vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer"]
@@ -511,10 +407,12 @@ vertical_alignment = 1
 [node name="ProceedButton" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/MarginContainer/Panel"]
 visible = false
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 theme_override_font_sizes/font_size = 24
 text = "Przejdź do zadania"
 
 [node name="Introduction" type="ColorRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -575,6 +473,7 @@ layout_mode = 2
 
 [node name="IntroductionButton" type="Button" parent="Introduction/VBoxContainer/PanelContainer3"]
 layout_mode = 2
+theme = ExtResource("2_hvryv")
 text = "Zrozumiano"
 
 [connection signal="pressed" from="LevelSelection/HBoxContainer/PanelContainer2/MarginContainer/Back" to="." method="_on_back_pressed"]
@@ -589,10 +488,5 @@ text = "Zrozumiano"
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton8" to="." method="_on_lesson_button_8_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton9" to="." method="_on_lesson_button_9_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton10" to="." method="_on_lesson_button_10_pressed"]
-[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton11" to="." method="_on_lesson_button_11_pressed"]
-[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton12" to="." method="_on_lesson_button_12_pressed"]
-[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton13" to="." method="_on_lesson_button_13_pressed"]
-[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton14" to="." method="_on_lesson_button_14_pressed"]
-[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton15" to="." method="_on_lesson_button_15_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/MarginContainer/Panel/ProceedButton" to="." method="_on_proceed_button_pressed"]
 [connection signal="pressed" from="Introduction/VBoxContainer/PanelContainer3/IntroductionButton" to="." method="_on_introduction_button_pressed"]
