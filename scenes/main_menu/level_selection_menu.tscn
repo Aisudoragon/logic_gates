@@ -572,7 +572,6 @@ text = "Twoja aplikacja do \"Projektowanie układów scalonych\" została przyj�
 
 [node name="PanelContainer3" type="PanelContainer" parent="Introduction/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
 
 [node name="IntroductionButton" type="Button" parent="Introduction/VBoxContainer/PanelContainer3"]
 layout_mode = 2

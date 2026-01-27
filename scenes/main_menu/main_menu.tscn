@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://hnth455chur7" path="res://scenes/main_menu/main_menu.gd" id="1_fsom3"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("sandbox_button", "NewBoardButton", "LoadBoardButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,6 +10,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fsom3")
+sandbox_button = NodePath("MainButtons/HBoxContainer/SandboxButton")
+NewBoardButton = NodePath("MainButtons/HBoxContainer/NewBoardButton")
+LoadBoardButton = NodePath("MainButtons/HBoxContainer/LoadBoardButton")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
@@ -33,9 +36,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -147.0
+offset_left = -238.0
 offset_top = -56.0
-offset_right = 147.0
+offset_right = 238.0
 offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -47,10 +50,29 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Zadania"
 
-[node name="SandboxButton" type="Button" parent="MainButtons"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainButtons"]
 layout_mode = 2
+alignment = 1
+
+[node name="SandboxButton" type="Button" parent="MainButtons/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 48
 text = "Piaskownica"
+
+[node name="NewBoardButton" type="Button" parent="MainButtons/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 48
+text = "Nowa"
+
+[node name="LoadBoardButton" type="Button" parent="MainButtons/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 48
+text = "Wczytaj"
 
 [node name="OptionsButton" type="Button" parent="MainButtons"]
 visible = false
@@ -62,32 +84,6 @@ text = "Opcje"
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Wyjście"
-
-[node name="SandboxButtons" type="VBoxContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 189.0
-offset_top = -23.0
-offset_right = 375.0
-offset_bottom = 131.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="NewBoardButton" type="Button" parent="SandboxButtons"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Nowa"
-
-[node name="LoadBoardButton" type="Button" parent="SandboxButtons"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Wczytaj"
 
 [node name="LoadBoardDialog" type="FileDialog" parent="."]
 oversampling_override = 1.0
@@ -103,9 +99,9 @@ favorites_enabled = false
 recent_list_enabled = false
 
 [connection signal="pressed" from="MainButtons/LessonsButton" to="." method="_on_lessons_button_pressed"]
-[connection signal="pressed" from="MainButtons/SandboxButton" to="." method="_on_sandbox_button_pressed"]
+[connection signal="pressed" from="MainButtons/HBoxContainer/SandboxButton" to="." method="_on_sandbox_button_pressed"]
+[connection signal="pressed" from="MainButtons/HBoxContainer/NewBoardButton" to="." method="_on_new_board_button_pressed"]
+[connection signal="pressed" from="MainButtons/HBoxContainer/LoadBoardButton" to="." method="_on_load_board_button_pressed"]
 [connection signal="pressed" from="MainButtons/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="MainButtons/ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="pressed" from="SandboxButtons/NewBoardButton" to="." method="_on_new_board_button_pressed"]
-[connection signal="pressed" from="SandboxButtons/LoadBoardButton" to="." method="_on_load_board_button_pressed"]
 [connection signal="file_selected" from="LoadBoardDialog" to="." method="_on_load_board_dialog_file_selected"]
