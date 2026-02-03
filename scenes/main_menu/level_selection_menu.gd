@@ -36,8 +36,8 @@ Na sam początek przypomnimy w skrócie algebrę Boole'a.
 [ul]Dana zmienna (np. [i]a[/i]) może mieć tylko jedną z dwóch wartości: 0 lub 1.[/ul]
 [ul]1 jest prawdą, 0 jest fałszem.[/ul]
 Występują w niej również działania takie jak:
-[ul][char=2227] [char=2014] alternatywa (lub),[/ul]
-[ul][char=2228] [char=2014] koniunkcja (i),[/ul]
+[ul][char=2228] [char=2014] alternatywa (lub),[/ul]
+[ul][char=2227] [char=2014] koniunkcja (i),[/ul]
 [ul][char=AC] [char=2014] negacja (nie).[/ul]
 Każda operacja będzie dokładniej wyjaśniona w swoich lekcjach. Jest to niezwykle ważny temat, który jest nieodzłączną częścią układów.
 
@@ -82,7 +82,7 @@ W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (konie
 
 func _on_lesson_button_2_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Bramka AND[/center][/font_size]
+[font_size=28][center]Bramka AND   [img=64]res://assets/resources/textures/gates/and_gate.png[/img][/center][/font_size]
 [hr]
 Pora skorzystać z pierwszej bramki, AND (i).
 [i]Jeśli nie wiesz jak działają bramki logiczne to ta lekcja wprowadzi Cię w trybie ekspresowym w ich działanie.[/i]
@@ -93,7 +93,7 @@ Można to przedstawić na tablicy prawdy w taki sposób:
 [center][table=3,center]
 [cell border=white padding=1,0,1,5][b] A [/b][/cell]
 [cell border=white padding=1,0,1,5][b] B [/b][/cell]
-[cell border=white padding=1,0,1,5][b]Wyjście[/b][/cell]
+[cell border=white padding=1,0,1,5][b]A[char=2227]B[/b][/cell]
 [cell border=white padding=1,0,1,5]0[/cell]
 [cell border=white padding=1,0,1,5]0[/cell]
 [cell border=white padding=1,0,1,5]0[/cell]
@@ -121,11 +121,13 @@ Następne kilka zadań wprowadzą Cię po kolei w każdą, dostępną bramkę lo
 
 func _on_lesson_button_3_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Bramka NOT[/center][/font_size]
+[font_size=28][center]Bramka NOT   [img=64]res://assets/resources/textures/not_gate_button.png[/img][/center][/font_size]
 [hr]
 Następna bramka, NOT (nie).
 
 Ta bramka posiada jedno wejście i jedno wyjście. Ta bramka służy do odwrócenia sygnału. To znaczy, jeśli na wejściu jest sygnał 0, to na wyjściu jest sygnał 1 i na odwrót.
+
+[i]Tablica prawdy będzie przedstawiona w poziomie po poprawnym wykonaniu.[/i]
 
 [hr]
 W tej lekcji sprawdzisz działanie bramki NOT."""
@@ -138,12 +140,38 @@ W tej lekcji sprawdzisz działanie bramki NOT."""
 
 func _on_lesson_button_4_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Bramka NAND[/center][/font_size]
+[font_size=28][center]Bramka NAND   [img=64]res://assets/resources/textures/gates/nand_gate.png[/img][/center][/font_size]
 [hr]
-Dodać opis zadania.
+W tym zadaniu użyjesz kombinacji dwóch wcześniejszych bramek.
+
+Nazwa NAND jest połączeniem [b]N[/b]OT, oraz [b]AND[/b]. Z tej nazwy można wywnioskować, że bramka ma odwrotny efekt od bramki AND. To znaczy, że wyjście będzie pozytywne tylko wtedy gdy obydwa wejścia NIE będą pozytywne.
+
+[center][table=3,center]
+[cell border=white padding=1,0,1,5][b] A [/b][/cell]
+[cell border=white padding=1,0,1,5][b] B [/b][/cell]
+[cell border=white padding=1,0,1,5][b]A[char=2227]B[/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[/table] Oraz odwrócenie wyniku: [table=1,center]
+[cell border=white padding=1,0,1,5][b][char=AC](A[char=2227]B)[/b][/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[/table][/center]
 
 [hr]
-Dodać cel zadania"""
+Tutaj połączysz bramki ze sobą kablem. Takie połączenia będą rosnąć z kolejnymi poziomami."""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 4
@@ -153,13 +181,33 @@ Dodać cel zadania"""
 
 func _on_lesson_button_5_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Bramka OR[/center][/font_size]
+[font_size=28][center]Bramka OR   [img=64]res://assets/resources/textures/gates/or_gate.png[/img][/center][/font_size]
 [hr]
-Dodać opis zadania.
-Dostajesz NAND do zrobienia, lmao.
+Teraz znając działanie NAND, zrozumienie następnych bramek będzie wymagać stworzenia układów, w których do użycia będzie dostępna tylko i wyłącznie NAND.
+
+Tak więc pierwszą bramkę, którą należy skonstruować to OR. Wyjście z tej bramki jest pozytywne, jeśli chociaż jedno wejście jest pozytywne.
+Tablica prawdy dla tej bramki wygląda następująco:
+
+[center][table=3,center]
+[cell border=white padding=1,0,1,5][b] A [/b][/cell]
+[cell border=white padding=1,0,1,5][b] B [/b][/cell]
+[cell border=white padding=1,0,1,5][b]A[char=2228]B[/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[/table][/center]
 
 [hr]
-Dodać cel zadania"""
+Należy stworzyć układ, który stworzy powyższą tablicę."""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 5
@@ -169,13 +217,38 @@ Dodać cel zadania"""
 
 func _on_lesson_button_6_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Bramka NOR[/center][/font_size]
+[font_size=28][center]Bramka NOR   [img=64]res://assets/resources/textures/gates/nor_gate.png[/img][/center][/font_size]
 [hr]
-Dodać opis zadania.
-Dostajesz NAND do zrobienia, lmao.
+Tutaj zasada działa jest podobna jak w NAND. Ta bramka jest połączeniem [b]N[/b]OT i [b]OR[/b].
+Czyli wyjście jest pozytywne tylko i wyłącznie kiedy żadne wejście nie jest pozytywne.
+Dla przypomnienia:
+
+[center][table=3,center]
+[cell border=white padding=1,0,1,5][b] A [/b][/cell]
+[cell border=white padding=1,0,1,5][b] B [/b][/cell]
+[cell border=white padding=1,0,1,5][b]A[char=2228]B[/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[/table] Odwrócenie wyniku: [table=1,center]
+[cell border=white padding=1,0,1,5][b][char=AC](A[char=2228]B)[/b][/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[/table][/center]
 
 [hr]
-Dodać cel zadania"""
+Stwórz tablicę prawdy dla bramki NOR."""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 6
@@ -185,13 +258,36 @@ Dodać cel zadania"""
 
 func _on_lesson_button_7_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Bramka XOR[/center][/font_size]
+[font_size=28][center]Bramka XOR   [img=64]res://assets/resources/textures/gates/xor_gate.png[/img][/center][/font_size]
 [hr]
-Dodać opis zadania.
-Dostajesz NAND do zrobienia, lmao.
+XOR jest kombinacją wyrażenia algebraicznego. Jest wyrażana symbolem [b][char=22BB][/b]. Jej pełne wyrażenie można zapisać jako:
+	A[char=22BB]B = (A [char=2227] [char=AC]B) [char=2228] ([char=AC]A [char=2227] B), albo
+	A[char=22BB]B = (A [char=2228] B) [char=2227] [char=AC](A [char=2227] B).
+
+Prościej tłumacząc: Wyjście jest pozytywne tylko i wyłącznie kiedy jedno z wejść jest pozytywne.
+
+[center][table=3,center]
+[cell border=white padding=1,0,1,5][b] A [/b][/cell]
+[cell border=white padding=1,0,1,5][b] B [/b][/cell]
+[cell border=white padding=1,0,1,5][b]A[char=22BB]B[/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[/table][/center]
+
 
 [hr]
-Dodać cel zadania"""
+Stwórz tablicę prawdy dla bramki XOR.
+Tym razem do wykonania zadania będzie dostępne więcej miejsca."""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 7
@@ -201,13 +297,37 @@ Dodać cel zadania"""
 
 func _on_lesson_button_8_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Bramka XNOR[/center][/font_size]
+[font_size=28][center]Bramka XNOR   [img=64]res://assets/resources/textures/gates/xnor_gate.png[/img][/center][/font_size]
 [hr]
-Dodać opis zadania.
-Dostajesz NAND do zrobienia, lmao.
+Podobna sytuacja jak z bramkami NAND i NOR, czyli połączenie [b]N[/b]OT i [b]XOR[/b].
+To znaczy, żeby wyjście było pozytywne, obydwa wejścia muszą mieć ten sam sygnał. Nie ważne w jakim stanie.
+
+[center][table=3,center]
+[cell border=white padding=1,0,1,5][b] A [/b][/cell]
+[cell border=white padding=1,0,1,5][b] B [/b][/cell]
+[cell border=white padding=1,0,1,5][b]A[char=22BB]B[/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[/table]		[table=1,center]
+[cell border=white padding=1,0,1,5][b][char=AC](A[char=22BB]B)[/b][/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[/table][/center]
 
 [hr]
-Dodać cel zadania"""
+Stwórz tablicę prawdy dla bramki XNOR."""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 8

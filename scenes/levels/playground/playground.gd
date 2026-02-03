@@ -115,7 +115,7 @@ func propagade_file_path(path: String) -> void:
 	$WiresInterface/SaveButtons.save_path = path
 
 
-func load_level(id: int) -> void:
+func load_level(id: int, reset: bool = false) -> void:
 	level_selected = id
 	$WiresInterface/SaveButtons/BackButton.visible = false
 	$WiresInterface/SaveButtons/BackButton2.visible = true
@@ -157,7 +157,11 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 		4:
 			wires.level_dimension_limiter(Vector2i(-4, -3), Vector2i(8, 1))
 			wires_interface.enable_buttons(0b1100_1100_0000)
-			help_message[0] = ""
+			help_message[0] = """[center][font_size=28]Zadanie 2.3[/font_size][/center]
+
+Połącz obydwie bramki w układ.
+[ul][color=%s]Wyjście AND ma być odwrócone.[/color][/ul]
+Kolejność bramek ma znaczenie!"""
 			helpful_text.text = ""
 		5:
 			wires.level_dimension_limiter(Vector2i(-4, -4), Vector2i(7, 2))
@@ -182,10 +186,7 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 		_:
 			print("Invalid level selected. How?")
 
-	if level_selected == 8:
-		wires.load_file(Filepaths.file_path_to_level(7))
-	else:
-		wires.load_file(Filepaths.file_path_to_level(level_selected))
+	wires.load_file(Filepaths.file_path_to_level(level_selected))
 
 	wires.untouchable_tiles = wires._wire_tiles.keys()
 	for tile in wires._gate_tiles:
@@ -210,7 +211,7 @@ Tutaj również prosto. Stwórz układ przy pomocy bramki.
 	objective_text.text = help_message[0] + help_message[1] % "red"
 
 	var file_path: String = Filepaths.levels_dir_path(level_selected)
-	if FileAccess.file_exists(file_path):
+	if FileAccess.file_exists(file_path) and not reset:
 		wires.load_file(file_path)
 
 
@@ -429,6 +430,7 @@ func _on_finish_button_pressed() -> void:
 		$LevelObjectiveAudioPlayer.play()
 		for gate in start_gates:
 			wires.set_output(gate, false)
+			await wires.queue_cleared
 		return
 	else:
 		$LevelObjectiveAudioPlayer.stream = AudioStreamOggVorbis.load_from_file("res://assets/Sounds/confirmation_002.ogg")
@@ -440,11 +442,7 @@ func send_signal_for_ui_sound() -> void:
 
 
 func _on_reset_level_button_pressed() -> void:
-	load_level(level_selected)
 	wires.clear()
-	if level_selected == 8:
-		wires.load_file(Filepaths.file_path_to_level(7))
-	else:
-		wires.load_file(Filepaths.file_path_to_level(level_selected))
+	load_level(level_selected, true)
 
 	play_ui_sound.emit()
