@@ -25,6 +25,8 @@ var _gates: Dictionary[int, GateTile]
 var _custom_gates: Array[CustomGate]
 var _custom_gate_tiles: Dictionary[Vector2i, CustomGateTile]
 
+var _custom_gates_names: Dictionary[Vector2i, String]
+
 var is_sandbox: bool = true
 var dimension_limits: Array[Vector2i]
 var untouchable_tiles: Array[Vector2i]
@@ -211,14 +213,24 @@ func _draw() -> void:
 	for gate in gates:
 		if gates[gate].gate == EditorMode.Gate.START:
 			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
-					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15, Color.BLACK)
+					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
+					Color.BLACK)
 			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
 					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100)
 		else:
 			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
-					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15, Color.BLACK)
+					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
+					Color.BLACK)
 			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
 					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100)
+
+	draw_set_transform(Vector2.ZERO, deg_to_rad(90))
+	for placement in _custom_gates_names:
+		var rotated_adjusted_placement: Vector2i = (Vector2i(placement.y, -placement.x) + Vector2i.UP) * 64 + Vector2i(-20, 5)
+		draw_string_outline(ThemeDB.fallback_font, rotated_adjusted_placement,
+				_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15, Color.BLACK)
+		draw_string(ThemeDB.fallback_font, rotated_adjusted_placement,
+				_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_RIGHT, 100)
 
 
 func place_wire() -> void:
@@ -377,7 +389,6 @@ func place_gate() -> void:
 		var cell_atlas_coords: Vector2i = highlight_layer.get_cell_atlas_coords(tile)
 		gate_data_cells[tile] = {"source_id": cell_source_id, "atlas_coords": cell_atlas_coords}
 
-	# HACK change it later to soomething that supports custom gates
 	var new_gate_id: int = _next_free_gate_id
 	_gates[new_gate_id] = GateTile.new(highlight_layer.get_cell_source_id(gate_tiles[0]) - 2)
 	if gate_tiles.size() == 1:
@@ -731,6 +742,8 @@ func place_custom_gate(path: String) -> void:
 	for output in range(outputs.size()):
 		new_custom_gate.exits[gate_outputs[output]] = outputs[output]
 
+	_custom_gates_names[inputs[0]] = path.get_file().trim_suffix(".circuit")
+
 
 func level_dimension_limiter(left_up: Vector2i, bottom_right: Vector2i) -> void:
 	dimension_limits = [left_up, bottom_right]
@@ -828,6 +841,8 @@ func delete_stuff() -> void:
 				keys_to_remove.append(gate_position)
 		for key in keys_to_remove:
 			_gate_tiles.erase(key)
+			if _custom_gates_names.has(key):
+				_custom_gates_names.erase(key)
 
 			var had_wire: bool = _wire_tiles.erase(key)
 			if had_wire:
@@ -872,6 +887,7 @@ func clear() -> void:
 	_gates.clear()
 	_custom_gates.clear()
 	_custom_gate_tiles.clear()
+	_custom_gates_names.clear()
 
 	wire_layer.clear()
 	highlight_layer.clear()

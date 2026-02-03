@@ -134,7 +134,7 @@ display_mode = 1
 access = 1
 filters = PackedStringArray("*.circuit")
 
-[node name="GateNameWindow" type="Control" parent="WiresInterface"]
+[node name="GateNameWindow" type="Control" parent="WiresInterface" node_paths=PackedStringArray("text_edit")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -143,6 +143,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_4wjdm")
+text_edit = NodePath("HBoxContainer/TextEdit")
 
 [node name="PanelContainer" type="PanelContainer" parent="WiresInterface/GateNameWindow"]
 modulate = Color(1, 1, 1, 0.61960787)
