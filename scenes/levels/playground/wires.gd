@@ -363,7 +363,6 @@ func update_signal(tile: Vector2i) -> void:
 			#print("Smaller")
 			#wires.resize(10)
 		wires.push_back(check_tile)
-	print(wires)
 	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, false, _logic_update_id))
 
 
@@ -582,19 +581,60 @@ func load_file(path: String) -> bool:
 		var gate_id: int = int(gate)
 		_next_free_gate_id = gate_id
 		var gate_type: EditorMode.Gate = gates_dictionary[gate]["gate"]
+
 		var inputs: Array[Vector2i]
 		for input: String in gates_dictionary[gate]["inputs"]:
 			inputs.append(str_to_var("Vector2i" + input))
 		var outputs: Array[Vector2i]
 		for output: String in gates_dictionary[gate]["outputs"]:
 			outputs.append(str_to_var("Vector2i" + output))
-		var display_name: String = gates_dictionary[gate]["name"]
+		var display_name: String
+		if gates_dictionary[gate].has("name"):
+			display_name = gates_dictionary[gate]["name"]
 
 		var new_gate: GateTile = GateTile.new(gate_type)
 		new_gate.inputs = inputs
 		new_gate.outputs = outputs
 		new_gate.display_name = display_name
 		_gates[gate_id] = new_gate
+
+		if gate_type == EditorMode.Gate.CUSTOM:
+			# TODO Load up custom gate from file
+
+			var gate_path: String = "user://%s.circuit" % gates_dictionary[gate]["name"]
+			load_custom_gate(gate_path)
+
+			create_custom_gate_from_dict()
+
+			# search for output gates
+			var custom_inputs: Array[Vector2i]
+			var custom_outputs: Array[Vector2i]
+			for potential_gate: String in _custom_gate_dict["gates"]:
+				if _custom_gate_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.START:
+					custom_inputs.append(str_to_var("Vector2i" + _custom_gate_dict["gates"][potential_gate]["outputs"][0]))
+				elif _custom_gate_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.STOP:
+					custom_outputs.append(str_to_var("Vector2i" + _custom_gate_dict["gates"][potential_gate]["inputs"][0]))
+			custom_inputs.sort_custom(sort_by_y_first)
+			custom_outputs.sort_custom(sort_by_y_first)
+
+			for input_index in range(custom_inputs.size()):
+				_custom_gate_tiles[str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][input_index])] = CustomGateTile.new(gate_path, _custom_gates[-1], custom_inputs[input_index])
+			for output_index in range(custom_outputs.size()):
+				_custom_gates[-1].exits[custom_outputs[output_index]] = str_to_var("Vector2i" + gates_dictionary[gate]["outputs"][output_index])
+
+			var gate_center_place: Vector2i = str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][0])
+			_custom_gates_names[gate_center_place] = gates_dictionary[gate]["name"]
+
+			var custom_gate_pins: Vector2i
+			custom_gate_pins.x = gates_dictionary[gate]["inputs"].size()
+			custom_gate_pins.y = gates_dictionary[gate]["outputs"].size()
+			wire_layer.load_custom_gate(custom_gate_pins, gate_center_place)
+
+			for update_position_string: String in gates_dictionary[gate]["inputs"]:
+				var update_position: Vector2i = str_to_var("Vector2i" + update_position_string)
+				_callable_queue.push_back(Callable(self, &"_get_into_gate").bind(update_position))
+
+			continue
 
 		var min_pos: Vector2i
 		if new_gate.inputs.is_empty():
@@ -634,6 +674,58 @@ func load_file(path: String) -> bool:
 	update_save_preview()
 	return true
 	# TODO return false in case of failure
+
+
+func create_custom_gate_from_dict() -> void:
+	var new_custom_gate := CustomGate.new(_callable_queue, self)
+	_custom_gates.append(new_custom_gate)
+
+	var gates_dictionary: Dictionary = _custom_gate_dict["gates"]
+
+	var custom_gate_inputs: Array[Vector2i]
+	var custom_gate_outputs: Array[Vector2i]
+	# Fill data for all gates inside.
+	for gate: String in gates_dictionary:
+		var gate_type: EditorMode.Gate = gates_dictionary[gate]["gate"]
+		var inputs: Array[Vector2i]
+		for input: String in gates_dictionary[gate]["inputs"]:
+			inputs.append(str_to_var("Vector2i" + input))
+		var outputs: Array[Vector2i]
+		for output: String in gates_dictionary[gate]["outputs"]:
+			outputs.append(str_to_var("Vector2i" + output))
+
+		if gate_type == EditorMode.Gate.START:
+			custom_gate_inputs.append(outputs[0])
+		elif gate_type == EditorMode.Gate.STOP:
+			custom_gate_outputs.append(inputs[0])
+
+		var new_gate: GateTile = GateTile.new(gate_type)
+		new_gate.inputs = inputs
+		new_gate.outputs = outputs
+		new_custom_gate._gates[int(gate)] = new_gate
+
+	var placement_dictionary: Dictionary = _custom_gate_dict["placement"]
+	# Place grid inside the gate.
+	for tile_string: String in placement_dictionary:
+		var tile: Vector2i = str_to_var("Vector2i" + tile_string)
+		if placement_dictionary[tile_string].has("gate"):
+			new_custom_gate._gate_tiles[tile] = int(placement_dictionary[tile_string]["gate"])
+			#new_custom_gate._custom_gate_tiles[Vector2i(11, 5)] = CustomGateTile.new(path, new_custom_gate, Vector2i(1, 1))
+		if placement_dictionary[tile_string].has("wires"):
+			var wire_tile: Dictionary = placement_dictionary[tile_string]["wires"]
+			if wire_tile.has("direction"):
+				var direction: int = wire_tile["direction"]
+				var state: bool = wire_tile["state"]
+				var new_wire: WireTile = WireTile.new(direction)
+				new_wire.state = state
+				new_custom_gate._wire_tiles[tile] = new_wire
+			else:
+				var wire_crossing: WireCrossing = WireCrossing.new()
+				var state: bool = wire_tile["horizontal_wire"]["state"]
+				wire_crossing.horizontal_wire.state = state
+				state = wire_tile["vertical_wire"]["state"]
+				wire_crossing.vertical_wire.state = state
+				new_custom_gate._wire_crossing_tiles[tile] = wire_crossing
 
 
 func load_custom_gate(path: String) -> void:
@@ -732,6 +824,9 @@ func place_custom_gate(path: String) -> void:
 		_gate_tiles[tile] = next_gate_id
 		wire_layer.set_cell(tile, 11, atlas_coords)
 
+	_gates[next_gate_id].inputs = inputs
+	_gates[next_gate_id].outputs = outputs
+
 	inputs.sort_custom(sort_by_y_first)
 	outputs.sort_custom(sort_by_y_first)
 	gate_inputs.sort_custom(sort_by_y_first)
@@ -743,6 +838,7 @@ func place_custom_gate(path: String) -> void:
 		new_custom_gate.exits[gate_outputs[output]] = outputs[output]
 
 	_custom_gates_names[inputs[0]] = path.get_file().trim_suffix(".circuit")
+	_gates[next_gate_id].display_name = _custom_gates_names[inputs[0]]
 
 
 func level_dimension_limiter(left_up: Vector2i, bottom_right: Vector2i) -> void:
@@ -946,12 +1042,15 @@ class GateTile:
 
 
 	func to_dict() -> Dictionary:
-		return {
+		var buff: Dictionary = {
 			"gate": gate,
 			"inputs": inputs,
 			"outputs": outputs,
-			"name": display_name
 		}
+		if display_name:
+			buff["name"] = display_name
+
+		return buff
 
 
 class CustomGateTile:
