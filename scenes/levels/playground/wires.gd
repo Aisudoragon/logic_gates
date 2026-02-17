@@ -26,6 +26,8 @@ var _custom_gates: Array[CustomGate]
 var _custom_gate_tiles: Dictionary[Vector2i, CustomGateTile]
 
 var _custom_gates_names: Dictionary[Vector2i, String]
+var _custom_gates_input_pins_names: Dictionary[Vector2i, String]
+var _custom_gates_output_pins_names: Dictionary[Vector2i, String]
 
 var is_sandbox: bool = true
 var dimension_limits: Array[Vector2i]
@@ -223,6 +225,19 @@ func _draw() -> void:
 					Color.BLACK)
 			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
 					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100)
+
+	for gate in _custom_gates_input_pins_names:
+		draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(-83, 14),
+					_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
+					Color.BLACK)
+		draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(-83, 14),
+				_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100)
+	for gate in _custom_gates_output_pins_names:
+		draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(43, 14),
+					_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
+					Color.BLACK)
+		draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(43, 14),
+				_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100)
 
 	draw_set_transform(Vector2.ZERO, deg_to_rad(90))
 	for placement in _custom_gates_names:
@@ -619,11 +634,17 @@ func load_file(path: String) -> bool:
 
 			for input_index in range(custom_inputs.size()):
 				_custom_gate_tiles[str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][input_index])] = CustomGateTile.new(gate_path, _custom_gates[-1], custom_inputs[input_index])
+				_custom_gates_input_pins_names[str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][input_index])] = _custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[custom_inputs[input_index]]].display_name
 			for output_index in range(custom_outputs.size()):
 				_custom_gates[-1].exits[custom_outputs[output_index]] = str_to_var("Vector2i" + gates_dictionary[gate]["outputs"][output_index])
+				_custom_gates_output_pins_names[str_to_var("Vector2i" + gates_dictionary[gate]["outputs"][output_index])] = _custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[custom_outputs[output_index]]].display_name
 
 			var gate_center_place: Vector2i = str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][0])
 			_custom_gates_names[gate_center_place] = gates_dictionary[gate]["name"]
+
+			print(gates_dictionary[gate]["outputs"])
+			#for custom_input in custom_inputs:
+				#print(_custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[custom_input]].display_name)
 
 			var custom_gate_pins: Vector2i
 			custom_gate_pins.x = gates_dictionary[gate]["inputs"].size()
@@ -702,6 +723,8 @@ func create_custom_gate_from_dict() -> void:
 		var new_gate: GateTile = GateTile.new(gate_type)
 		new_gate.inputs = inputs
 		new_gate.outputs = outputs
+		if gates_dictionary[gate].has("name"):
+			new_gate.display_name = gates_dictionary[gate]["name"]
 		new_custom_gate._gates[int(gate)] = new_gate
 
 	var placement_dictionary: Dictionary = _custom_gate_dict["placement"]
@@ -801,6 +824,8 @@ func place_custom_gate(path: String) -> void:
 		var new_gate: GateTile = GateTile.new(gate_type)
 		new_gate.inputs = inputs_inside
 		new_gate.outputs = outputs_inside
+		if loaded_gates_dict[gate].has("name"):
+			new_gate.display_name = loaded_gates_dict[gate]["name"]
 		new_custom_gate._gates[int(gate)] = new_gate
 
 	var tiles: Array[Vector2i] = highlight_layer.get_used_cells()
@@ -834,8 +859,10 @@ func place_custom_gate(path: String) -> void:
 
 	for input in range(inputs.size()):
 		_custom_gate_tiles[inputs[input]] = CustomGateTile.new(path, new_custom_gate, gate_inputs[input])
+		_custom_gates_input_pins_names[inputs[input]] = _custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[gate_inputs[input]]].display_name
 	for output in range(outputs.size()):
 		new_custom_gate.exits[gate_outputs[output]] = outputs[output]
+		_custom_gates_output_pins_names[outputs[output]] = _custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[gate_outputs[output]]].display_name
 
 	_custom_gates_names[inputs[0]] = path.get_file().trim_suffix(".circuit")
 	_gates[next_gate_id].display_name = _custom_gates_names[inputs[0]]
@@ -937,8 +964,9 @@ func delete_stuff() -> void:
 				keys_to_remove.append(gate_position)
 		for key in keys_to_remove:
 			_gate_tiles.erase(key)
-			if _custom_gates_names.has(key):
-				_custom_gates_names.erase(key)
+			_custom_gates_names.erase(key)
+			_custom_gates_input_pins_names.erase(key)
+			_custom_gates_output_pins_names.erase(key)
 
 			var had_wire: bool = _wire_tiles.erase(key)
 			if had_wire:
@@ -984,6 +1012,8 @@ func clear() -> void:
 	_custom_gates.clear()
 	_custom_gate_tiles.clear()
 	_custom_gates_names.clear()
+	_custom_gates_input_pins_names.clear()
+	_custom_gates_output_pins_names.clear()
 
 	wire_layer.clear()
 	highlight_layer.clear()
