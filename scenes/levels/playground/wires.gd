@@ -413,7 +413,7 @@ func place_gate() -> void:
 		if _gates[new_gate_id].gate == EditorMode.Gate.START:
 			_wire_tiles[gate_tiles[0]] = WireTile.new(1)
 
-			_gates[new_gate_id].new_list_element()
+			_gates[new_gate_id].new_list_element(input_list_element)
 			_gates[new_gate_id].set_element(gate_tiles[0], false)
 			$"../WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer/MarginContainer/VBoxContainer".add_child(_gates[new_gate_id].list_element)
 			_gates[new_gate_id].list_element.signal_set.connect(set_output)
@@ -421,6 +421,11 @@ func place_gate() -> void:
 			_gates[new_gate_id].outputs.append(gate_tiles[0])
 		else:
 			_wire_tiles[gate_tiles[0]] = WireTile.new(4)
+
+			_gates[new_gate_id].new_list_element(output_list_element)
+			$"../WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer2/MarginContainer/VBoxContainer".add_child(_gates[new_gate_id].list_element)
+			_gates[new_gate_id].set_element(gate_tiles[0], false)
+
 			_gates[new_gate_id].inputs.append(gate_tiles[0])
 		_gate_tiles[gate_tiles[0]] = new_gate_id
 		_update_neighboring_wires(gate_tiles[0])
@@ -562,6 +567,8 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 		outputs[0] = not (inputs[0] == inputs[1])
 	elif gate_type == EditorMode.Gate.XNOR:
 		outputs[0] = inputs[0] == inputs[1]
+	elif gate_type == EditorMode.Gate.STOP:
+		this_gate_tile.set_element(Vector2i.ZERO, inputs[0])
 	elif gate_type == EditorMode.Gate.CUSTOM:
 		if not _custom_gate_tiles.has(grid_position):
 			return
@@ -985,7 +992,7 @@ func delete_stuff() -> void:
 				_update_neighboring_wires(key)
 
 			wire_layer.erase_cell(key)
-		if _gates[gate_id].gate == EditorMode.Gate.START:
+		if _gates[gate_id].gate == EditorMode.Gate.START or _gates[gate_id].gate == EditorMode.Gate.STOP:
 			_gates[gate_id].list_element.queue_free()
 		_gates.erase(gate_id)
 	elif _wire_tiles.has(grid_position) or _wire_crossing_tiles.has(grid_position):
@@ -1109,8 +1116,8 @@ class GateTile:
 		list_element.set_display(new_name)
 
 
-	func new_list_element() -> void:
-		list_element = input_list_element.instantiate()
+	func new_list_element(scene: PackedScene) -> void:
+		list_element = scene.instantiate()
 
 
 	func set_element(grid_position: Vector2i, new_state: bool) -> void:

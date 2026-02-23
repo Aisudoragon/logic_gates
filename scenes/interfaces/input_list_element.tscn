@@ -23,7 +23,7 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Nowa bramka"
+text = "Nowe wejście"
 
 [node name="Button" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(35, 0)

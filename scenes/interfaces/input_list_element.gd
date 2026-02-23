@@ -1,4 +1,4 @@
-class_name InputListElement extends Control
+extends Control
 
 signal signal_set(grid_position: Vector2i, state: bool)
 

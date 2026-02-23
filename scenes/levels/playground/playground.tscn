@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://vxc7l235kxff"]
+[gd_scene load_steps=13 format=3 uid="uid://vxc7l235kxff"]
 
 [ext_resource type="Script" uid="uid://ddrbmlbq6sk85" path="res://scenes/levels/playground/playground.gd" id="1_ywb2o"]
 [ext_resource type="Script" uid="uid://bh6pxtvechol" path="res://scenes/levels/playground/grid_lines.gd" id="2_olfo7"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" uid="uid://djeigehoc35yq" path="res://scenes/levels/playground/gate_name_window.gd" id="10_4wjdm"]
 [ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://my_button_theme.tres" id="10_xv8nk"]
 [ext_resource type="AudioStream" uid="uid://dtn05s8a8igqv" path="res://assets/Sounds/confirmation_002.ogg" id="12_rsso6"]
-[ext_resource type="PackedScene" uid="uid://dn63t1sujedg8" path="res://scenes/interfaces/output_list_element.tscn" id="13_kmq3w"]
 
 [node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text", "finish_button", "camera")]
 script = ExtResource("1_ywb2o")
@@ -272,9 +271,6 @@ size_flags_vertical = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer2/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="InputListElement" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer2/MarginContainer/VBoxContainer" instance=ExtResource("13_kmq3w")]
-layout_mode = 2
 
 [node name="GateNameWindow" type="Control" parent="WiresInterface" node_paths=PackedStringArray("text_edit")]
 visible = false
