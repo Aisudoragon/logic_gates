@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://vxc7l235kxff"]
+[gd_scene load_steps=14 format=3 uid="uid://vxc7l235kxff"]
 
 [ext_resource type="Script" uid="uid://ddrbmlbq6sk85" path="res://scenes/levels/playground/playground.gd" id="1_ywb2o"]
 [ext_resource type="Script" uid="uid://bh6pxtvechol" path="res://scenes/levels/playground/grid_lines.gd" id="2_olfo7"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://djeigehoc35yq" path="res://scenes/levels/playground/gate_name_window.gd" id="10_4wjdm"]
 [ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://my_button_theme.tres" id="10_xv8nk"]
 [ext_resource type="AudioStream" uid="uid://dtn05s8a8igqv" path="res://assets/Sounds/confirmation_002.ogg" id="12_rsso6"]
+[ext_resource type="PackedScene" uid="uid://dn63t1sujedg8" path="res://scenes/interfaces/output_list_element.tscn" id="13_kmq3w"]
 
 [node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text", "finish_button", "camera")]
 script = ExtResource("1_ywb2o")
@@ -106,10 +107,21 @@ text = "Zapisz jako"
 
 [node name="SaveDialog" type="FileDialog" parent="WiresInterface/SaveButtons"]
 oversampling_override = 1.0
+title = "Zapisz plik"
 initial_position = 1
+ok_button_text = "Zapisz"
+cancel_button_text = "Anuluj"
 display_mode = 1
 access = 1
+root_subfolder = "customs"
 filters = PackedStringArray("*.circuit")
+hidden_files_toggle_enabled = false
+file_filter_toggle_enabled = false
+file_sort_options_enabled = false
+folder_creation_enabled = false
+favorites_enabled = false
+recent_list_enabled = false
+layout_toggle_enabled = false
 
 [node name="CodeEdit" type="CodeEdit" parent="WiresInterface"]
 visible = false
@@ -168,6 +180,100 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="WiresInterface/GateDialog/Panel/ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="InputOutputView" type="Control" parent="WiresInterface"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Panel" type="Panel" parent="WiresInterface/InputOutputView"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 14.0
+offset_right = 415.0
+offset_bottom = 215.0
+
+[node name="MarginContainer" type="MarginContainer" parent="WiresInterface/InputOutputView/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 37.77)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[font_size=22]Wejścia[/font_size]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[font_size=22]Wyjścia[/font_size]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator" type="VSeparator" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InputListElement" parent="WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer2/MarginContainer/VBoxContainer" instance=ExtResource("13_kmq3w")]
 layout_mode = 2
 
 [node name="GateNameWindow" type="Control" parent="WiresInterface" node_paths=PackedStringArray("text_edit")]
@@ -270,6 +376,7 @@ text = "Kliknij opcję \"KABEL\", przytrzymaj przycisk myszy na jednym końcu i 
 [node name="LevelObjectiveAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_rsso6")
 
+[connection signal="play_ui_sound" from="Wires" to="." method="send_signal_for_ui_sound"]
 [connection signal="toggle_output" from="Wires/WireLayer" to="Wires" method="_on_wire_layer_toggle_output"]
 [connection signal="mode_selected" from="WiresInterface" to="." method="_on_wires_interface_mode_selected"]
 [connection signal="play_ui_sound" from="WiresInterface/SaveButtons" to="." method="send_signal_for_ui_sound"]
@@ -280,6 +387,7 @@ stream = ExtResource("12_rsso6")
 [connection signal="pressed" from="WiresInterface/SaveButtons/SaveAsButton" to="WiresInterface/SaveButtons" method="_on_save_as_button_pressed"]
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="Wires" method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="WiresInterface/SaveButtons" method="_on_file_dialog_file_selected"]
+[connection signal="play_ui_sound" from="WiresInterface/GateNameWindow" to="." method="send_signal_for_ui_sound"]
 [connection signal="pressed" from="WiresInterface/GateNameWindow/HBoxContainer/Button" to="WiresInterface/GateNameWindow" method="_on_button_pressed"]
 [connection signal="pressed" from="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/FinishButton" to="." method="_on_finish_button_pressed"]
 [connection signal="pressed" from="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/HelpButton" to="." method="_on_help_button_pressed"]

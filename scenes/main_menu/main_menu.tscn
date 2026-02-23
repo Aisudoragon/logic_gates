@@ -99,6 +99,7 @@ initial_position = 1
 file_mode = 0
 display_mode = 1
 access = 1
+root_subfolder = "customs"
 filters = PackedStringArray("*.circuit")
 hidden_files_toggle_enabled = false
 folder_creation_enabled = false

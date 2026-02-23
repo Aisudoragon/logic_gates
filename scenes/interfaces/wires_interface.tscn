@@ -112,7 +112,7 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/PlaceStart/VBoxContainer"]
 layout_mode = 2
-text = "START"
+text = "WEJŚCIE"
 horizontal_alignment = 1
 
 [node name="PlaceEnd" type="Button" parent="HBoxContainer"]
@@ -139,7 +139,7 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/PlaceEnd/VBoxContainer"]
 layout_mode = 2
-text = "KONIEC"
+text = "WYJŚCIE"
 horizontal_alignment = 1
 
 [node name="PlaceNot" type="Button" parent="HBoxContainer"]

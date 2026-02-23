@@ -222,6 +222,7 @@ func reset_playground_state() -> void:
 	mode_selected = EditorMode.Mode.SELECT
 	gate_selected = EditorMode.Gate.AND
 	wires.clear()
+	$WiresInterface/SaveButtons.save_path = ""
 
 	level_selected = 0
 	wires.untouchable_tiles.clear()

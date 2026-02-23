@@ -1,5 +1,7 @@
 extends Control
 
+signal play_ui_sound()
+
 @export var text_edit: LineEdit
 
 var current_gate_edit: Wires.GateTile
@@ -19,6 +21,7 @@ func _on_button_pressed() -> void:
 	if text_edit.text.is_empty():
 		var characters := "QWERTYUIOPASDFGHJKLZXCVBNM"
 		text_edit.text = characters.substr(randi_range(0, characters.length()), 1) + str(randi_range(0, 9))
-	current_gate_edit.display_name = text_edit.text
+	current_gate_edit.set_name(text_edit.text)
 	visible = false
 	text_edit.text = ""
+	play_ui_sound.emit()

@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://bemn4rpoh3114"]
+
+[ext_resource type="Script" uid="uid://h0nodv66nv4u" path="res://scenes/interfaces/input_list_element.gd" id="1_hc0of"]
+
+[node name="InputListElement" type="Control"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hc0of")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Nowa bramka"
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+text = "0"
+
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_button_pressed"]

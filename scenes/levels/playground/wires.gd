@@ -1,5 +1,8 @@
 class_name Wires extends Node2D
 
+const input_list_element: PackedScene = preload("res://scenes/interfaces/input_list_element.tscn")
+const output_list_element: PackedScene = preload("res://scenes/interfaces/output_list_element.tscn")
+
 @export var wire_layer: WireLayer
 @export var highlight_layer: HighlightLayer
 
@@ -7,6 +10,7 @@ var _place_wire_checkpoints: Array[Vector2i]
 var _custom_gate_dict: Dictionary
 
 signal queue_cleared()
+signal play_ui_sound()
 
 var _queue_executes_per_frame := 1
 var _callable_queue := DoubleLinkedListCallable.new()
@@ -84,12 +88,12 @@ func _draw() -> void:
 					grid_position * 64 + Vector2i(32, 1),
 				]
 				(green_lines if wire_state else red_lines).append_array(two_points)
-			draw_circle(grid_position * 64 + Vector2i(32, 32), 3.5, Color.GREEN if wire_state else Color.RED)
+			draw_circle(grid_position * 64 + Vector2i(32, 32), 3.5, Color.GREEN if wire_state else Color.DARK_RED)
 			if (
 					wire_direction == 7 or wire_direction == 11 or wire_direction == 13
 					or wire_direction == 14 or wire_direction == 15
 			):
-				draw_circle(grid_position * 64 + Vector2i(32, 32), 12, Color.GREEN if wire_state else Color.RED)
+				draw_circle(grid_position * 64 + Vector2i(32, 32), 12, Color.GREEN if wire_state else Color.DARK_RED)
 	for grid_position in _wire_crossing_tiles:
 		var points: PackedVector2Array = [
 			grid_position * 64 + Vector2i(0, 32),
@@ -127,7 +131,7 @@ func _draw() -> void:
 				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color.GREEN)
 			else:
 				red_lines.append_array(points)
-				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color.RED)
+				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color.DARK_RED)
 		# Output
 		if _wire_tiles[grid_position].direction == EditorMode.Direction.LEFT:
 			points = [
@@ -139,11 +143,11 @@ func _draw() -> void:
 				draw_circle(grid_position * 64 + Vector2i(28, 32), 3.5, Color.GREEN)
 			else:
 				red_lines.append_array(points)
-				draw_circle(grid_position * 64 + Vector2i(28, 32), 3.5, Color.RED)
+				draw_circle(grid_position * 64 + Vector2i(28, 32), 3.5, Color.DARK_RED)
 
 		if _gates[_gate_tiles[grid_position]].gate == EditorMode.Gate.START:
 			draw_circle(grid_position * 64 + Vector2i(32, 32), 12,
-					Color.GREEN if _wire_tiles[grid_position].state else Color.RED)
+					Color.GREEN if _wire_tiles[grid_position].state else Color.DARK_RED)
 			var two_points: PackedVector2Array = [
 				grid_position * 64 + Vector2i(32, 32),
 				grid_position * 64 + Vector2i(64, 32),
@@ -153,7 +157,7 @@ func _draw() -> void:
 			gates[grid_position] = _gates[_gate_tiles[grid_position]]
 		if _gates[_gate_tiles[grid_position]].gate == EditorMode.Gate.STOP:
 			draw_circle(grid_position * 64 + Vector2i(32, 32), 12,
-					Color.GREEN if _wire_tiles[grid_position].state else Color.RED)
+					Color.GREEN if _wire_tiles[grid_position].state else Color.DARK_RED)
 			var two_points: PackedVector2Array = [
 				grid_position * 64 + Vector2i(32, 32),
 				grid_position * 64 + Vector2i(0, 32),
@@ -163,7 +167,7 @@ func _draw() -> void:
 			gates[grid_position] = _gates[_gate_tiles[grid_position]]
 
 	if not red_lines.is_empty():
-		draw_multiline(red_lines, Color.RED, 7)
+		draw_multiline(red_lines, Color.DARK_RED, 7)
 	if not green_lines.is_empty():
 		draw_multiline(green_lines, Color.GREEN, 7)
 
@@ -408,6 +412,12 @@ func place_gate() -> void:
 	if gate_tiles.size() == 1:
 		if _gates[new_gate_id].gate == EditorMode.Gate.START:
 			_wire_tiles[gate_tiles[0]] = WireTile.new(1)
+
+			_gates[new_gate_id].new_list_element()
+			_gates[new_gate_id].set_element(gate_tiles[0], false)
+			$"../WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer/MarginContainer/VBoxContainer".add_child(_gates[new_gate_id].list_element)
+			_gates[new_gate_id].list_element.signal_set.connect(set_output)
+
 			_gates[new_gate_id].outputs.append(gate_tiles[0])
 		else:
 			_wire_tiles[gate_tiles[0]] = WireTile.new(4)
@@ -616,7 +626,7 @@ func load_file(path: String) -> bool:
 		if gate_type == EditorMode.Gate.CUSTOM:
 			# TODO Load up custom gate from file
 
-			var gate_path: String = "user://%s.circuit" % gates_dictionary[gate]["name"]
+			var gate_path: String = "%s/%s.circuit" % [Filepaths.custom_gates_directory, gates_dictionary[gate]["name"]]
 			load_custom_gate(gate_path)
 
 			create_custom_gate_from_dict()
@@ -877,12 +887,14 @@ func toggle_output() -> void:
 		if _gates[_gate_tiles[grid_mouse_position]].gate == EditorMode.Gate.START:
 			var state: bool = not _wire_tiles[grid_mouse_position].state
 			set_output(grid_mouse_position, state)
+			_gates[_gate_tiles[grid_mouse_position]].list_element._on_button_pressed()
 
 
 func set_output(grid_position: Vector2i, state: bool) -> void:
 	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(grid_position, state,
 			_logic_update_id))
 	wire_layer.set_start_gate(grid_position, state)
+	play_ui_sound.emit()
 
 
 func save_circuit(path: String) -> void:
@@ -919,6 +931,7 @@ func save_circuit(path: String) -> void:
 
 func _on_file_dialog_file_selected(path: String) -> void:
 	save_circuit(path)
+	play_ui_sound.emit()
 
 
 func update_save_preview() -> void:
@@ -972,6 +985,8 @@ func delete_stuff() -> void:
 				_update_neighboring_wires(key)
 
 			wire_layer.erase_cell(key)
+		if _gates[gate_id].gate == EditorMode.Gate.START:
+			_gates[gate_id].list_element.queue_free()
 		_gates.erase(gate_id)
 	elif _wire_tiles.has(grid_position) or _wire_crossing_tiles.has(grid_position):
 		wire_layer.erase_cell(grid_position)
@@ -1016,6 +1031,11 @@ func clear() -> void:
 
 	wire_layer.clear()
 	highlight_layer.clear()
+
+	for node in $"../WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer/MarginContainer/VBoxContainer".get_children():
+		node.queue_free()
+	for node in $"../WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer2/MarginContainer/VBoxContainer".get_children():
+		node.queue_free()
 
 
 class WireTile:
@@ -1065,6 +1085,8 @@ class GateTile:
 	var outputs: Array[Vector2i]
 	var display_name: String
 
+	var list_element: Node
+
 
 	func _init(new_gate_type: EditorMode.Gate) -> void:
 		gate = new_gate_type
@@ -1080,6 +1102,19 @@ class GateTile:
 			buff["name"] = display_name
 
 		return buff
+
+
+	func set_name(new_name: String) -> void:
+		display_name = new_name
+		list_element.set_display(new_name)
+
+
+	func new_list_element() -> void:
+		list_element = input_list_element.instantiate()
+
+
+	func set_element(grid_position: Vector2i, new_state: bool) -> void:
+		list_element.set_element(grid_position, new_state)
 
 
 class CustomGateTile:
