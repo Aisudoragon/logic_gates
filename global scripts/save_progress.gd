@@ -65,3 +65,13 @@ static func load_save() -> bool:
 	level_10 = progress_dict["level_10"]
 
 	return true
+
+
+static func open_customs_directory() -> DirAccess:
+	var dir := DirAccess.open(Filepaths.custom_gates_directory)
+	if not dir:
+		var error: Error = DirAccess.make_dir_absolute(Filepaths.custom_gates_directory)
+		if error:
+			printerr("Failed to create customs folder.")
+		dir = DirAccess.open(Filepaths.custom_gates_directory)
+	return dir

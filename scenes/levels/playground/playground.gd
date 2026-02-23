@@ -241,11 +241,22 @@ func _on_wires_interface_mode_selected(mode: EditorMode.Mode, gate: EditorMode.G
 
 	if mode == EditorMode.Mode.SELECT:
 		highlight_layer.clear()
-	if gate == EditorMode.Gate.CUSTOM:
+	if gate == EditorMode.Gate.CUSTOM and $WiresInterface/GateDialog.visible == false:
 		highlight = false
 		$WiresInterface/GateDialog.visible = true
+
+		# TODO dodać wczytywanie listy tutaj
+		var directory: DirAccess = SaveProgress.open_customs_directory()
+		var files: PackedStringArray = directory.get_files()
+		for file in files:
+			var new_button := CustomGateButton.new(file)
+			new_button.load_file.connect(_on_gate_dialog_file_selected)
+			$WiresInterface/GateDialog/Panel/ScrollContainer/MarginContainer/VBoxContainer.add_child(new_button)
 	else:
 		highlight = true
+		$WiresInterface/GateDialog.visible = false
+		for n in $WiresInterface/GateDialog/Panel/ScrollContainer/MarginContainer/VBoxContainer.get_children():
+			n.queue_free()
 
 	play_ui_sound.emit()
 
@@ -261,9 +272,12 @@ func _on_back_button_2_pressed() -> void:
 
 
 func _on_gate_dialog_file_selected(path: String) -> void:
-	custom_gate_path = path
-	wires.load_custom_gate(path)
+	custom_gate_path = "%s/%s" % [Filepaths.custom_gates_directory, path]
+	wires.load_custom_gate(custom_gate_path)
 	highlight = true
+	$WiresInterface/GateDialog.visible = false
+	for n in $WiresInterface/GateDialog/Panel/ScrollContainer/MarginContainer/VBoxContainer.get_children():
+		n.queue_free()
 
 	play_ui_sound.emit()
 

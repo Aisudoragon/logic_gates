@@ -125,14 +125,50 @@ editable = false
 draw_tabs = true
 gutters_draw_line_numbers = true
 
-[node name="GateDialog" type="FileDialog" parent="WiresInterface"]
-oversampling_override = 1.0
-title = "Open a File"
-initial_position = 2
-file_mode = 0
-display_mode = 1
-access = 1
-filters = PackedStringArray("*.circuit")
+[node name="GateDialog" type="Control" parent="WiresInterface"]
+visible = false
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="WiresInterface/GateDialog"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -308.0
+offset_top = -350.0
+offset_right = -34.0
+offset_bottom = -125.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="WiresInterface/GateDialog/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="WiresInterface/GateDialog/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WiresInterface/GateDialog/Panel/ScrollContainer/MarginContainer"]
+layout_mode = 2
 
 [node name="GateNameWindow" type="Control" parent="WiresInterface" node_paths=PackedStringArray("text_edit")]
 visible = false
@@ -244,7 +280,6 @@ stream = ExtResource("12_rsso6")
 [connection signal="pressed" from="WiresInterface/SaveButtons/SaveAsButton" to="WiresInterface/SaveButtons" method="_on_save_as_button_pressed"]
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="Wires" method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="WiresInterface/SaveButtons/SaveDialog" to="WiresInterface/SaveButtons" method="_on_file_dialog_file_selected"]
-[connection signal="file_selected" from="WiresInterface/GateDialog" to="." method="_on_gate_dialog_file_selected"]
 [connection signal="pressed" from="WiresInterface/GateNameWindow/HBoxContainer/Button" to="WiresInterface/GateNameWindow" method="_on_button_pressed"]
 [connection signal="pressed" from="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/FinishButton" to="." method="_on_finish_button_pressed"]
 [connection signal="pressed" from="ObjectiveLayer/PanelContainer/MarginContainer/VBoxContainer/HelpButton" to="." method="_on_help_button_pressed"]

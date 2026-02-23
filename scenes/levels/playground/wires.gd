@@ -241,11 +241,11 @@ func _draw() -> void:
 
 	draw_set_transform(Vector2.ZERO, deg_to_rad(90))
 	for placement in _custom_gates_names:
-		var rotated_adjusted_placement: Vector2i = (Vector2i(placement.y, -placement.x) + Vector2i.UP) * 64 + Vector2i(-20, 5)
+		var rotated_adjusted_placement: Vector2i = (Vector2i(placement.y, -placement.x) + Vector2i.UP) * 64 + Vector2i(30, 5)
 		draw_string_outline(ThemeDB.fallback_font, rotated_adjusted_placement,
-				_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15, Color.BLACK)
+				_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15, Color.BLACK)
 		draw_string(ThemeDB.fallback_font, rotated_adjusted_placement,
-				_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_RIGHT, 100)
+				_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100)
 
 
 func place_wire() -> void:
@@ -642,7 +642,6 @@ func load_file(path: String) -> bool:
 			var gate_center_place: Vector2i = str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][0])
 			_custom_gates_names[gate_center_place] = gates_dictionary[gate]["name"]
 
-			print(gates_dictionary[gate]["outputs"])
 			#for custom_input in custom_inputs:
 				#print(_custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[custom_input]].display_name)
 
