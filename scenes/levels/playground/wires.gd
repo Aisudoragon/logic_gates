@@ -568,7 +568,8 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 	elif gate_type == EditorMode.Gate.XNOR:
 		outputs[0] = inputs[0] == inputs[1]
 	elif gate_type == EditorMode.Gate.STOP:
-		this_gate_tile.set_element(Vector2i.ZERO, inputs[0])
+		if is_sandbox:
+			this_gate_tile.set_element(Vector2i.ZERO, inputs[0])
 	elif gate_type == EditorMode.Gate.CUSTOM:
 		if not _custom_gate_tiles.has(grid_position):
 			return

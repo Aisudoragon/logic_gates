@@ -122,6 +122,7 @@ func load_level(id: int, reset: bool = false) -> void:
 	$WiresInterface/SaveButtons/SaveButton.visible = false
 	$WiresInterface/SaveButtons/ResetLevelButton.visible = true
 	$ObjectiveLayer.visible = true
+	$WiresInterface/InputOutputView.visible = false
 	help_message.resize(3)
 	wires.is_sandbox = false
 	match level_selected:
@@ -233,6 +234,7 @@ func reset_playground_state() -> void:
 	$WiresInterface/SaveButtons/SaveButton.visible = true
 	$WiresInterface/SaveButtons/ResetLevelButton.visible = false
 	$ObjectiveLayer.visible = false
+	$WiresInterface/InputOutputView.visible = true
 
 
 
