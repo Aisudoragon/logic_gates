@@ -706,9 +706,19 @@ func load_file(path: String) -> bool:
 
 		if gate_type == EditorMode.Gate.START:
 			wire_layer.set_cell(outputs[0], 9, Vector2i.ZERO)
+
+			_gates[gate_id].new_list_element(input_list_element)
+			_gates[gate_id].set_element(outputs[0], _wire_tiles[outputs[0]].state)
+			$"../WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer/MarginContainer/VBoxContainer".add_child(_gates[gate_id].list_element)
+			_gates[gate_id].list_element.signal_set.connect(set_output)
+			_gates[gate_id].set_name(_gates[gate_id].display_name)
 		if gate_type == EditorMode.Gate.STOP:
 			wire_layer.set_cell(inputs[0], 10, Vector2i.ZERO)
 
+			_gates[gate_id].new_list_element(output_list_element)
+			$"../WiresInterface/InputOutputView/Panel/MarginContainer/VBoxContainer/HBoxContainer2/ScrollContainer2/MarginContainer/VBoxContainer".add_child(_gates[gate_id].list_element)
+			_gates[gate_id].set_element(inputs[0], _wire_tiles[inputs[0]].state)
+			_gates[gate_id].set_name(_gates[gate_id].display_name)
 	update_save_preview()
 	return true
 	# TODO return false in case of failure

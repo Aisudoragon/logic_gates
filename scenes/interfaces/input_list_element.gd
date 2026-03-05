@@ -10,6 +10,7 @@ var state: bool
 
 func set_display(new_name: String) -> void:
 	label.text = new_name
+	button.text = str(int(state))
 
 
 func set_element(new_grid_position: Vector2i, new_state: bool) -> void:
