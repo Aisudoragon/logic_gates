@@ -31,7 +31,7 @@ func _on_change_scene_main_menu() -> void:
 
 
 func _on_change_scene_level_selection() -> void:
-	level_selection.introduction_visibility(not SaveProgress.introduction)
+	level_selection.introduction_visibility(not SaveProgress.dialogue_1)
 	level_selection.lesson_button_2.disabled = not SaveProgress.level_1
 	level_selection.lesson_button_3.disabled = not SaveProgress.level_2
 	level_selection.lesson_button_4.disabled = not SaveProgress.level_3

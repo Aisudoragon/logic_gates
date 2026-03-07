@@ -3,6 +3,32 @@ class_name LevelSelectionMenu extends Control
 signal change_scene_main_menu()
 signal change_scene_level_selected(id: int)
 signal play_ui_sound()
+
+# Dialogue [Speaker, sentence], [Speaker, sentence]
+var sentences: Array[Array] = [
+	# Postacie:
+		# Ja
+		# Narrator
+		# Kowalski - Szef
+		# Kwiatkowski (Marcin)
+	[
+		["Kowalski - Szef", "Bardzo się cieszymy, że dołączył Pan do naszego zespołu!"],
+		["Kowalski - Szef", "Zajmę się się teraz formalnościami. Dla Pana został przydzielony nasz inżynier Kwiatkowski."],
+		["Kowalski - Szef", "W tym czasie proszę udać się na swoje stanowisko, a Pan Kwiatkowski niedługo przybędzie."],
+		["Narrator", "[i]Idziesz do twojego nowego stanowiska. Po kilku minutach zjawia się przydzielony inżynier.[/i]"],
+		["Kwiatkowski", "Cześć! Marcin jestem."],
+		["Marcin", "Gadkę zostawimy na później, bo się teraz spieszę na spotkanie. Zrobię Ci szybki kurs naszego programu."],
+		["Marcin", "W nim projektujemy i symulujemy układy, zanim pójdą do produkcji."],
+		["Marcin", "Na początek przygotowałem Ci zestaw zadań, abyś szybko zrozumiał jak działa nasz program."],
+		["Marcin", "Jak zrozumiesz już sterowanie, to zawołaj mnie i wytłumaczę co dalej."],
+	],
+]
+# Dialogue_X, sentences
+var dialogues: Dictionary[StringName, Array] = {
+	&"dialogue_1": sentences[0]
+}
+var current_dialogue: Array
+
 var lesson_selected: int = 0
 @export var lessonExplanation: RichTextLabel
 @export var proceedButton: Button
@@ -17,8 +43,51 @@ var lesson_selected: int = 0
 @onready var lesson_button_9: Button = %LessonButton9
 @onready var lesson_button_10: Button = %LessonButton10
 
+@onready var speaker_name: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer2/SpeakerName
+@onready var speaker_text: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer/SpeakerText
+@onready var speaker_image: TextureRect = $DialogueBox/SpeakerImage
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not ($DialogueBox as ColorRect).visible or not event.is_action_pressed(&"special"):
+		return
+
+	dialogue_advance()
+
+
 func introduction_visibility(visibility: bool) -> void:
-	($Introduction as ColorRect).visible = visibility
+	if visibility:
+		start_conversation(&"dialogue_1")
+
+
+func start_conversation(dialogue: StringName) -> void:
+	($DialogueBox as ColorRect).visible = true
+
+	current_dialogue = dialogues[dialogue].duplicate(true)
+	var this_sentence: Array = current_dialogue.pop_front()
+	speaker_name.text = this_sentence[0]
+	speaker_text.text = this_sentence[1]
+	speaker_image.texture = pick_image_for_dialogue(this_sentence[0])
+
+
+func dialogue_advance() -> void:
+	if current_dialogue.is_empty():
+		($DialogueBox as ColorRect).visible = false
+		return
+
+	var this_sentence: Array = current_dialogue.pop_front()
+	speaker_name.text = this_sentence[0]
+	speaker_text.text = this_sentence[1]
+
+	if this_sentence[0] == "Ja" or this_sentence[0] == "Narrator":
+		speaker_image.texture = ImageTexture.new()
+	else:
+		speaker_image.texture = pick_image_for_dialogue(this_sentence[0])
+
+
+func pick_image_for_dialogue(speaker: String) -> ImageTexture:
+	var image := Image.load_from_file("res://assets/resources/textures/dialogue_avatars/%s.png" % speaker)
+	return ImageTexture.create_from_image(image)
 
 
 func _on_back_pressed() -> void:
@@ -362,8 +431,9 @@ func _on_proceed_button_pressed() -> void:
 
 func _on_introduction_button_pressed() -> void:
 	introduction_visibility(false)
-	SaveProgress.introduction = true
+	SaveProgress.dialogue_1 = true
 	SaveProgress.update_save_file()
+	($LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ReintroduceButton as Button).focus_mode = Control.FOCUS_NONE
 
 	play_ui_sound.emit()
 

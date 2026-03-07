@@ -1,6 +1,6 @@
 class_name SaveProgress
 
-static var introduction := false
+static var dialogue_1 := false
 static var level_1 := false
 static var level_2 := false
 static var level_3 := false
@@ -15,7 +15,7 @@ static var level_10 := false
 
 static func update_save_file() -> void:
 	var progress_dict := {
-		"introduction": introduction,
+		"dialogue_1": dialogue_1,
 		"level_1": level_1,
 		"level_2": level_2,
 		"level_3": level_3,
@@ -52,7 +52,7 @@ static func load_save() -> bool:
 		return false
 
 	var progress_dict: Dictionary = JSON.parse_string(save_file.get_as_text())
-	introduction = progress_dict["introduction"]
+	dialogue_1 = progress_dict["dialogue_1"]
 	level_1 = progress_dict["level_1"]
 	level_2 = progress_dict["level_2"]
 	level_3 = progress_dict["level_3"]
