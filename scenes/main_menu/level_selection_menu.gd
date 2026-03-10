@@ -28,6 +28,8 @@ var sentences: Array[Array] = [
 		["Marcin", "Masz tutaj jeszcze materiały tłumaczące działanie każdej bramki. Każdy pracownik takie dostaje."],
 		["Marcin", "Dobra, to ty działaj. A ja lecę na kolejne spotkanie."],
 		["Marcin", "Możesz powtórzyć każde zadanie w każdej chwili. Będzie wyświetlone poprzednie poprawne rozwiązanie, jeśli chcesz tylko rzucić na coś okiem."],
+		["Marcin", 'Jeszcze Ci powiem, że w trakcie rysowania kabli, jeśli naciśniesz przycisk [R] to wtedy "obracasz" kabel do drugiego rogu.'],
+		["Marcin", 'A kiedy naciśniesz przycisk [F] to wtedy twórz Ci punkt z które możesz kontynuować rysowanie.'],
 	],
 	[
 		["Marcin", "Świetnie Ci poszło z tymi zadaniami. Spróbuj teraz je trochę rozwinąć."],
