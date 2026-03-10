@@ -258,7 +258,7 @@ Można to przedstawić na tablicy prawdy w taki sposób:
 [i]A, oraz B są wejściami do bramki. Wyjście mówi samo za siebie.[/i]
 
 [hr]
-Następne kilka zadań wprowadzą Cię po kolei w każdą, dostępną bramkę logiczną. W tej lekcji, zobaczysz jak się taką wstawia do układu, oraz jak ją połączyć."""
+Następne kilka poradników wprowadzą Cię po kolei w każdą, dostępną bramkę logiczną. W tej lekcji, zobaczysz jak się taką wstawia do układu, oraz jak ją połączyć."""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 2
@@ -486,10 +486,35 @@ func _on_lesson_button_9_pressed() -> void:
 	lessonExplanation.text = """
 [font_size=28][center]Półpełny sumator[/center][/font_size]
 [hr]
-Dodać opis zadania.
+Pierwszy układ!
+Tutaj stworzysz sumator półpełny. Taki układ wykonuje operację dodawania dwóch bitów.
+Tablica prawdy wygląda następująco:
+
+[center][table=4,center]
+[cell border=white padding=1,0,1,5][b] A [/b][/cell]
+[cell border=white padding=1,0,1,5][b] B [/b][/cell]
+[cell border=white padding=1,0,1,5][b]Suma[/b][/cell]
+[cell border=white padding=1,0,1,5][b]Przeniesienie[/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[/table][/center]
 
 [hr]
-Dodać cel zadania"""
+Wykonaj sumator z podanymi instrukcjami."""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 9
@@ -535,10 +560,11 @@ func _on_lesson_button_12_pressed() -> void:
 	lessonExplanation.text = """
 [font_size=28][center]Pełny sumator[/center][/font_size]
 [hr]
-Dodać opis zadania.
+Tak samo jak z poprzednim sumatorem. Tylko tym razem należy uwzględnić jeszcze dodatkowe wyjście przeniesienia.
+Czyli teraz
 
 [hr]
-Dodać cel zadania"""
+Zbuduj pełny sumator"""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 12
@@ -550,10 +576,10 @@ func _on_lesson_button_13_pressed() -> void:
 	lessonExplanation.text = """
 [font_size=28][center]Multiplekser 4x1[/center][/font_size]
 [hr]
-Dodać opis zadania.
+Teraz pora na większy multiplekser. Ta sama zasada działania. Więcej wejść i przełączników.
 
 [hr]
-Dodać cel zadania"""
+Zbuduj multiplekser z 4 wejściami i 2 przełącznikami."""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 13
@@ -565,10 +591,53 @@ func _on_lesson_button_14_pressed() -> void:
 	lessonExplanation.text = """
 [font_size=28][center]Multiplekser 2x1[/center][/font_size]
 [hr]
-Dodać opis zadania.
+Pora na prosty multiplekser (MUX)!
+Jest to układ który ma kilka wejść i w zależności od sygnału przełącznika, przesyła sygnał konkretnego wyjścia dalej.
+Tak wygląda tablica prawdy multipleksera, który posiada 2 wejścia i 1 przełącznik:
+
+[center][table=4,center]
+[cell border=white padding=1,0,1,5][b]Przełącznik[/b][/cell]
+[cell border=white padding=1,0,1,5][b]Wejście 1[/b][/cell]
+[cell border=white padding=1,0,1,5][b]Wejście 2[/b][/cell]
+[cell border=white padding=1,0,1,5][b]Wyjście[/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[/table][/center]
+
+Może się wydawać trochę duże. Ale działanie jest naprawdę proste. Możesz zauważyć, że jeśli przełącznik ma sygnał 0, to wyjście jest zależne tylko i wyłącznie od wejścia 1. Tak samo, kiedy przełącznik ma sygnał 1, to wyjście jest zależne tylko i wyłącznie od wejścia 0.
 
 [hr]
-Dodać cel zadania"""
+Zbuduj multiplekser 2x1"""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 14

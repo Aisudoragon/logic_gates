@@ -144,52 +144,64 @@ Poniżej znajduje się również przycisk "Pomoc", który bardziej wprost wskaż
 		2:
 			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
 			wires_interface.enable_buttons(0b1100_0100_0000)
-			help_message[0] = """[center][font_size=28]Zadanie 2.1[/font_size][/center]
+			help_message[0] = """[center][font_size=28]AND[/font_size][/center]
 
-Tutaj również prosto. Stwórz układ przy pomocy bramki.
-[ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul]
-
-Możesz zauważyć, że po wykonaniu poprawnie zadania, zostanie wygenerowana tablica prawdy taka sama jak w rozpisie lekcji."""
-			helpful_text.text = """Kliknij przycisk bramki "AND", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia."""
+[font_size=14]Tutaj również prosto. Stwórz układ przy pomocy bramki.
+[ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul][/font_size]"""
+			helpful_text.text = """[font_size=14]Kliknij przycisk bramki "AND", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia.[/font_size]"""
 		3:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
 			wires_interface.enable_buttons(0b1100_1000_0000)
-			help_message[0] = """[center][font_size=28]Zadanie 2.2[/font_size][/center]
+			help_message[0] = """[center][font_size=28]NOT[/font_size][/center]
 
-Tutaj również prosto. Stwórz układ przy pomocy bramki.
-[ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul]"""
-			helpful_text.text = """Kliknij przycisk bramki "AND", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia."""
+[font_size=14]Tutaj również prosto. Stwórz układ przy pomocy bramki.
+[ul][color=%s]Gdy obydwa wejścia mają sygnał 1, sygnał ma zostać przekazany do wyjścia[/color][/ul][/font_size]"""
+			helpful_text.text = """[font_size=14]Kliknij przycisk bramki "NOT", a następnie wybierz mniejsce na siatce do wstawienia. Następnie połącz wejścia i wyjścia.[/font_size]"""
 		4:
 			wires.level_dimension_limiter(Vector2i(-4, -3), Vector2i(8, 1))
 			wires_interface.enable_buttons(0b1100_1100_0000)
-			help_message[0] = """[center][font_size=28]Zadanie 2.3[/font_size][/center]
+			help_message[0] = """[center][font_size=28]NAND[/font_size][/center]
 
-Połącz obydwie bramki w układ.
+[font_size=14]Połącz obydwie bramki w układ.
 [ul][color=%s]Wyjście AND ma być odwrócone.[/color][/ul]
-Kolejność bramek ma znaczenie!"""
-			helpful_text.text = ""
+Kolejność bramek ma znaczenie![/font_size]"""
+			helpful_text.text = """[font_size=14]Bramki mogą być wstawione tuż obok siebie.[/font_size]"""
 		5:
 			wires.level_dimension_limiter(Vector2i(-4, -4), Vector2i(7, 2))
 			wires_interface.enable_buttons(0b1100_0010_0000)
-			help_message[0] = ""
-			helpful_text.text = ""
+			help_message[0] = """[center][font_size=28]OR[/font_size][/center]
+
+[font_size=14][ul][color=%s]Stwórz bramkę OR przy pomocy bramek NAND.[/color][/ul][/font_size]"""
+			helpful_text.text = """[font_size=14]Jedno wyjście możesz połączyć do kilku wejść.[/font_size]"""
 		6:
 			wires.level_dimension_limiter(Vector2i(-6, -4), Vector2i(9, 2))
 			wires_interface.enable_buttons(0b1100_0010_0000)
-			help_message[0] = ""
-			helpful_text.text = ""
+			help_message[0] = """[center][font_size=28]NOR[/font_size][/center]
+
+[font_size=14][ul][color=%s]Stwórz bramkę NOR przy pomocy bramek NAND.[/color][/ul][/font_size]"""
+			helpful_text.text = """[font_size=14]Spróbuj odwzorować układ z OR. A na końcu odwrócić sygnał.[/font_size]"""
 		7, 8:
 			wires.level_dimension_limiter(Vector2i(-8, -4), Vector2i(11, 2))
 			wires_interface.enable_buttons(0b1100_0010_0000)
-			help_message[0] = ""
-			helpful_text.text = ""
+			if level_selected == 7:
+				help_message[0] = "[center][font_size=28]XOR"
+			else:
+				help_message[0] = "[center][font_size=28]XNOR"
+			help_message[0] += """[/font_size][/center]
+
+[font_size=14][ul][color=%s]Stwórz bramkę XOR przy pomocy bramek NAND.[/color][/ul][/font_size]"""
+			if level_selected == 7:
+				helpful_text.text = """[font_size=14]XOR jest ciężkim przypadkiem. Wyjście jest pozytywne tylko i wyłącznie kiedy oba wejścia mają różne wartości.[/font_size]"""
+			else:
+				helpful_text.text = """[font_size=14]Identyczny układ jak w przypadku XOR. Na końcu odwrócony wynik.[/font_size]"""
 		9:
 			wires.level_dimension_limiter(Vector2i(-5, -6), Vector2i(9, 5))
 			wires_interface.enable_buttons(0b1100_0100_0100)
 			help_message[0] = """[center][font_size=28]Półpełny sumator[/font_size][/center]
 
-[font_size=14][/font_size]"""
-			helpful_text.text = """[font_size=14][/font_size]"""
+[font_size=14][ul][color=%s]Niech Suma otrzyma sygnał, tylko kiedy jeden z wyjść go wysyła.[/color][/ul]
+[ul][color=%s]Niech przeniesienie otrzyma sygnał, tylko kiedy obydwa wyjścia go wysyłają.[/color][/ul][/font_size]"""
+			helpful_text.text = """[font_size=14]Obydwie bramki, które masz do dyspozycji, idealnie spełniają swoją rolę dla konkretnych celów.[/font_size]"""
 		10:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 0))
 			wires_interface.enable_buttons(0b1100_0000_0000)
@@ -219,22 +231,51 @@ Jeśli chcesz aby to się nie stało, to daj im trochę odstępu.[/font_size]"""
 			wires_interface.enable_buttons(0b1100_0101_0100)
 			help_message[0] = """[center][font_size=28]Pełny sumator[/font_size][/center]
 
-[font_size=14][/font_size]"""
+[font_size=14][ul][color=%s]Niech Suma otrzyma sygnał, tylko gdy nieparzysta ilość wejść otrzyma sygnał.[/color][/ul]
+[ul][color=%s]Niech Przeniesienie otrzyma sygnał, gdy więcej niż 1 wejście otrzyma sygnał.[/color][/ul][/font_size]"""
 			helpful_text.text = """[font_size=14][/font_size]"""
 		13:
 			wires.level_dimension_limiter(Vector2i(-4, -10), Vector2i(25, 10))
 			wires_interface.enable_buttons(0b1100_1101_0000)
 			help_message[0] = """[center][font_size=28]Multiplekser 4x1[/font_size][/center]
 
-[font_size=14][/font_size]"""
-			helpful_text.text = """[font_size=14][/font_size]"""
+[font_size=14][ul][color=%s]Zbuduj działający multiplexer z 4 wejściami i 2 przełącznikami.[/color][/ul]
+
+Ten zbiór instrukcji przedsstawi jak wejścia mają zostać podłączone:
+[center][table=3,center]
+[cell border=white padding=1,0,1,5][b] S1 [/b][/cell]
+[cell border=white padding=1,0,1,5][b] S2 [/b][/cell]
+[cell border=white padding=1,0,1,5][b]Wejście[/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]I1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]I2[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]I3[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]I4[/cell]
+[/table][/center]
+
+Wygenerowana tablica prawdy będzie bardzo duża, ze względu na dużą ilość wejść.[/font_size]"""
+			helpful_text.text = """[font_size=14]Zasada jest taka sama jak przy mniejszym multiplekserze. Należy rozszerzyć poprzedni schemat by uwzględnić dodatkowe wejścia.[/font_size]"""
 		14:
 			wires.level_dimension_limiter(Vector2i(-2, -3), Vector2i(18, 6))
 			wires_interface.enable_buttons(0b1100_1101_0000)
 			help_message[0] = """[center][font_size=28]Multiplekser 2x1[/font_size][/center]
 
-[font_size=14][/font_size]"""
-			helpful_text.text = """[font_size=14][/font_size]"""
+[font_size=14][ul][color=%s]Zbuduj działający multiplekser z dwoma wejściami.[/color][/ul]
+
+Wejścia zostały skrócone:
+Wejście 1 - I1
+Wejście 2 - I2
+Przełącznik - S1
+
+Kiedy przełącznik jest wyłączony, ma odbierać sygnał z S1.[/font_size]"""
+			helpful_text.text = """[font_size=14]Na danym stanie przełącznika, skup się na odbieraniu sygnału tylko z tego wejścia.[/font_size]"""
 		_:
 			print("Invalid level selected. How?")
 
@@ -363,7 +404,7 @@ func _on_finish_button_pressed() -> void:
 
 	for start in range(2 ** start_gates.size()):
 		if level_selected == 13:
-			await get_tree().create_timer(0.05).timeout
+			await get_tree().create_timer(0.1).timeout
 		else:
 			await get_tree().create_timer(0.85).timeout
 
@@ -484,9 +525,25 @@ func _on_finish_button_pressed() -> void:
 				finish_button.disabled = false
 				objective_text.text = buffer_objective % "red"
 		9:
-			if not guesses[0] and not guesses[1] and guesses[2] and not guesses[3] and guesses[4] and not guesses[5] and not guesses[6] and guesses[7]:
+			var results: Array[String]
+			var results_bool: Array[bool]
+			if not guesses[0] and guesses[2] and guesses[4] and not guesses[6]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+			if not guesses[1] and not guesses[3] and not guesses[5] and guesses[7]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+
+			objective_text.text = buffer_objective % results
+
+			if results_bool[0] and results_bool[1]:
 				finish_button.text = "Ukończono!"
-				objective_text.text = buffer_objective % "green"
 				SaveProgress.level_9 = true
 				SaveProgress.update_save_file()
 				SaveProgress.ensure_directory_available()
@@ -494,7 +551,6 @@ func _on_finish_button_pressed() -> void:
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
-				objective_text.text = buffer_objective % "red"
 		10:
 			var results: Array[String]
 			var results_bool: Array[bool]
@@ -568,9 +624,27 @@ func _on_finish_button_pressed() -> void:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
 		12:
+			print(guesses)
+
+			var results: Array[String]
+			var results_bool: Array[bool]
+			if not guesses[0] and guesses[2] and guesses[4] and not guesses[6] and guesses[8] and not guesses[10] and not guesses[12] and guesses[14]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+			if not guesses[1] and not guesses[3] and not guesses[5] and guesses[7] and not guesses[9] and guesses[11] and guesses[13] and guesses[15]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+
+			objective_text.text = buffer_objective % results
+
 			if not guesses[0] and not guesses[1] and guesses[2] and not guesses[3] and guesses[4] and not guesses[5] and not guesses[6] and guesses[7] and guesses[8] and not guesses[9] and not guesses[10] and guesses[11] and not guesses[12] and guesses[13] and guesses[14] and guesses[15]:
 				finish_button.text = "Ukończono!"
-				objective_text.text = buffer_objective % "green"
 				SaveProgress.level_12 = true
 				SaveProgress.update_save_file()
 				SaveProgress.ensure_directory_available()
@@ -578,7 +652,6 @@ func _on_finish_button_pressed() -> void:
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
-				objective_text.text = buffer_objective % "red"
 		13:
 			if (
 					guesses[1] and guesses[3] and guesses[5] and guesses[7] and guesses[9] and guesses[11] and guesses[13] and guesses[15]
@@ -611,7 +684,7 @@ func _on_finish_button_pressed() -> void:
 				SaveProgress.level_14 = true
 				SaveProgress.update_save_file()
 				SaveProgress.ensure_directory_available()
-				wires.save_circuit(Filepaths.levels_dir_path(13))
+				wires.save_circuit(Filepaths.levels_dir_path(14))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false

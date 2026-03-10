@@ -90,8 +90,8 @@ func _draw() -> void:
 				(green_lines if wire_state else red_lines).append_array(two_points)
 			draw_circle(grid_position * 64 + Vector2i(32, 32), 3.5, Color.GREEN if wire_state else Color.DARK_RED)
 			if (
-					wire_direction == 7 or wire_direction == 11 or wire_direction == 13
-					or wire_direction == 14 or wire_direction == 15
+				wire_direction == 7 or wire_direction == 11 or wire_direction == 13
+				or wire_direction == 14 or wire_direction == 15
 			):
 				draw_circle(grid_position * 64 + Vector2i(32, 32), 12, Color.GREEN if wire_state else Color.DARK_RED)
 	for grid_position in _wire_crossing_tiles:
@@ -147,7 +147,7 @@ func _draw() -> void:
 
 		if _gates[_gate_tiles[grid_position]].gate == EditorMode.Gate.START:
 			draw_circle(grid_position * 64 + Vector2i(32, 32), 12,
-					Color.GREEN if _wire_tiles[grid_position].state else Color.DARK_RED)
+				Color.GREEN if _wire_tiles[grid_position].state else Color.DARK_RED)
 			var two_points: PackedVector2Array = [
 				grid_position * 64 + Vector2i(32, 32),
 				grid_position * 64 + Vector2i(64, 32),
@@ -157,7 +157,7 @@ func _draw() -> void:
 			gates[grid_position] = _gates[_gate_tiles[grid_position]]
 		if _gates[_gate_tiles[grid_position]].gate == EditorMode.Gate.STOP:
 			draw_circle(grid_position * 64 + Vector2i(32, 32), 12,
-					Color.GREEN if _wire_tiles[grid_position].state else Color.DARK_RED)
+				Color.GREEN if _wire_tiles[grid_position].state else Color.DARK_RED)
 			var two_points: PackedVector2Array = [
 				grid_position * 64 + Vector2i(32, 32),
 				grid_position * 64 + Vector2i(0, 32),
@@ -177,79 +177,79 @@ func _draw() -> void:
 		var bottom_right: Vector2i = dimension_limits[1] * 64
 		# Upper left shadow
 		draw_rect(Rect2i(
-				Vector2i(-high_number, -high_number),
-				Vector2i(high_number, high_number) - upper_left.abs()),
-				Color(Color.BLACK, 0.2))
+			Vector2i(-high_number, -high_number),
+			Vector2i(high_number, high_number) - upper_left.abs()),
+			Color(Color.BLACK, 0.2))
 		# Up shadow
 		draw_rect(Rect2i(
-				Vector2i(upper_left.x, -high_number),
-				Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number - absi(upper_left.y))),
-				Color(Color.BLACK, 0.2))
+			Vector2i(upper_left.x, -high_number),
+			Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number - absi(upper_left.y))),
+			Color(Color.BLACK, 0.2))
 		# Upper right shadow
 		draw_rect(Rect2i(
-				Vector2i(bottom_right.x + 64, -high_number),
-				Vector2i(high_number, high_number - absi(upper_left.y))),
-				Color(Color.BLACK, 0.2))
+			Vector2i(bottom_right.x + 64, -high_number),
+			Vector2i(high_number, high_number - absi(upper_left.y))),
+			Color(Color.BLACK, 0.2))
 		# Right shadow
 		draw_rect(Rect2i(
-				Vector2i(bottom_right.x + 64, upper_left.y),
-				Vector2i(high_number, absi(upper_left.y) + absi(bottom_right.y) + 64)),
-				Color(Color.BLACK, 0.2))
+			Vector2i(bottom_right.x + 64, upper_left.y),
+			Vector2i(high_number, absi(upper_left.y) + absi(bottom_right.y) + 64)),
+			Color(Color.BLACK, 0.2))
 		# Bottom right shadow
 		draw_rect(Rect2i(
-				(bottom_right + Vector2i(64, 64)),
-				Vector2i(high_number, high_number)),
-				Color(Color.BLACK, 0.2))
+			(bottom_right + Vector2i(64, 64)),
+			Vector2i(high_number, high_number)),
+			Color(Color.BLACK, 0.2))
 		# Down shadow
 		draw_rect(Rect2i(
-				Vector2i(upper_left.x, bottom_right.y + 64),
-				Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number)),
-				Color(Color.BLACK, 0.2))
+			Vector2i(upper_left.x, bottom_right.y + 64),
+			Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number)),
+			Color(Color.BLACK, 0.2))
 		# Bottom left shadow
 		draw_rect(Rect2i(
-				Vector2i(-high_number, bottom_right.y + 64),
-				Vector2i(high_number - absi(upper_left.x), high_number)),
-				Color(Color.BLACK, 0.2))
+			Vector2i(-high_number, bottom_right.y + 64),
+			Vector2i(high_number - absi(upper_left.x), high_number)),
+			Color(Color.BLACK, 0.2))
 		# Left shadow
 		draw_rect(Rect2i(
-				Vector2i(-high_number, upper_left.y),
-				Vector2i(high_number - absi(upper_left.x), (absi(upper_left.y) + absi(bottom_right.y) + 64))),
-				Color(Color.BLACK, 0.2))
+			Vector2i(-high_number, upper_left.y),
+			Vector2i(high_number - absi(upper_left.x), (absi(upper_left.y) + absi(bottom_right.y) + 64))),
+			Color(Color.BLACK, 0.2))
 
 	for gate in gates:
 		if gates[gate].gate == EditorMode.Gate.START:
 			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
-					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
-					Color.BLACK)
+				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
+				Color.BLACK)
 			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
-					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100)
+				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100)
 		else:
 			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
-					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
-					Color.BLACK)
+				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
+				Color.BLACK)
 			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
-					_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100)
+				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100)
 
 	for gate in _custom_gates_input_pins_names:
 		draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(-83, 14),
-					_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
-					Color.BLACK)
+			_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
+			Color.BLACK)
 		draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(-83, 14),
-				_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100)
+			_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100)
 	for gate in _custom_gates_output_pins_names:
 		draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(43, 14),
-					_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
-					Color.BLACK)
+			_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
+			Color.BLACK)
 		draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(43, 14),
-				_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100)
+			_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100)
 
 	draw_set_transform(Vector2.ZERO, deg_to_rad(90))
 	for placement in _custom_gates_names:
 		var rotated_adjusted_placement: Vector2i = (Vector2i(placement.y, -placement.x) + Vector2i.UP) * 64 + Vector2i(30, 5)
 		draw_string_outline(ThemeDB.fallback_font, rotated_adjusted_placement,
-				_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15, Color.BLACK)
+			_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15, Color.BLACK)
 		draw_string(ThemeDB.fallback_font, rotated_adjusted_placement,
-				_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100)
+			_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100)
 
 
 func place_wire() -> void:
@@ -276,10 +276,10 @@ func place_wire() -> void:
 		if not is_sandbox:
 			var wire_coodinates: Vector2i = tile
 			if (
-					wire_coodinates.x < dimension_limits[0].x
-					or wire_coodinates.y < dimension_limits[0].y
-					or wire_coodinates.x > dimension_limits[1].x
-					or wire_coodinates.y > dimension_limits[1].y
+				wire_coodinates.x < dimension_limits[0].x
+				or wire_coodinates.y < dimension_limits[0].y
+				or wire_coodinates.x > dimension_limits[1].x
+				or wire_coodinates.y > dimension_limits[1].y
 			):
 				continue
 
@@ -324,24 +324,24 @@ func update_wire_for_neighbors(tile: Vector2i) -> void:
 		var neighbor: Vector2i = tile + directions[index]
 		# Delete connection
 		if (
-				not _wire_crossing_tiles.has(neighbor)
-				and (_wire_tiles[tile].direction & directions_from[index]
-				and (not _wire_tiles.has(neighbor)
-				or not _wire_tiles[neighbor].direction & directions_to[index]))
+			not _wire_crossing_tiles.has(neighbor)
+			and (_wire_tiles[tile].direction & directions_from[index]
+			and (not _wire_tiles.has(neighbor)
+			or not _wire_tiles[neighbor].direction & directions_to[index]))
 		):
 			_wire_tiles[tile].direction &= ~directions_from[index]
 			update_signal(tile)
 		# Add connection
 		elif (
-				_gate_tiles.has(neighbor)
-				and _wire_tiles.has(neighbor)
+			_gate_tiles.has(neighbor)
+			and _wire_tiles.has(neighbor)
 				#and _wire_crossing_tiles.has(neighbor)
-				and _wire_tiles[neighbor].direction & directions_to[index]
+			and _wire_tiles[neighbor].direction & directions_to[index]
 		):
 			_wire_tiles[tile].direction |= directions_from[index]
 			if _wire_tiles[neighbor].state:
 				_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, true,
-						_logic_update_id))
+					_logic_update_id))
 
 	wire_layer.set_wire(tile, _wire_tiles[tile].direction)
 
@@ -391,7 +391,6 @@ func update_signal(tile: Vector2i) -> void:
 				wire_spread.append(check_tile + go_further)
 
 		if wires.size() > 10000:
-			print("Too big to check, or infinite loop")
 			_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, false, _logic_update_id))
 
 			return
@@ -404,12 +403,12 @@ func place_gate() -> void:
 	var gate_data_cells: Dictionary[Vector2i, Dictionary]
 	for tile in gate_tiles:
 		if (
-				_gate_tiles.has(tile) or untouchable_tiles.has(tile)
-				or (not is_sandbox
-				and (tile.x < dimension_limits[0].x
-				or tile.y < dimension_limits[0].y
-				or tile.x > dimension_limits[1].x
-				or tile.y > dimension_limits[1].y))
+			_gate_tiles.has(tile) or untouchable_tiles.has(tile)
+			or (not is_sandbox
+			and (tile.x < dimension_limits[0].x
+			or tile.y < dimension_limits[0].y
+			or tile.x > dimension_limits[1].x
+			or tile.y > dimension_limits[1].y))
 		):
 			return
 
@@ -449,8 +448,8 @@ func place_gate() -> void:
 		for tile in gate_tiles:
 			_gate_tiles[tile] = new_gate_id
 			if (
-					highlight_layer.get_cell_atlas_coords(tile) == Vector2i.ZERO
-					or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(0, 2)
+				highlight_layer.get_cell_atlas_coords(tile) == Vector2i.ZERO
+				or highlight_layer.get_cell_atlas_coords(tile) == Vector2i(0, 2)
 			):
 				_wire_tiles[tile] = WireTile.new(4)
 				_update_neighboring_wires(tile)
@@ -459,9 +458,9 @@ func place_gate() -> void:
 				_callable_queue.push_back(Callable(self, &"_get_into_gate").bind(tile))
 				_gates[new_gate_id].inputs.append(tile)
 			elif (
-					highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1)
-					or (_gates[new_gate_id].gate == EditorMode.Gate.NOT
-					and highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 0))
+				highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 1)
+				or (_gates[new_gate_id].gate == EditorMode.Gate.NOT
+				and highlight_layer.get_cell_atlas_coords(tile) == Vector2i(2, 0))
 			):
 				_wire_tiles[tile] = WireTile.new(1)
 				_update_neighboring_wires(tile)
@@ -520,13 +519,13 @@ func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) ->
 				_update_neighboring_wires(grid_position)
 				return
 			_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(next_tile_position,
-					state, update_id))
+				state, update_id))
 		elif _wire_crossing_tiles.has(next_tile_position):
 			if _wire_crossing_tiles[next_tile_position].get_axis_wire(
-					directions_dict[direction]).update_id >= update_id:
+				directions_dict[direction]).update_id >= update_id:
 				continue
 			_callable_queue.push_back(Callable(self, &"_spread_wire_through_crossing").bind(
-					next_tile_position, state, update_id, directions_dict[direction]))
+				next_tile_position, state, update_id, directions_dict[direction]))
 
 	if _gate_tiles.has(grid_position):
 		for output: Vector2i in _gates[_gate_tiles[grid_position]].outputs:
@@ -546,10 +545,10 @@ func _spread_wire_through_crossing(grid_position: Vector2i, state: bool, update_
 	var next_tile_position: Vector2i = grid_position + direction
 	if _wire_crossing_tiles.has(next_tile_position):
 		_callable_queue.push_back(Callable(self, &"_spread_wire_through_crossing").bind(
-				next_tile_position, state, update_id, direction))
+			next_tile_position, state, update_id, direction))
 		return
 	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(next_tile_position,
-					state, update_id))
+		state, update_id))
 
 
 func _get_into_gate(grid_position: Vector2i) -> void:
@@ -592,7 +591,7 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 
 	for index in outputs.size():
 		_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(
-				output_coordinates[index], outputs[index], _logic_update_id))
+			output_coordinates[index], outputs[index], _logic_update_id))
 
 
 func load_file(path: String) -> bool:
@@ -740,6 +739,7 @@ func load_file(path: String) -> bool:
 
 func create_custom_gate_from_dict() -> void:
 	var new_custom_gate := CustomGate.new(_callable_queue, self)
+	new_custom_gate.parent = self
 	_custom_gates.append(new_custom_gate)
 
 	var gates_dictionary: Dictionary = _custom_gate_dict["gates"]
@@ -767,6 +767,10 @@ func create_custom_gate_from_dict() -> void:
 		if gates_dictionary[gate].has("name"):
 			new_gate.display_name = gates_dictionary[gate]["name"]
 		new_custom_gate._gates[int(gate)] = new_gate
+
+		if gate_type == EditorMode.Gate.CUSTOM:
+			print("LOADING DEEPER GATE create_custom_gate_from_dict")
+			new_custom_gate.go_deeper(gates_dictionary[gate]["name"])
 
 	var placement_dictionary: Dictionary = _custom_gate_dict["placement"]
 	# Place grid inside the gate.
@@ -817,6 +821,7 @@ func sort_by_y_first(a: Vector2i, b: Vector2i) -> bool:
 
 func place_custom_gate(path: String) -> void:
 	var new_custom_gate := CustomGate.new(_callable_queue, self)
+	new_custom_gate.parent = self
 	_custom_gates.append(new_custom_gate)
 
 	var gates_ids: Array[int]
@@ -868,6 +873,10 @@ func place_custom_gate(path: String) -> void:
 		if loaded_gates_dict[gate].has("name"):
 			new_gate.display_name = loaded_gates_dict[gate]["name"]
 		new_custom_gate._gates[int(gate)] = new_gate
+
+		if gate_type == EditorMode.Gate.CUSTOM:
+			print("LOADING DEEPER GATE place_custom_gate")
+			new_custom_gate.go_deeper(loaded_gates_dict[gate]["name"])
 
 	var tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	for tile in tiles:
