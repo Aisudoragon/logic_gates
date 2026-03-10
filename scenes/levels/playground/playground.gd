@@ -624,8 +624,6 @@ func _on_finish_button_pressed() -> void:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false
 		12:
-			print(guesses)
-
 			var results: Array[String]
 			var results_bool: Array[bool]
 			if not guesses[0] and guesses[2] and guesses[4] and not guesses[6] and guesses[8] and not guesses[10] and not guesses[12] and guesses[14]:

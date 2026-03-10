@@ -19,6 +19,8 @@ func _init(queue_ref: DoubleLinkedListCallable, top_layer_ref: Wires) -> void:
 
 
 func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) -> void:
+	if not _wire_tiles.has(grid_position):
+		return
 	var this_wire_tile: Wires.WireTile = _wire_tiles[grid_position]
 	if this_wire_tile.state == state:
 		return
@@ -38,16 +40,17 @@ func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) ->
 		if _wire_tiles.has(next_tile_position):
 			if _wire_tiles[next_tile_position].update_id >= update_id:
 				continue
+			if _gate_tiles.has(next_tile_position) and _wire_tiles[next_tile_position].direction == 1 and not _wire_tiles[next_tile_position].state == state:
+				_wire_tiles.erase(grid_position)
+				return
 			_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(next_tile_position,
-					state, update_id))
+				state, update_id))
 		elif _wire_crossing_tiles.has(next_tile_position):
 			if _wire_crossing_tiles[next_tile_position].get_axis_wire(
-					directions_dict[direction]).update_id >= update_id:
+				directions_dict[direction]).update_id >= update_id:
 				continue
 			_callable_queue.push_back(Callable(self, &"_spread_wire_through_crossing").bind(
-					next_tile_position, state, update_id, directions_dict[direction]))
-		else:
-			push_error("%d direction is set but nothing is in %s" % [direction, next_tile_position])
+				next_tile_position, state, update_id, directions_dict[direction]))
 
 	if _gate_tiles.has(grid_position):
 		for output: Vector2i in _gates[_gate_tiles[grid_position]].outputs:
@@ -116,96 +119,6 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 	for index in outputs.size():
 		_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(
 				output_coordinates[index], outputs[index], _top_layer._logic_update_id))
-
-
-#func load_custom_gate_deeper(gate_path: String) -> void:
-	#var new_custom_gate := CustomGate.new(_callable_queue, _top_layer)
-	#new_custom_gate.parent = self
-	#_custom_gates.append(new_custom_gate)
-#
-	#gate_path = "user://customs/%s.circuit" % gate_path
-	#var _custom_gate_dict: Dictionary = JSON.parse_string(FileAccess.open(gate_path, FileAccess.READ).get_as_text())
-	#print("Loaded %s" % gate_path)
-#
-	#var gates_dictionary: Dictionary = _custom_gate_dict["gates"]
-#
-	#var custom_gate_inputs: Array[Vector2i]
-	#var custom_gate_outputs: Array[Vector2i]
-	## Fill data for all gates inside.
-	#for gate: String in gates_dictionary:
-		#var gate_type: EditorMode.Gate = gates_dictionary[gate]["gate"]
-		#var inputs: Array[Vector2i]
-		#for input: String in gates_dictionary[gate]["inputs"]:
-			#inputs.append(str_to_var("Vector2i" + input))
-		#var outputs: Array[Vector2i]
-		#for output: String in gates_dictionary[gate]["outputs"]:
-			#outputs.append(str_to_var("Vector2i" + output))
-#
-		#if gate_type == EditorMode.Gate.START:
-			#custom_gate_inputs.append(outputs[0])
-		#elif gate_type == EditorMode.Gate.STOP:
-			#custom_gate_outputs.append(inputs[0])
-#
-		#var new_gate: Wires.GateTile = Wires.GateTile.new(gate_type)
-		#new_gate.inputs = inputs
-		#new_gate.outputs = outputs
-		#if gates_dictionary[gate].has("name"):
-			#new_gate.display_name = gates_dictionary[gate]["name"]
-		#new_custom_gate._gates[int(gate)] = new_gate
-#
-		#var custom_inputs: Array[Vector2i]
-		#var custom_outputs: Array[Vector2i]
-		#for potential_gate: String in _custom_gate_dict["gates"]:
-			#if _custom_gate_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.START:
-				#custom_inputs.append(str_to_var("Vector2i" + _custom_gate_dict["gates"][potential_gate]["outputs"][0]))
-			#elif _custom_gate_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.STOP:
-				#custom_outputs.append(str_to_var("Vector2i" + _custom_gate_dict["gates"][potential_gate]["inputs"][0]))
-		#custom_inputs.sort_custom(_top_layer.sort_by_y_first)
-		#custom_outputs.sort_custom(_top_layer.sort_by_y_first)
-#
-		#print(custom_inputs)
-#
-		#for input_index in range(custom_inputs.size()):
-			#_custom_gate_tiles[str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][input_index])] = Wires.CustomGateTile.new(gate_path, _custom_gates[-1], custom_inputs[input_index])
-		#for output_index in range(custom_outputs.size()):
-			#_custom_gates[-1].exits[custom_outputs[output_index]] = str_to_var("Vector2i" + gates_dictionary[gate]["outputs"][output_index])
-#
-		#var gate_center_place: Vector2i = str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][0])
-#
-		#var custom_gate_pins: Vector2i
-		#custom_gate_pins.x = gates_dictionary[gate]["inputs"].size()
-		#custom_gate_pins.y = gates_dictionary[gate]["outputs"].size()
-#
-		#for update_position_string: String in gates_dictionary[gate]["inputs"]:
-			#var update_position: Vector2i = str_to_var("Vector2i" + update_position_string)
-			#_callable_queue.push_back(Callable(self, &"_get_into_gate").bind(update_position))
-#
-		#if gate_type == EditorMode.Gate.CUSTOM:
-			##new_custom_gate.load_custom_gate_deeper(gates_dictionary[gate]["name"])
-			#print("LOADING DEEPER GATE create_custom_gate_from_dict")
-#
-	#var placement_dictionary: Dictionary = _custom_gate_dict["placement"]
-	## Place grid inside the gate.
-	#for tile_string: String in placement_dictionary:
-		#var tile: Vector2i = str_to_var("Vector2i" + tile_string)
-		#if placement_dictionary[tile_string].has("gate"):
-			#new_custom_gate._gate_tiles[tile] = int(placement_dictionary[tile_string]["gate"])
-			##new_custom_gate._custom_gate_tiles[Vector2i(11, 5)] = CustomGateTile.new(path, new_custom_gate, Vector2i(1, 1))
-		#if placement_dictionary[tile_string].has("wires"):
-			#var wire_tile: Dictionary = placement_dictionary[tile_string]["wires"]
-			#if wire_tile.has("direction"):
-				#var direction: int = wire_tile["direction"]
-				#var state: bool = wire_tile["state"]
-				#var new_wire: Wires.WireTile = Wires.WireTile.new(direction)
-				#new_wire.state = state
-				#new_custom_gate._wire_tiles[tile] = new_wire
-			#else:
-				#var wire_crossing: Wires.WireCrossing = Wires.WireCrossing.new()
-				#var state: bool = wire_tile["horizontal_wire"]["state"]
-				#wire_crossing.horizontal_wire.state = state
-				#state = wire_tile["vertical_wire"]["state"]
-				#wire_crossing.vertical_wire.state = state
-				#new_custom_gate._wire_crossing_tiles[tile] = wire_crossing
 
 
 func load_custom_gate_deeper(path: String) -> void:
