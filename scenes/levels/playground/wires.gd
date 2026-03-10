@@ -674,9 +674,6 @@ func load_file(path: String) -> bool:
 			var gate_center_place: Vector2i = str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][0])
 			_custom_gates_names[gate_center_place] = gates_dictionary[gate]["name"]
 
-			#for custom_input in custom_inputs:
-				#print(_custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[custom_input]].display_name)
-
 			var custom_gate_pins: Vector2i
 			custom_gate_pins.x = gates_dictionary[gate]["inputs"].size()
 			custom_gate_pins.y = gates_dictionary[gate]["outputs"].size()
@@ -770,7 +767,6 @@ func create_custom_gate_from_dict() -> void:
 		new_custom_gate._gates[int(gate)] = new_gate
 
 		if gate_type == EditorMode.Gate.CUSTOM:
-			print("LOADING DEEPER GATE create_custom_gate_from_dict")
 			var deeper_path: String = "%s/%s.circuit" % [Filepaths.custom_gates_directory, gates_dictionary[gate]["name"]]
 			var deeper_dict: Dictionary = JSON.parse_string(FileAccess.open(deeper_path, FileAccess.READ).get_as_text())
 			new_custom_gate.create_custom_gate_from_dict(deeper_dict)
@@ -893,7 +889,6 @@ func place_custom_gate(path: String) -> void:
 		new_custom_gate._gates[int(gate)] = new_gate
 
 		if gate_type == EditorMode.Gate.CUSTOM:
-			print("LOADING DEEPER GATE place_custom_gate")
 			var deeper_path: String = "%s/%s.circuit" % [Filepaths.custom_gates_directory, loaded_gates_dict[gate]["name"]]
 			var deeper_dict: Dictionary = JSON.parse_string(FileAccess.open(deeper_path, FileAccess.READ).get_as_text())
 			new_custom_gate.create_custom_gate_from_dict(deeper_dict)
