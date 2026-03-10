@@ -43,6 +43,8 @@ var sentences: Array[Array] = [
 var dialogues: Dictionary[StringName, Array] = {
 	&"dialogue_1": sentences[0],
 	&"dialogue_2": sentences[1],
+	&"dialogue_3": sentences[2],
+	&"dialogue_4": sentences[3],
 }
 var current_dialogue: Array
 
@@ -62,7 +64,10 @@ var lesson_selected: int = 0
 @onready var lesson_button_11: Button = %LessonButton11
 @onready var lesson_button_12: Button = %LessonButton12
 @onready var lesson_button_13: Button = %LessonButton13
+@onready var lesson_button_14: Button = %LessonButton14
 @onready var dialogue_button_2: Button = %DialogueButton2
+@onready var dialogue_button_3: Button = %DialogueButton3
+@onready var dialogue_button_4: Button = %DialogueButton4
 
 @onready var speaker_name: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer2/SpeakerName
 @onready var speaker_text: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer/SpeakerText
@@ -523,6 +528,7 @@ func _on_dialogue_button_2_pressed() -> void:
 	lesson_button_6.disabled = not SaveProgress.dialogue_2
 	lesson_button_7.disabled = not SaveProgress.dialogue_2
 	lesson_button_8.disabled = not SaveProgress.dialogue_2
+	lesson_button_9.disabled = not SaveProgress.dialogue_2
 
 
 func _on_lesson_button_12_pressed() -> void:
@@ -553,3 +559,31 @@ Dodać cel zadania"""
 	lesson_selected = 13
 
 	play_ui_sound.emit()
+
+
+func _on_lesson_button_14_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Multiplekser 2x1[/center][/font_size]
+[hr]
+Dodać opis zadania.
+
+[hr]
+Dodać cel zadania"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 14
+
+	play_ui_sound.emit()
+
+
+func _on_dialogue_button_3_pressed() -> void:
+	start_conversation(&"dialogue_3")
+	SaveProgress.dialogue_3 = true
+	SaveProgress.update_save_file()
+	lesson_button_12.disabled = not SaveProgress.dialogue_3
+
+
+func _on_dialogue_button_4_pressed() -> void:
+	start_conversation(&"dialogue_4")
+	SaveProgress.dialogue_4 = true
+	SaveProgress.update_save_file()

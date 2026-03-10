@@ -491,7 +491,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[color=yellow][font_size=22]Coś większego?[/font_size][/color]"
+text = "[color=yellow][font_size=22]Coś większego[/font_size][/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -545,6 +545,33 @@ size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
 text = "[font_size=22]Multiplekser 4x1[/font_size]"
+vertical_alignment = 1
+
+[node name="DialogueButton4" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("2_hvryv")
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DialogueButton4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DialogueButton4/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[color=yellow][font_size=22]Zakończenie..?[/font_size][/color]"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer"]
@@ -776,7 +803,10 @@ text = "Zrozumiano"
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton7" to="." method="_on_lesson_button_7_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton8" to="." method="_on_lesson_button_8_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton9" to="." method="_on_lesson_button_9_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton14" to="." method="_on_lesson_button_14_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DialogueButton3" to="." method="_on_dialogue_button_3_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton12" to="." method="_on_lesson_button_12_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LessonButton13" to="." method="_on_lesson_button_13_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DialogueButton4" to="." method="_on_dialogue_button_4_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/MarginContainer/Panel/ProceedButton" to="." method="_on_proceed_button_pressed"]
 [connection signal="pressed" from="Introduction/VBoxContainer/PanelContainer3/IntroductionButton" to="." method="_on_introduction_button_pressed"]

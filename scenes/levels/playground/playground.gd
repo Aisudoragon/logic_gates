@@ -228,6 +228,13 @@ Jeśli chcesz aby to się nie stało, to daj im trochę odstępu.[/font_size]"""
 
 [font_size=14][/font_size]"""
 			helpful_text.text = """[font_size=14][/font_size]"""
+		14:
+			wires.level_dimension_limiter(Vector2i(-2, -3), Vector2i(18, 6))
+			wires_interface.enable_buttons(0b1100_1101_0000)
+			help_message[0] = """[center][font_size=28]Multiplekser 2x1[/font_size][/center]
+
+[font_size=14][/font_size]"""
+			helpful_text.text = """[font_size=14][/font_size]"""
 		_:
 			print("Invalid level selected. How?")
 
@@ -378,8 +385,6 @@ func _on_finish_button_pressed() -> void:
 			objective_text.text = buffer_objective + help_message[2]
 
 	buffer_objective = buffer_objective + help_message[2]
-
-	print(guesses)
 
 	match level_selected:
 		1:
@@ -551,7 +556,6 @@ func _on_finish_button_pressed() -> void:
 				results.append("red")
 				results_bool.append(false)
 
-			print(results)
 			objective_text.text = buffer_objective % results
 
 			if results_bool[0] and results_bool[1] and results_bool[2] and results_bool[3] and results_bool[4]:
@@ -590,6 +594,21 @@ func _on_finish_button_pressed() -> void:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
 				SaveProgress.level_13 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(13))
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
+		14:
+			if (
+					guesses[3] and guesses[4] and guesses[5] and guesses[7]
+					and not (guesses[0] and guesses[1] and guesses[2] and guesses[6])
+			):
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_14 = true
 				SaveProgress.update_save_file()
 				SaveProgress.ensure_directory_available()
 				wires.save_circuit(Filepaths.levels_dir_path(13))
