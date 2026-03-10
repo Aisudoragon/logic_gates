@@ -1,6 +1,7 @@
 class_name SaveProgress
 
 static var dialogue_1 := false
+static var dialogue_2 := false
 static var level_1 := false
 static var level_2 := false
 static var level_3 := false
@@ -11,11 +12,15 @@ static var level_7 := false
 static var level_8 := false
 static var level_9 := false
 static var level_10 := false
+static var level_11 := false
+static var level_12 := false
+static var level_13 := false
 
 
 static func update_save_file() -> void:
 	var progress_dict := {
 		"dialogue_1": dialogue_1,
+		"dialogue_2": dialogue_2,
 		"level_1": level_1,
 		"level_2": level_2,
 		"level_3": level_3,
@@ -26,6 +31,9 @@ static func update_save_file() -> void:
 		"level_8": level_8,
 		"level_9": level_9,
 		"level_10": level_10,
+		"level_11": level_11,
+		"level_12": level_12,
+		"level_13": level_13,
 	}
 	var save_file := FileAccess.open(Filepaths.save_progress, FileAccess.WRITE)
 	var success: bool = save_file.store_string(JSON.stringify(progress_dict, "\t"))
@@ -52,17 +60,21 @@ static func load_save() -> bool:
 		return false
 
 	var progress_dict: Dictionary = JSON.parse_string(save_file.get_as_text())
-	dialogue_1 = progress_dict["dialogue_1"]
-	level_1 = progress_dict["level_1"]
-	level_2 = progress_dict["level_2"]
-	level_3 = progress_dict["level_3"]
-	level_4 = progress_dict["level_4"]
-	level_5 = progress_dict["level_5"]
-	level_6 = progress_dict["level_6"]
-	level_7 = progress_dict["level_7"]
-	level_8 = progress_dict["level_8"]
-	level_9 = progress_dict["level_9"]
-	level_10 = progress_dict["level_10"]
+	dialogue_1 = progress_dict.get("dialogue_1", false)
+	dialogue_2 = progress_dict.get("dialogue_2", false)
+	level_1 = progress_dict.get("level_1", false)
+	level_2 = progress_dict.get("level_2", false)
+	level_3 = progress_dict.get("level_3", false)
+	level_4 = progress_dict.get("level_4", false)
+	level_5 = progress_dict.get("level_5", false)
+	level_6 = progress_dict.get("level_6", false)
+	level_7 = progress_dict.get("level_7", false)
+	level_8 = progress_dict.get("level_8", false)
+	level_9 = progress_dict.get("level_9", false)
+	level_10 = progress_dict.get("level_10", false)
+	level_11 = progress_dict.get("level_11", false)
+	level_12 = progress_dict.get("level_12", false)
+	level_13 = progress_dict.get("level_13", false)
 
 	return true
 

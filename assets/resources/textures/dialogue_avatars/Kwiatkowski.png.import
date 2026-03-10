@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wyh1u07bjm2w"
-path="res://.godot/imported/Kowalski - Szef.png-670c7ace0296349f0528ad69944ac477.ctex"
+uid="uid://dpvqwj0pn73u8"
+path="res://.godot/imported/Kwiatkowski.png-e11020eb6073ed88d8f83d5ac38e7b72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/resources/textures/dialogue_avatars/Kowalski - Szef.png"
-dest_files=["res://.godot/imported/Kowalski - Szef.png-670c7ace0296349f0528ad69944ac477.ctex"]
+source_file="res://assets/resources/textures/dialogue_avatars/Kwiatkowski.png"
+dest_files=["res://.godot/imported/Kwiatkowski.png-e11020eb6073ed88d8f83d5ac38e7b72.ctex"]
 
 [params]
 

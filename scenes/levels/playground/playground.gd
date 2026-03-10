@@ -116,6 +116,10 @@ func propagade_file_path(path: String) -> void:
 
 
 func load_level(id: int, reset: bool = false) -> void:
+	if reset:
+		finish_button.text = "Wypróbuj rozwiązanie"
+		finish_button.disabled = false
+
 	level_selected = id
 	$WiresInterface/SaveButtons/BackButton.visible = false
 	$WiresInterface/SaveButtons/BackButton2.visible = true
@@ -129,14 +133,14 @@ func load_level(id: int, reset: bool = false) -> void:
 		1:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 1))
 			wires_interface.enable_buttons(0b1100_0000_0000)
-			help_message[0] = """[center][font_size=28]Zadanie 1[/font_size][/center]
+			help_message[0] = """[center][font_size=28]Proste połączenie[/font_size][/center]
 
-Na początek coś prostego.
+[font_size=14]Tutaj będą wypisane zadania, które należe spełnić:
 [ul][color=%s]Połącz oba końce w jeden kabel[/color][/ul]
 
-Na końcu każdego takiego streszczenia pojawi się tablica prawdy, która zostanie uzupełniona po wypróbowaniu rozwiązania.
-Przyszłe zadania [i]mogą[/i] wymagać, aby była wygenerowana w konkretny sposób."""
-			helpful_text.text = """Kliknij przycisk "KABEL", przytrzymaj lewy przycisk myszy na jednym końcu i przeciągnij do drugiego końca."""
+Tutaj pojawi się streszczenie zadania. Po naciśnięciu "Wypróbuj rozwiązanie" pojawi się tablica prawdy, która wskaże jak zostało wykonane zadanie.
+Poniżej znajduje się również przycisk "Pomoc", który bardziej wprost wskaże co należy zrobić."""
+			helpful_text.text = """[font_size=14]Kliknij przycisk "KABEL", przytrzymaj lewy przycisk myszy na jednym końcu i przeciągnij do drugiego końca.[/font_size]"""
 		2:
 			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
 			wires_interface.enable_buttons(0b1100_0100_0000)
@@ -181,9 +185,49 @@ Kolejność bramek ma znaczenie!"""
 			helpful_text.text = ""
 		9:
 			wires.level_dimension_limiter(Vector2i(-5, -6), Vector2i(9, 5))
-			wires_interface.enable_buttons(0b1111_1111_1000)
-			help_message[0] = ""
-			helpful_text.text = ""
+			wires_interface.enable_buttons(0b1100_0100_0100)
+			help_message[0] = """[center][font_size=28]Półpełny sumator[/font_size][/center]
+
+[font_size=14][/font_size]"""
+			helpful_text.text = """[font_size=14][/font_size]"""
+		10:
+			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 0))
+			wires_interface.enable_buttons(0b1100_0000_0000)
+			help_message[0] = """[center][font_size=28]Wiele kabli[/font_size][/center]
+
+[font_size=14][ul][color=%s]Połącz A do Z[/color][/ul]
+[ul][color=%s]Połącz B do Y[/color][/ul]
+
+Skrzyżuj kable tak, aby na siebie nie wpływały.[/font_size]"""
+			helpful_text.text = """[font_size=14]Jeśli przypadkowo stworzysz rozwidlenie do 3 kierunków. Nie musisz usuwać i rysować ponownie. Wystarczy, że naciśniesz na nie a zamieni się w skrzyżowanie i vice versa![/font_size]"""
+		11:
+			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(6, 1))
+			wires_interface.enable_buttons(0b1100_0000_0000)
+			help_message[0] = """[center][font_size=28]Rozwidlenia[/font_size][/center]
+
+[font_size=14]Połącz Wejście do:
+[ul][color=%s]Wyjścia A[/color][/ul]
+[ul][color=%s]Wyjścia C[/color][/ul]
+[ul][color=%s]Wyjścia D[/color][/ul]
+[b]NIE[/b] łącz Wejścia do:
+[ul][color=%s]Wyjścia B[/color][/ul]
+[ul][color=%s]Wyjścia E[/color][/ul][/font_size]"""
+			helpful_text.text = """[font_size=14]Kable w sąsiedztwie z wejściem/wyjściem automatycznie się połączą.
+Jeśli chcesz aby to się nie stało, to daj im trochę odstępu.[/font_size]"""
+		12:
+			wires.level_dimension_limiter(Vector2i(-4, -6), Vector2i(18, 7))
+			wires_interface.enable_buttons(0b1100_0101_0100)
+			help_message[0] = """[center][font_size=28]Pełny sumator[/font_size][/center]
+
+[font_size=14][/font_size]"""
+			helpful_text.text = """[font_size=14][/font_size]"""
+		13:
+			wires.level_dimension_limiter(Vector2i(-4, -10), Vector2i(25, 10))
+			wires_interface.enable_buttons(0b1100_1101_0000)
+			help_message[0] = """[center][font_size=28]Multiplekser 4x1[/font_size][/center]
+
+[font_size=14][/font_size]"""
+			helpful_text.text = """[font_size=14][/font_size]"""
 		_:
 			print("Invalid level selected. How?")
 
@@ -311,13 +355,19 @@ func _on_finish_button_pressed() -> void:
 	help_message[2] = ""
 
 	for start in range(2 ** start_gates.size()):
-		await get_tree().create_timer(.25).timeout
+		if level_selected == 13:
+			await get_tree().create_timer(0.05).timeout
+		else:
+			await get_tree().create_timer(0.85).timeout
 
-		for gate in range(start_gates.size() - 1, -1, -1):
+		for gate in range(start_gates.size()):
 			wires.set_output(start_gates[gate], start >> gate & 1)
 			help_message[2] += "[cell border=white]%d[/cell]" % (start >> gate & 1)
 			objective_text.text = buffer_objective + help_message[2]
 		await wires.queue_cleared
+
+		if not visible:
+			return
 
 		for gate in start_gates:
 			truth_table_content.append(wires._wire_tiles[gate].state)
@@ -429,13 +479,120 @@ func _on_finish_button_pressed() -> void:
 				finish_button.disabled = false
 				objective_text.text = buffer_objective % "red"
 		9:
-			if guesses[1] and not guesses[2] and not guesses[3]:
+			if not guesses[0] and not guesses[1] and guesses[2] and not guesses[3] and guesses[4] and not guesses[5] and not guesses[6] and guesses[7]:
 				finish_button.text = "Ukończono!"
 				objective_text.text = buffer_objective % "green"
 				SaveProgress.level_9 = true
 				SaveProgress.update_save_file()
 				SaveProgress.ensure_directory_available()
 				wires.save_circuit(Filepaths.levels_dir_path(9))
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
+		10:
+			var results: Array[String]
+			var results_bool: Array[bool]
+			if not guesses[1] and guesses[3] and not guesses[5] and guesses[7]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+			if not guesses[0] and not guesses[2] and guesses[4] and guesses[6]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+
+			objective_text.text = buffer_objective % results
+
+			if results_bool[0] and results_bool[1]:
+				finish_button.text = "Ukończono!"
+				SaveProgress.level_10 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(10))
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+		11:
+			var results: Array[String]
+			var results_bool: Array[bool]
+			if not guesses[0] and guesses[5]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+			if not guesses[2] and guesses[7]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+			if not guesses[3] and guesses[8]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+			if not guesses[1] and not guesses[6]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+			if not guesses[0] and not guesses[9]:
+				results.append("green")
+				results_bool.append(true)
+			else:
+				results.append("red")
+				results_bool.append(false)
+
+			print(results)
+			objective_text.text = buffer_objective % results
+
+			if results_bool[0] and results_bool[1] and results_bool[2] and results_bool[3] and results_bool[4]:
+				finish_button.text = "Ukończono!"
+				SaveProgress.level_11 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(11))
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+		12:
+			if not guesses[0] and not guesses[1] and guesses[2] and not guesses[3] and guesses[4] and not guesses[5] and not guesses[6] and guesses[7] and guesses[8] and not guesses[9] and not guesses[10] and guesses[11] and not guesses[12] and guesses[13] and guesses[14] and guesses[15]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_12 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(12))
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie"
+				finish_button.disabled = false
+				objective_text.text = buffer_objective % "red"
+		13:
+			if (
+					guesses[1] and guesses[3] and guesses[5] and guesses[7] and guesses[9] and guesses[11] and guesses[13] and guesses[15]
+					and guesses[20] and guesses[21] and guesses[22] and guesses[23] and guesses[28] and guesses[29] and guesses[30] and guesses[31]
+					and guesses[34] and guesses[35] and guesses[38] and guesses[39] and guesses[42] and guesses[43] and guesses[46] and guesses[47]
+					and guesses[56] and guesses[57] and guesses[58] and guesses[59] and guesses[60] and guesses[61] and guesses[62] and guesses[63]
+
+					and not (guesses[0] and guesses[2] and guesses[4] and guesses[6] and guesses[8] and guesses[10] and guesses[12] and guesses[14]
+					and guesses[16] and guesses[17] and guesses[18] and guesses[19] and guesses[24] and guesses[25] and guesses[26] and guesses[27]
+					and guesses[32] and guesses[33] and guesses[36] and guesses[37] and guesses[41] and guesses[42] and guesses[45] and guesses[46]
+					and guesses[48] and guesses[40] and guesses[50] and guesses[51] and guesses[52] and guesses[53] and guesses[54] and guesses[55])
+			):
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_13 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(13))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie"
 				finish_button.disabled = false

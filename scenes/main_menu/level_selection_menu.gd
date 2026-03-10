@@ -8,24 +8,41 @@ signal play_ui_sound()
 var sentences: Array[Array] = [
 	# Postacie:
 		# Ja
-		# Narrator
 		# Kowalski - Szef
 		# Kwiatkowski (Marcin)
 	[
-		["Kowalski - Szef", "Bardzo się cieszymy, że dołączył Pan do naszego zespołu!"],
-		["Kowalski - Szef", "Zajmę się się teraz formalnościami. Dla Pana został przydzielony nasz inżynier Kwiatkowski."],
-		["Kowalski - Szef", "W tym czasie proszę udać się na swoje stanowisko, a Pan Kwiatkowski niedługo przybędzie."],
-		["Narrator", "[i]Idziesz do twojego nowego stanowiska. Po kilku minutach zjawia się przydzielony inżynier.[/i]"],
+		["Szef", "Bardzo się cieszymy, że dołączył Pan do naszego zespołu!"],
+		["Szef", "Zajmę się się teraz formalnościami. Dla Pana został przydzielony nasz inżynier Kwiatkowski."],
+		["Szef", "W tym czasie proszę udać się na swoje stanowisko, a Pan Kwiatkowski niedługo przybędzie."],
+		["Ja", "[i]Po kilku minutach...[/i]"],
 		["Kwiatkowski", "Cześć! Marcin jestem."],
-		["Marcin", "Gadkę zostawimy na później, bo się teraz spieszę na spotkanie. Zrobię Ci szybki kurs naszego programu."],
+		["Marcin", "Gadkę zostawimy na później, teraz spieszę się na spotkanie. Zrobię Ci szybki kurs naszego programu."],
 		["Marcin", "W nim projektujemy i symulujemy układy, zanim pójdą do produkcji."],
 		["Marcin", "Na początek przygotowałem Ci zestaw zadań, abyś szybko zrozumiał jak działa nasz program."],
 		["Marcin", "Jak zrozumiesz już sterowanie, to zawołaj mnie i wytłumaczę co dalej."],
+		["Marcin", "W razie czego możesz powtórzyć każdą rozmowę, klikając na przyciski z żółtym tekstem."],
 	],
+	[
+		["Marcin", "Dobra. Wygląda na to, że masz to już obcykane."],
+		["Marcin", "Dam Ci teraz kilka prostych zleceń na start. Potem Cię przydzielę do czegoś większego."],
+		["Marcin", "Masz tutaj jeszcze materiały tłumaczące działanie każdej bramki. Każdy pracownik takie dostaje."],
+		["Marcin", "Dobra, to ty działaj. A ja lecę na kolejne spotkanie."],
+		["Marcin", "Możesz powtórzyć każde zadanie w każdej chwili. Będzie wyświetlone poprzednie poprawne rozwiązanie, jeśli chcesz tylko rzucić na coś okiem."],
+	],
+	[
+		["Marcin", "Świetnie Ci poszło z tymi zadaniami. Spróbuj teraz je trochę rozwinąć."],
+		["Marcin", "Większy multiplekser może zająć trochę czasu. Pamiętaj, że nie musisz się spieszyć i możesz wrócić do zadania w każdej chwili."],
+	],
+	[
+		["Marcin", "Ładnie wykonana robota! Świetnie sobie poradziłeś ze wszystkim."],
+		["Marcin", "Na dzisiaj skończyły mi się rzeczy, które mogę Ci dać do zrobienia."],
+		["Marcin", "Choć do kawiarni. Pokażę Ci jakie przysmaki tam mają."],
+	]
 ]
 # Dialogue_X, sentences
 var dialogues: Dictionary[StringName, Array] = {
-	&"dialogue_1": sentences[0]
+	&"dialogue_1": sentences[0],
+	&"dialogue_2": sentences[1],
 }
 var current_dialogue: Array
 
@@ -42,6 +59,10 @@ var lesson_selected: int = 0
 @onready var lesson_button_8: Button = %LessonButton8
 @onready var lesson_button_9: Button = %LessonButton9
 @onready var lesson_button_10: Button = %LessonButton10
+@onready var lesson_button_11: Button = %LessonButton11
+@onready var lesson_button_12: Button = %LessonButton12
+@onready var lesson_button_13: Button = %LessonButton13
+@onready var dialogue_button_2: Button = %DialogueButton2
 
 @onready var speaker_name: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer2/SpeakerName
 @onready var speaker_text: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer/SpeakerText
@@ -58,6 +79,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func introduction_visibility(visibility: bool) -> void:
 	if visibility:
 		start_conversation(&"dialogue_1")
+		SaveProgress.dialogue_1 = true
+		SaveProgress.update_save_file()
 
 
 func start_conversation(dialogue: StringName) -> void:
@@ -79,15 +102,14 @@ func dialogue_advance() -> void:
 	speaker_name.text = this_sentence[0]
 	speaker_text.text = this_sentence[1]
 
-	if this_sentence[0] == "Ja" or this_sentence[0] == "Narrator":
+	if this_sentence[0] == "Ja":
 		speaker_image.texture = ImageTexture.new()
 	else:
 		speaker_image.texture = pick_image_for_dialogue(this_sentence[0])
 
 
-func pick_image_for_dialogue(speaker: String) -> ImageTexture:
-	var image := Image.load_from_file("res://assets/resources/textures/dialogue_avatars/%s.png" % speaker)
-	return ImageTexture.create_from_image(image)
+func pick_image_for_dialogue(speaker: String) -> CompressedTexture2D:
+	return load("res://assets/resources/textures/dialogue_avatars/%s.png" % speaker)
 
 
 func _on_back_pressed() -> void:
@@ -99,18 +121,14 @@ func _on_back_pressed() -> void:
 
 func _on_lesson_button_1_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Witaj w twojej pierwszej lekcji![/center][/font_size]
+[font_size=28][center]Witaj w poziomie wprowadzającym![/center][/font_size]
 [hr]
 Na sam początek przypomnimy w skrócie algebrę Boole'a.
 [ul]Dana zmienna (np. [i]a[/i]) może mieć tylko jedną z dwóch wartości: 0 lub 1.[/ul]
 [ul]1 jest prawdą, 0 jest fałszem.[/ul]
-Występują w niej również działania takie jak:
-[ul][char=2228] [char=2014] alternatywa (lub),[/ul]
-[ul][char=2227] [char=2014] koniunkcja (i),[/ul]
-[ul][char=AC] [char=2014] negacja (nie).[/ul]
 Każda operacja będzie dokładniej wyjaśniona w swoich lekcjach. Jest to niezwykle ważny temat, który jest nieodzłączną częścią układów.
 
-W tej lekcji zostanie wytłumaczone odczytywanie tablic prawdy, oraz jak wygląda układ scalony.
+W tej lekcji zostanie wytłumaczone odczytywanie tablic prawdy, oraz jak wygląda tworzenie kabli pomiędzy złączeniami.
 
 Tablica prawdy składa się z trzech elementów, które mogą (nie muszą) pojawić się wielokrotnie:
 
@@ -139,12 +157,67 @@ zmienna [char=2014] reprezentuje dany symbol. Np. a.
 wyrażenie [char=2014] reprezentuje pewne działanie. Np. a[char=2227]b.
 wartość [char=2014] reprezentuje 0 lub 1.
 
-Przykłady poprawnych tablic będą zaprezentowane w nastepnych lekcjach (oraz prostsza wersja w tej lekcji). Teraz pora na odrobinę praktyki. Na początek coś prostego!
+Przykłady poprawnych tablic będą zaprezentowane w nastepnych lekcjach (oraz prostsza wersja w tej lekcji). Teraz pora na odrobinę praktyki.
 [hr]
 W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (koniec) układu. Na planszy będą się znajdować obydwa zakończenia. Wystarczy je połączyć kablem!"""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 1
+
+	play_ui_sound.emit()
+
+
+func _on_lesson_button_10_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Układ nie składa się tylko z jednego kabla[/center][/font_size]
+[hr]
+W układzie może znajdować się wiele kabli, które robią inne rzeczy. Mogą się krzyżować lub rozdzielać.
+
+Rozwidlenie oznaczone kropką: [img=64]res://assets/resources/textures/crossing.png[/img]. Skrzyżowanie bez kropki: [img]res://assets/resources/textures/crossing_no.png[/img]
+
+[hr]
+W tym zadaniu połączysz ze sobą konkretne złączenia, według tablicy prawdy:
+
+[center][table=4,center]
+[cell border=white padding=1,0,1,5][b] A [/b][/cell]
+[cell border=white padding=1,0,1,5][b] B [/b][/cell]
+[cell border=white padding=1,0,1,5][b] Y [/b][/cell]
+[cell border=white padding=1,0,1,5][b] Z [/b][/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]0[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[cell border=white padding=1,0,1,5]1[/cell]
+[/table][/center]"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 10
+
+	play_ui_sound.emit()
+
+
+func _on_lesson_button_11_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Rozwidlenia[/center][/font_size]
+[hr]
+Tutaj będzie poruszona ta sama kwestia. Tylko teraz jedno wyjście będzie rozprowadzone do kilku wyjść.
+
+[hr]
+Połącz jedno wejście do kilku konkretnych wyjść."""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 11
 
 	play_ui_sound.emit()
 
@@ -406,7 +479,7 @@ Stwórz tablicę prawdy dla bramki XNOR."""
 
 func _on_lesson_button_9_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Bramka SR Latch[/center][/font_size]
+[font_size=28][center]Półpełny sumator[/center][/font_size]
 [hr]
 Dodać opis zadania.
 
@@ -419,12 +492,6 @@ Dodać cel zadania"""
 	play_ui_sound.emit()
 
 
-func _on_lesson_button_10_pressed() -> void:
-	pass # Replace with function body.
-
-	play_ui_sound.emit()
-
-
 func _on_proceed_button_pressed() -> void:
 	change_scene_level_selected.emit(lesson_selected)
 
@@ -433,12 +500,56 @@ func _on_introduction_button_pressed() -> void:
 	introduction_visibility(false)
 	SaveProgress.dialogue_1 = true
 	SaveProgress.update_save_file()
-	($LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ReintroduceButton as Button).focus_mode = Control.FOCUS_NONE
 
 	play_ui_sound.emit()
 
 
 func _on_reintroduce_button_pressed() -> void:
 	introduction_visibility(true)
+	SaveProgress.dialogue_1 = true
+	SaveProgress.update_save_file()
+
+	play_ui_sound.emit()
+
+
+func _on_dialogue_button_2_pressed() -> void:
+	start_conversation(&"dialogue_2")
+	SaveProgress.dialogue_2 = true
+	SaveProgress.update_save_file()
+	lesson_button_2.disabled = not SaveProgress.dialogue_2
+	lesson_button_3.disabled = not SaveProgress.dialogue_2
+	lesson_button_4.disabled = not SaveProgress.dialogue_2
+	lesson_button_5.disabled = not SaveProgress.dialogue_2
+	lesson_button_6.disabled = not SaveProgress.dialogue_2
+	lesson_button_7.disabled = not SaveProgress.dialogue_2
+	lesson_button_8.disabled = not SaveProgress.dialogue_2
+
+
+func _on_lesson_button_12_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Pełny sumator[/center][/font_size]
+[hr]
+Dodać opis zadania.
+
+[hr]
+Dodać cel zadania"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 12
+
+	play_ui_sound.emit()
+
+
+func _on_lesson_button_13_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Multiplekser 4x1[/center][/font_size]
+[hr]
+Dodać opis zadania.
+
+[hr]
+Dodać cel zadania"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 13
 
 	play_ui_sound.emit()

@@ -16,18 +16,26 @@
 				"(-3, -1)"
 			]
 		},
-		"9": {
+		"11": {
+			"gate": 7,
+			"inputs": [],
+			"name": "Cin",
+			"outputs": [
+				"(-3, 1)"
+			]
+		},
+		"17": {
 			"gate": 8,
 			"inputs": [
-				"(6, -3)"
+				"(17, -1)"
 			],
 			"name": "Suma",
 			"outputs": []
 		},
-		"10": {
+		"18": {
 			"gate": 8,
 			"inputs": [
-				"(6, 2)"
+				"(17, 4)"
 			],
 			"name": "Carry",
 			"outputs": []
@@ -48,15 +56,22 @@
 				"state": false
 			}
 		},
-		"(6, -3)": {
-			"gate": 9,
+		"(-3, 1)": {
+			"gate": 11,
+			"wires": {
+				"direction": 1,
+				"state": false
+			}
+		},
+		"(17, -1)": {
+			"gate": 17,
 			"wires": {
 				"direction": 4,
 				"state": false
 			}
 		},
-		"(6, 2)": {
-			"gate": 10,
+		"(17, 4)": {
+			"gate": 18,
 			"wires": {
 				"direction": 4,
 				"state": false

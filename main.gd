@@ -32,15 +32,19 @@ func _on_change_scene_main_menu() -> void:
 
 func _on_change_scene_level_selection() -> void:
 	level_selection.introduction_visibility(not SaveProgress.dialogue_1)
-	level_selection.lesson_button_2.disabled = not SaveProgress.level_1
-	level_selection.lesson_button_3.disabled = not SaveProgress.level_2
-	level_selection.lesson_button_4.disabled = not SaveProgress.level_3
-	level_selection.lesson_button_5.disabled = not SaveProgress.level_4
-	level_selection.lesson_button_6.disabled = not SaveProgress.level_5
-	level_selection.lesson_button_7.disabled = not SaveProgress.level_6
-	level_selection.lesson_button_8.disabled = not SaveProgress.level_7
-	level_selection.lesson_button_9.disabled = not SaveProgress.level_8
-	level_selection.lesson_button_10.disabled = not SaveProgress.level_9
+	level_selection.lesson_button_2.disabled = not SaveProgress.dialogue_2
+	level_selection.lesson_button_3.disabled = not SaveProgress.dialogue_2
+	level_selection.lesson_button_4.disabled = not SaveProgress.dialogue_2
+	level_selection.lesson_button_5.disabled = not SaveProgress.dialogue_2
+	level_selection.lesson_button_6.disabled = not SaveProgress.dialogue_2
+	level_selection.lesson_button_7.disabled = not SaveProgress.dialogue_2
+	level_selection.lesson_button_8.disabled = not SaveProgress.dialogue_2
+	level_selection.lesson_button_9.disabled = not SaveProgress.dialogue_2
+	level_selection.lesson_button_10.disabled = not SaveProgress.level_1
+	level_selection.lesson_button_11.disabled = not SaveProgress.level_10
+	level_selection.dialogue_button_2.disabled = not SaveProgress.level_11
+	level_selection.lesson_button_12.disabled = not SaveProgress.level_9
+	level_selection.lesson_button_13.disabled = not SaveProgress.level_12
 	_change_scene(level_selection)
 
 

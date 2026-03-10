@@ -12,7 +12,7 @@ var _custom_gate_dict: Dictionary
 signal queue_cleared()
 signal play_ui_sound()
 
-var _queue_executes_per_frame := 1
+var _queue_executes_per_frame := 500
 var _callable_queue := DoubleLinkedListCallable.new()
 var _next_free_gate_id := 0:
 	get:
@@ -360,27 +360,41 @@ func update_signal(tile: Vector2i) -> void:
 		if _wire_tiles[check_tile].direction & EditorMode.Direction.RIGHT:
 			if _wire_tiles.has(check_tile + Vector2i.RIGHT) and not wires.has(check_tile + Vector2i.RIGHT):
 				wire_spread.append(check_tile + Vector2i.RIGHT)
-			elif _wire_crossing_tiles.has(check_tile + Vector2i.RIGHT) and not wires.has(check_tile + (Vector2i.RIGHT) * 2):
-				wire_spread.append(check_tile + (Vector2i.RIGHT * 2))
+			elif _wire_crossing_tiles.has(check_tile + Vector2i.RIGHT):
+				var go_further := Vector2i.RIGHT * 2
+				while _wire_crossing_tiles.has(check_tile + go_further):
+					go_further += Vector2i.RIGHT
+				wire_spread.append(check_tile + go_further)
 		if _wire_tiles[check_tile].direction & EditorMode.Direction.DOWN:
 			if _wire_tiles.has(check_tile + Vector2i.DOWN) and not wires.has(check_tile + Vector2i.DOWN):
 				wire_spread.append(check_tile + Vector2i.DOWN)
-			elif _wire_crossing_tiles.has(check_tile + Vector2i.DOWN) and not wires.has(check_tile + (Vector2i.DOWN * 2)):
-				wire_spread.append(check_tile + (Vector2i.DOWN * 2))
+			elif _wire_crossing_tiles.has(check_tile + Vector2i.DOWN):
+				var go_further := Vector2i.DOWN * 2
+				while _wire_crossing_tiles.has(check_tile + go_further):
+					go_further += Vector2i.DOWN
+				wire_spread.append(check_tile + go_further)
 		if _wire_tiles[check_tile].direction & EditorMode.Direction.LEFT:
 			if _wire_tiles.has(check_tile + Vector2i.LEFT) and not wires.has(check_tile + Vector2i.LEFT):
 				wire_spread.append(check_tile + Vector2i.LEFT)
-			elif _wire_crossing_tiles.has(check_tile + Vector2i.LEFT) and not wires.has(check_tile + (Vector2i.LEFT * 2)):
-				wire_spread.append(check_tile + (Vector2i.LEFT * 2))
+			elif _wire_crossing_tiles.has(check_tile + Vector2i.LEFT):
+				var go_further := Vector2i.LEFT * 2
+				while _wire_crossing_tiles.has(check_tile + go_further):
+					go_further += Vector2i.LEFT
+				wire_spread.append(check_tile + go_further)
 		if _wire_tiles[check_tile].direction & EditorMode.Direction.UP:
 			if _wire_tiles.has(check_tile + Vector2i.UP) and not wires.has(check_tile + Vector2i.UP):
 				wire_spread.append(check_tile + Vector2i.UP)
-			elif _wire_crossing_tiles.has(check_tile + Vector2i.UP) and not wires.has(check_tile + (Vector2i.UP * 2)):
-				wire_spread.append(check_tile + (Vector2i.UP * 2))
+			elif _wire_crossing_tiles.has(check_tile + Vector2i.UP):
+				var go_further := Vector2i.UP * 2
+				while _wire_crossing_tiles.has(check_tile + go_further):
+					go_further += Vector2i.UP
+				wire_spread.append(check_tile + go_further)
 
-		#if wires.size() > 25:
-			#print("Smaller")
-			#wires.resize(10)
+		if wires.size() > 10000:
+			print("Too big to check, or infinite loop")
+			_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, false, _logic_update_id))
+
+			return
 		wires.push_back(check_tile)
 	_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(tile, false, _logic_update_id))
 
