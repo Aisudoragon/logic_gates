@@ -108,10 +108,9 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 		parent._spread_wire_logic(exit_coords, _wire_tiles[grid_position].state, _top_layer._logic_update_id)
 
 	elif gate_type == EditorMode.Gate.CUSTOM:
-		print("Entering custom gate!")
 		# TODO Enter into gate coordinates and propagade signal there
 		if not _custom_gate_tiles.has(grid_position):
-			print("No _ucstom_gate_tiles at %s", grid_position)
+			print("No _custom_gate_tiles at %s", grid_position)
 			return
 		var the_gate: CustomGate = _custom_gate_tiles[grid_position].inner_workings
 		the_gate._spread_wire_logic(_custom_gate_tiles[grid_position].swap_coordinate, _wire_tiles[grid_position].state, _top_layer._logic_update_id)
@@ -184,16 +183,12 @@ func load_custom_gate_deeper(path: String) -> void:
 			custom_inputs.sort_custom(_top_layer.sort_by_y_first)
 			custom_outputs.sort_custom(_top_layer.sort_by_y_first)
 
-			print(custom_inputs)
 			for input_index in range(custom_inputs.size()):
 				_custom_gate_tiles[str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][input_index])] = Wires.CustomGateTile.new(gate_path, _custom_gates[-1], custom_inputs[input_index])
 			for output_index in range(custom_outputs.size()):
 				_custom_gates[-1].exits[custom_outputs[output_index]] = str_to_var("Vector2i" + gates_dictionary[gate]["outputs"][output_index])
 
 			var gate_center_place: Vector2i = str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][0])
-
-			#for custom_input in custom_inputs:
-				#print(_custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[custom_input]].display_name)
 
 			for update_position_string: String in gates_dictionary[gate]["inputs"]:
 				var update_position: Vector2i = str_to_var("Vector2i" + update_position_string)
@@ -214,7 +209,6 @@ func create_custom_gate_from_dict(custom_gate_dict: Dictionary) -> void:
 	# Fill data for all gates inside.
 	for gate: String in gates_dictionary:
 		var gate_type: EditorMode.Gate = gates_dictionary[gate]["gate"]
-		print(gate_type)
 		var inputs: Array[Vector2i]
 		for input: String in gates_dictionary[gate]["inputs"]:
 			inputs.append(str_to_var("Vector2i" + input))
@@ -235,8 +229,24 @@ func create_custom_gate_from_dict(custom_gate_dict: Dictionary) -> void:
 		new_custom_gate._gates[int(gate)] = new_gate
 
 		if gate_type == EditorMode.Gate.CUSTOM:
-			new_custom_gate.load_custom_gate_deeper(gates_dictionary[gate]["name"])
-			print("Loading even deeper inside")
+			var gate_path: String = "%s/%s.circuit" % [Filepaths.custom_gates_directory, gates_dictionary[gate]["name"]]
+			var deeper_dict: Dictionary = JSON.parse_string(FileAccess.open(gate_path, FileAccess.READ).get_as_text())
+			new_custom_gate.create_custom_gate_from_dict(deeper_dict)
+
+			var custom_inputs: Array[Vector2i]
+			var custom_outputs: Array[Vector2i]
+			for potential_gate: String in deeper_dict["gates"]:
+				if deeper_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.START:
+					custom_inputs.append(str_to_var("Vector2i" + deeper_dict["gates"][potential_gate]["outputs"][0]))
+				elif deeper_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.STOP:
+					custom_outputs.append(str_to_var("Vector2i" + deeper_dict["gates"][potential_gate]["inputs"][0]))
+			custom_inputs.sort_custom(_top_layer.sort_by_y_first)
+			custom_outputs.sort_custom(_top_layer.sort_by_y_first)
+
+			for input_index in range(inputs.size()):
+				new_custom_gate._custom_gate_tiles[inputs[input_index]] = Wires.CustomGateTile.new(gate_path, new_custom_gate._custom_gates[-1], custom_inputs[input_index])
+			for output_index in range(outputs.size()):
+				new_custom_gate._custom_gates[-1].exits[custom_outputs[output_index]] = outputs[output_index]
 
 	var placement_dictionary: Dictionary = custom_gate_dict["placement"]
 	# Place grid inside the gate.

@@ -770,7 +770,24 @@ func create_custom_gate_from_dict() -> void:
 
 		if gate_type == EditorMode.Gate.CUSTOM:
 			print("LOADING DEEPER GATE create_custom_gate_from_dict")
-			new_custom_gate.go_deeper(gates_dictionary[gate]["name"])
+			var deeper_path: String = "%s/%s.circuit" % [Filepaths.custom_gates_directory, gates_dictionary[gate]["name"]]
+			var deeper_dict: Dictionary = JSON.parse_string(FileAccess.open(deeper_path, FileAccess.READ).get_as_text())
+			new_custom_gate.create_custom_gate_from_dict(deeper_dict)
+
+			var deeper_inputs: Array[Vector2i]
+			var deeper_outputs: Array[Vector2i]
+			for potential_gate: String in deeper_dict["gates"]:
+				if deeper_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.START:
+					deeper_inputs.append(str_to_var("Vector2i" + deeper_dict["gates"][potential_gate]["outputs"][0]))
+				elif deeper_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.STOP:
+					deeper_outputs.append(str_to_var("Vector2i" + deeper_dict["gates"][potential_gate]["inputs"][0]))
+			deeper_inputs.sort_custom(sort_by_y_first)
+			deeper_outputs.sort_custom(sort_by_y_first)
+
+			for input_index in range(inputs.size()):
+				new_custom_gate._custom_gate_tiles[inputs[input_index]] = CustomGateTile.new(deeper_path, new_custom_gate._custom_gates[-1], deeper_inputs[input_index])
+			for output_index in range(outputs.size()):
+				new_custom_gate._custom_gates[-1].exits[deeper_outputs[output_index]] = outputs[output_index]
 
 	var placement_dictionary: Dictionary = _custom_gate_dict["placement"]
 	# Place grid inside the gate.
@@ -876,7 +893,24 @@ func place_custom_gate(path: String) -> void:
 
 		if gate_type == EditorMode.Gate.CUSTOM:
 			print("LOADING DEEPER GATE place_custom_gate")
-			new_custom_gate.go_deeper(loaded_gates_dict[gate]["name"])
+			var deeper_path: String = "%s/%s.circuit" % [Filepaths.custom_gates_directory, loaded_gates_dict[gate]["name"]]
+			var deeper_dict: Dictionary = JSON.parse_string(FileAccess.open(deeper_path, FileAccess.READ).get_as_text())
+			new_custom_gate.create_custom_gate_from_dict(deeper_dict)
+
+			var deeper_inputs: Array[Vector2i]
+			var deeper_outputs: Array[Vector2i]
+			for potential_gate: String in deeper_dict["gates"]:
+				if deeper_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.START:
+					deeper_inputs.append(str_to_var("Vector2i" + deeper_dict["gates"][potential_gate]["outputs"][0]))
+				elif deeper_dict["gates"][potential_gate]["gate"] == EditorMode.Gate.STOP:
+					deeper_outputs.append(str_to_var("Vector2i" + deeper_dict["gates"][potential_gate]["inputs"][0]))
+			deeper_inputs.sort_custom(sort_by_y_first)
+			deeper_outputs.sort_custom(sort_by_y_first)
+
+			for input_index in range(inputs_inside.size()):
+				new_custom_gate._custom_gate_tiles[inputs_inside[input_index]] = CustomGateTile.new(deeper_path, new_custom_gate._custom_gates[-1], deeper_inputs[input_index])
+			for output_index in range(outputs_inside.size()):
+				new_custom_gate._custom_gates[-1].exits[deeper_outputs[output_index]] = outputs_inside[output_index]
 
 	var tiles: Array[Vector2i] = highlight_layer.get_used_cells()
 	for tile in tiles:
