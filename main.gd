@@ -42,6 +42,10 @@ func _on_change_scene_level_selection() -> void:
 	level_selection.learn_button_4.disabled = not (SaveProgress.level_105)
 	level_selection.level_button_106.disabled = not (SaveProgress.level_105)
 	level_selection.dialogue_button_3.disabled = not (SaveProgress.level_106)
+	level_selection.level_button_107.disabled = not (SaveProgress.dialogue_3)
+	level_selection.level_button_108.disabled = not (SaveProgress.level_107)
+	level_selection.level_button_109.disabled = not (SaveProgress.level_108)
+	level_selection.dialogue_button_4.disabled = not (SaveProgress.level_109)
 
 	_change_scene(level_selection)
 

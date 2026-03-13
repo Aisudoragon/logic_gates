@@ -50,12 +50,12 @@ var sentences: Array[Array] = [
 	],
 	[
 		["Marcin", "No, no! Poznałeś właśnie działanie wszystkich bramek!"],
-		["Marcin", "Teraz pora na więcej zadań aby utrwawiła Ci się ta wiedza."],
+		["Marcin", "Teraz pora na krótką serię zadań aby utrwawiła Ci się ta wiedza."],
 	],
 	[
 		["Marcin", "Świetnie sobie ze wszystkim poradziłeś!"],
 		["Marcin", "Jest już późno więc lepiej się już zbierajmy."],
-		["Marcin", "Pamiętaj, że w każdej chwili możesz skorzystać z trybu piaskownicy w naszym programie. Masz tam największą swobodę i możesz robić co chcesz. Eksperymentować, czy spróbować zoptymalizować jakis obwód."],
+		["Marcin", "Pamiętaj, że w każdej chwili możesz skorzystać z trybu piaskownicy w naszym programie. Masz tam największą swobodę i możesz robić co chcesz. Eksperymentować, czy spróbować zoptymalizować jakiś obwód."],
 	]
 ]
 # Dialogue_X, sentences
@@ -77,11 +77,16 @@ var lesson_selected: int = 0
 @onready var level_button_104: Button = %LevelButton104
 @onready var level_button_105: Button = %LevelButton105
 @onready var level_button_106: Button = %LevelButton106
+@onready var level_button_107: Button = %LevelButton107
+@onready var level_button_108: Button = %LevelButton108
+@onready var level_button_109: Button = %LevelButton109
+
 @onready var learn_button_3: Button = %LearnButton3
 @onready var learn_button_4: Button = %LearnButton4
+
 @onready var dialogue_button_2: Button = %DialogueButton2
 @onready var dialogue_button_3: Button = %DialogueButton3
-
+@onready var dialogue_button_4: Button = %DialogueButton4
 
 @onready var speaker_name: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer2/SpeakerName
 @onready var speaker_text: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer/SpeakerText
@@ -557,4 +562,172 @@ Odwzorujesz to działanie za pomocą innych bramek.
 func _on_dialogue_button_3_pressed() -> void:
 	start_conversation(&"dialogue_3")
 	SaveProgress.dialogue_3 = true
+	SaveProgress.update_save_file()
+	level_button_107.disabled = false
+
+
+func _on_level_button_107_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Zadanie 1.[/center][/font_size]
+[hr]
+W tej serii stworzysz układy, aby pasowały idealnie do tablic prawdy.
+
+Wyjścia będą oznaczone jako funkcje f(x, y, ...).
+
+[center][table=4]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]z[/b] [/cell]
+[cell border=white] [b]f(x, y, z)[/b] [/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[/table][/center]
+
+"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 107
+
+	play_ui_sound.emit()
+
+
+func _on_level_button_108_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Zadanie 2.[/center][/font_size]
+[hr]
+W tej serii stworzysz układy, aby pasowały idealnie do tablic prawdy.
+
+[center][table=4]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]z[/b] [/cell]
+[cell border=white] [b]f(x, y, z)[/b] [/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[/table][/center]
+
+"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 108
+
+	play_ui_sound.emit()
+
+
+func _on_level_button_109_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Zadanie 3.[/center][/font_size]
+[hr]
+W tej serii stworzysz układy, aby pasowały idealnie do tablic prawdy.
+
+[center][table=4]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]z[/b] [/cell]
+[cell border=white] [b]f(x, y, z)[/b] [/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[/table][/center]
+
+"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 109
+
+	play_ui_sound.emit()
+
+
+func _on_dialogue_button_4_pressed() -> void:
+	start_conversation(&"dialogue_4")
+	SaveProgress.dialogue_4 = true
 	SaveProgress.update_save_file()

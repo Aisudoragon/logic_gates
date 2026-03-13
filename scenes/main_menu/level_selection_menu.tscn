@@ -422,7 +422,112 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[color=yellow][font_size=22]Pora odpoczynku[/font_size][/color]"
+text = "[color=yellow][font_size=19]Seria zadań utrwalających[/font_size][/color]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelButton107" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("2_hvryv")
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton107"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton107/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=22][color=orange]Zadanie 1.[/color][/font_size]"
+vertical_alignment = 1
+
+[node name="LevelButton108" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("2_hvryv")
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton108"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton108/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=22][color=orange]Zadanie 2.[/color][/font_size]"
+vertical_alignment = 1
+
+[node name="LevelButton109" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("2_hvryv")
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton109"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton109/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=22][color=orange]Zadanie 3.[/color][/font_size]"
+vertical_alignment = 1
+
+[node name="DialogueButton4" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("2_hvryv")
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DialogueButton4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DialogueButton4/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+text = "[color=yellow][font_size=19]Koniec zmiany[/font_size][/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -655,5 +760,9 @@ text = "Zrozumiano"
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LearnButton4" to="." method="_on_learn_button_4_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton106" to="." method="_on_level_button_106_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DialogueButton3" to="." method="_on_dialogue_button_3_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton107" to="." method="_on_level_button_107_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton108" to="." method="_on_level_button_108_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton109" to="." method="_on_level_button_109_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DialogueButton4" to="." method="_on_dialogue_button_4_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/MarginContainer/Panel/ProceedButton" to="." method="_on_proceed_button_pressed"]
 [connection signal="pressed" from="Introduction/VBoxContainer/PanelContainer3/IntroductionButton" to="." method="_on_introduction_button_pressed"]

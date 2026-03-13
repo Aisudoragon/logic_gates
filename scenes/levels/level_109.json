@@ -3,45 +3,60 @@
 		"1": {
 			"gate": 7,
 			"inputs": [],
+			"name": "x",
 			"outputs": [
-				"(-3, -2)"
-			],
-			"name": "A"
-		},
-		"2": {
-			"gate": 7,
-			"inputs": [],
-			"outputs": [
-				"(-3, 0)"
-			],
-			"name": "B"
+				"(-3, -3)"
+			]
 		},
 		"3": {
+			"gate": 7,
+			"inputs": [],
+			"name": "y",
+			"outputs": [
+				"(-3, -1)"
+			]
+		},
+		"4": {
+			"gate": 7,
+			"inputs": [],
+			"name": "z",
+			"outputs": [
+				"(-3, 1)"
+			]
+		},
+		"6": {
 			"gate": 8,
 			"inputs": [
 				"(7, -1)"
 			],
-			"outputs": [],
-			"name": "¬(A∧B)"
+			"name": "f(x, y, z)",
+			"outputs": []
 		}
 	},
 	"placement": {
-		"(-3, -2)": {
+		"(-3, -3)": {
 			"gate": 1,
 			"wires": {
 				"direction": 1,
 				"state": false
 			}
 		},
-		"(-3, 0)": {
-			"gate": 2,
+		"(-3, -1)": {
+			"gate": 3,
+			"wires": {
+				"direction": 1,
+				"state": false
+			}
+		},
+		"(-3, 1)": {
+			"gate": 4,
 			"wires": {
 				"direction": 1,
 				"state": false
 			}
 		},
 		"(7, -1)": {
-			"gate": 3,
+			"gate": 6,
 			"wires": {
 				"direction": 4,
 				"state": false

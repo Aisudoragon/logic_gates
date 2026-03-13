@@ -1,62 +1,62 @@
 {
 	"gates": {
-		"7": {
+		"1": {
 			"gate": 7,
 			"inputs": [],
-			"name": "A",
+			"name": "x",
 			"outputs": [
 				"(-3, -3)"
 			]
 		},
-		"8": {
+		"3": {
 			"gate": 7,
 			"inputs": [],
-			"name": "B",
+			"name": "y",
 			"outputs": [
 				"(-3, -1)"
 			]
 		},
-		"9": {
-			"gate": 8,
-			"inputs": [
-				"(6, -3)"
-			],
-			"name": "Suma",
-			"outputs": []
+		"4": {
+			"gate": 7,
+			"inputs": [],
+			"name": "z",
+			"outputs": [
+				"(-3, 1)"
+			]
 		},
-		"10": {
+		"6": {
 			"gate": 8,
 			"inputs": [
-				"(6, 2)"
+				"(7, -1)"
 			],
-			"name": "Przeniesienie",
+			"name": "f(x, y, z)",
 			"outputs": []
 		}
 	},
 	"placement": {
 		"(-3, -3)": {
-			"gate": 7,
+			"gate": 1,
 			"wires": {
 				"direction": 1,
 				"state": false
 			}
 		},
 		"(-3, -1)": {
-			"gate": 8,
+			"gate": 3,
 			"wires": {
 				"direction": 1,
 				"state": false
 			}
 		},
-		"(6, -3)": {
-			"gate": 9,
+		"(-3, 1)": {
+			"gate": 4,
 			"wires": {
-				"direction": 4,
+				"direction": 1,
 				"state": false
 			}
 		},
-		"(6, 2)": {
-			"gate": 10,
+		"(7, -1)": {
+			"gate": 6,
 			"wires": {
 				"direction": 4,
 				"state": false

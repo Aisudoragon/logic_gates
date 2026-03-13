@@ -1,77 +1,62 @@
 {
 	"gates": {
-		"7": {
+		"1": {
 			"gate": 7,
 			"inputs": [],
-			"name": "A",
+			"name": "x",
 			"outputs": [
 				"(-3, -3)"
 			]
 		},
-		"8": {
+		"3": {
 			"gate": 7,
 			"inputs": [],
-			"name": "B",
+			"name": "y",
 			"outputs": [
 				"(-3, -1)"
 			]
 		},
-		"11": {
+		"4": {
 			"gate": 7,
 			"inputs": [],
-			"name": "Cin",
+			"name": "z",
 			"outputs": [
 				"(-3, 1)"
 			]
 		},
-		"17": {
+		"6": {
 			"gate": 8,
 			"inputs": [
-				"(17, -1)"
+				"(7, -1)"
 			],
-			"name": "Suma",
-			"outputs": []
-		},
-		"18": {
-			"gate": 8,
-			"inputs": [
-				"(17, 4)"
-			],
-			"name": "Carry",
+			"name": "f(x, y, z)",
 			"outputs": []
 		}
 	},
 	"placement": {
 		"(-3, -3)": {
-			"gate": 7,
+			"gate": 1,
 			"wires": {
 				"direction": 1,
 				"state": false
 			}
 		},
 		"(-3, -1)": {
-			"gate": 8,
+			"gate": 3,
 			"wires": {
 				"direction": 1,
 				"state": false
 			}
 		},
 		"(-3, 1)": {
-			"gate": 11,
+			"gate": 4,
 			"wires": {
 				"direction": 1,
 				"state": false
 			}
 		},
-		"(17, -1)": {
-			"gate": 17,
-			"wires": {
-				"direction": 4,
-				"state": false
-			}
-		},
-		"(17, 4)": {
-			"gate": 18,
+		"(7, -1)": {
+			"gate": 6,
 			"wires": {
 				"direction": 4,
 				"state": false

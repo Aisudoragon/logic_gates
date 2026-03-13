@@ -188,6 +188,144 @@ Na wyjściu ma być 1 tylko, gdy obydwa wejścia mają tą samą wartość.[/fon
 
 Masz dużo przestrzeni. Dobrze jest za wziąć się krokami.
 Gdy x i y mają 0, po złączeniu ma być 1. Gdy x i y mają 1, po złączeniu również ma być 1.[/font_size]"""
+		107:
+			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
+			wires_interface.enable_buttons(0b1100_1110_0000)
+			help_message[0] = """[center][font_size=28]Zadanie 1.[/font_size][/center]
+
+[font_size=14][ul][color=%s]Odwzoruj podaną tablicę prawdy.[/color][/ul]
+
+[center][table=4]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]z[/b] [/cell]
+[cell border=white] [b]f(x, y, z)[/b] [/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[/table][/center][/font_size]"""
+			helpful_text.text = """[font_size=14]Zamiast patrzeć co trzeba aby było 1. Popatrz co trzeba aby było 0.[/font_size]"""
+		108:
+			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
+			wires_interface.enable_buttons(0b1100_0101_0100)
+			help_message[0] = """[center][font_size=28]Zadanie 2.[/font_size][/center]
+
+[font_size=14][ul][color=%s]Odwzoruj podaną tablicę prawdy.[/color][/ul]
+
+[center][table=4]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]z[/b] [/cell]
+[cell border=white] [b]f(x, y, z)[/b] [/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[/table][/center][/font_size]"""
+			helpful_text.text = """[font_size=14]Tylko 2 wejścia wpływają na wynik.[/font_size]"""
+		109:
+			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
+			wires_interface.enable_buttons(0b1100_1101_0000)
+			help_message[0] = """[center][font_size=28]Zadanie 2.[/font_size][/center]
+
+[font_size=14][ul][color=%s]Odwzoruj podaną tablicę prawdy.[/color][/ul]
+
+[center][table=4]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]z[/b] [/cell]
+[cell border=white] [b]f(x, y, z)[/b] [/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]1[/cell]
+[cell border=white]0[/cell]
+[/table][/center][/font_size]"""
+			helpful_text.text = """[font_size=14]Na wyjściu jest 1 kiedy wszystkie wejścia mają 0.[/font_size]"""
 		_:
 			print("Invalid level selected. How?")
 			wires.level_dimension_limiter(Vector2i.ZERO, Vector2i.ZERO)
@@ -405,6 +543,39 @@ func _on_finish_button_pressed() -> void:
 				SaveProgress.update_save_file()
 				SaveProgress.ensure_directory_available()
 				wires.save_circuit(Filepaths.levels_dir_path(106))
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie        ▶"
+				objective_text.text = buffer_objective % "red"
+		107:
+			if guesses[0] and guesses[1] and guesses[2] and guesses[3] and guesses[4] and guesses[5] and guesses[6] and not guesses[7]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_107 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(107))
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie        ▶"
+				objective_text.text = buffer_objective % "red"
+		108:
+			if not guesses[0] and not guesses[1] and guesses[2] and guesses[3] and guesses[4] and guesses[5] and not guesses[6] and not guesses[7]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_108 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(108))
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie        ▶"
+				objective_text.text = buffer_objective % "red"
+		109:
+			if guesses[0] and not guesses[1] and not guesses[2] and not guesses[3] and not guesses[4] and not guesses[5] and not guesses[6] and not guesses[7]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_109 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(109))
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie        ▶"
 				objective_text.text = buffer_objective % "red"
