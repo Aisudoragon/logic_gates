@@ -179,67 +179,67 @@ func _draw() -> void:
 		draw_rect(Rect2i(
 			Vector2i(-high_number, -high_number),
 			Vector2i(high_number, high_number) - upper_left.abs()),
-			Color(Color(0.22, 0.22, 0.22), 0.2))
+			Color(Color.BLACK, 0.2))
 		# Up shadow
 		draw_rect(Rect2i(
 			Vector2i(upper_left.x, -high_number),
 			Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number - absi(upper_left.y))),
-			Color(Color(0.22, 0.22, 0.22), 0.2))
+			Color(Color.BLACK, 0.2))
 		# Upper right shadow
 		draw_rect(Rect2i(
 			Vector2i(bottom_right.x + 64, -high_number),
 			Vector2i(high_number, high_number - absi(upper_left.y))),
-			Color(Color(0.22, 0.22, 0.22), 0.2))
+			Color(Color.BLACK, 0.2))
 		# Right shadow
 		draw_rect(Rect2i(
 			Vector2i(bottom_right.x + 64, upper_left.y),
 			Vector2i(high_number, absi(upper_left.y) + absi(bottom_right.y) + 64)),
-			Color(Color(0.22, 0.22, 0.22), 0.2))
+			Color(Color.BLACK, 0.2))
 		# Bottom right shadow
 		draw_rect(Rect2i(
 			(bottom_right + Vector2i(64, 64)),
 			Vector2i(high_number, high_number)),
-			Color(Color(0.22, 0.22, 0.22), 0.2))
+			Color(Color.BLACK, 0.2))
 		# Down shadow
 		draw_rect(Rect2i(
 			Vector2i(upper_left.x, bottom_right.y + 64),
 			Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number)),
-			Color(Color(0.22, 0.22, 0.22), 0.2))
+			Color(Color.BLACK, 0.2))
 		# Bottom left shadow
 		draw_rect(Rect2i(
 			Vector2i(-high_number, bottom_right.y + 64),
 			Vector2i(high_number - absi(upper_left.x), high_number)),
-			Color(Color(0.22, 0.22, 0.22), 0.2))
+			Color(Color.BLACK, 0.2))
 		# Left shadow
 		draw_rect(Rect2i(
 			Vector2i(-high_number, upper_left.y),
 			Vector2i(high_number - absi(upper_left.x), (absi(upper_left.y) + absi(bottom_right.y) + 64))),
-			Color(Color(0.22, 0.22, 0.22), 0.2))
+			Color(Color.BLACK, 0.2))
 
 	for gate in gates:
 		if gates[gate].gate == EditorMode.Gate.START:
 			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
 				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
-				Color(0.22, 0.22, 0.22))
+				Color.BLACK)
 			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
 				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100)
 		else:
 			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
 				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
-				Color(0.22, 0.22, 0.22))
+				Color.BLACK)
 			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
 				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100)
 
 	for gate in _custom_gates_input_pins_names:
 		draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(-83, 14),
 			_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
-			Color(0.22, 0.22, 0.22))
+			Color.BLACK)
 		draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(-83, 14),
 			_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100)
 	for gate in _custom_gates_output_pins_names:
 		draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(43, 14),
 			_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
-			Color(0.22, 0.22, 0.22))
+			Color.BLACK)
 		draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(43, 14),
 			_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100)
 
@@ -247,7 +247,7 @@ func _draw() -> void:
 	for placement in _custom_gates_names:
 		var rotated_adjusted_placement: Vector2i = (Vector2i(placement.y, -placement.x) + Vector2i.UP) * 64 + Vector2i(30, 5)
 		draw_string_outline(ThemeDB.fallback_font, rotated_adjusted_placement,
-			_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15, Color(0.22, 0.22, 0.22))
+			_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15, Color.BLACK)
 		draw_string(ThemeDB.fallback_font, rotated_adjusted_placement,
 			_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100)
 
@@ -472,7 +472,6 @@ func place_gate() -> void:
 
 func process_queue(iterations: int) -> void:
 	if _callable_queue.is_empty():
-		#queue_redraw()
 		queue_cleared.emit()
 		return
 	for i in range(iterations):

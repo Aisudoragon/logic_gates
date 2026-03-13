@@ -15,30 +15,47 @@ var sentences: Array[Array] = [
 		["Szef", "Zajmę się się teraz formalnościami. Dla Pana został przydzielony nasz inżynier Kwiatkowski."],
 		["Szef", "W tym czasie proszę udać się na swoje stanowisko, a Pan Kwiatkowski niedługo przybędzie."],
 		["Ja", "[i]Po kilku minutach...[/i]"],
-		["Kwiatkowski", "Cześć! Marcin jestem."],
-		["Marcin", "Gadkę zostawimy na później, teraz spieszę się na spotkanie. Zrobię Ci szybki kurs naszego programu."],
-		["Marcin", "W nim projektujemy i symulujemy układy, zanim pójdą do produkcji."],
-		["Marcin", "Na początek przygotowałem Ci zestaw zadań, abyś szybko zrozumiał jak działa nasz program."],
-		["Marcin", "Jak zrozumiesz już sterowanie, to zawołaj mnie i wytłumaczę co dalej."],
-		["Marcin", "W razie czego możesz powtórzyć każdą rozmowę, klikając na przyciski z żółtym tekstem."],
+		["Kwiatkowski", "Cześć! Marcin jestem. Przysłał mnie szef."],
+		["Ja", "Mateusz, miło mi."],
+		["Kwiatkowski", "Szef mi powiedział, że mamy nowego pracownika. Fajnie jest zobaczyć nową twarz."],
+		["Ja", "I równie fajnie jest pracować w nowej firmie. Zmiana otoczenia wyjdzie mi na dobre."],
+		["Kwiatkowski", "Oby Ci się spodobało tutaj! Jak chcesz to na przerwie będzie można się zgadać, albo popoznawać inne nowe twarze."],
+		["Kwiatkowski", "No, to teraz przejdźmy do obowiązków."],
+		["Kwiatkowski", "Najważniejsze pytanie: jak dużo wiesz o układach cyfrowych?"],
+		["Ja", "No... W sumie to niewiele."],
+		["Kwiatkowski", "Niewiele jak bardzo?"],
+		["Ja", "Na pewno przyda mi się odświeżenie pamięci."],
+		["Kwiatkowski", "Rozumiem. To co? Może być rozpoczęcie od podstaw?"],
+		["Ja", "A jest taka możliwość?"],
+		["Kwiatkowski", "Oczywiście! Jesteśmy przygotowani na takie wypadki!"],
+		["Kwiatkowski", "Oto nasz program szkoleniowy. Idealny nie jest i ma swoje lata, ale pomaga załatwić robotę."],
+		["Kwiatkowski", "Na początek kliknij na pierwszy element z listy po lewej. Wtedy na prawej części zobaczysz opis, wyjaśnienia i tak dalej."],
+		["Kwiatkowski", "Na samym początku trzeba zrozumieć czym jest algebra Boole'a."],
+		["Ja", "Oby moja nauka nie była bólem dla Ciebie."],
+		["Kwiatkowski", "Już Cię lubię!"],
+		["Kwiatkowski", "Po tym jak przejrzysz materiały, są przygotowane jeszcze testy z wiedzy, żeby sprawdzić czy na pewno zapamiętałeś temat."],
+		["Ja", "[i]Elementy dydaktyczne są oznaczone przyciskami z białym tekstem.[/i]"],
+		["Ja", "[i]Testy wiedzy są oznaczone przyciskami z pomarańczowym tekstem.[/i]"],
+		["Ja", "[i]Dialogi można powtórzyć, klikając na przyciski w liście z żółtym tekstem.[/i]"],
 	],
 	[
-		["Marcin", "Dobra. Wygląda na to, że masz to już obcykane."],
-		["Marcin", "Dam Ci teraz kilka prostych zleceń na start. Potem Cię przydzielę do czegoś większego."],
-		["Marcin", "Masz tutaj jeszcze materiały tłumaczące działanie każdej bramki. Każdy pracownik takie dostaje."],
-		["Marcin", "Dobra, to ty działaj. A ja lecę na kolejne spotkanie."],
-		["Marcin", "Możesz powtórzyć każde zadanie w każdej chwili. Będzie wyświetlone poprzednie poprawne rozwiązanie, jeśli chcesz tylko rzucić na coś okiem."],
-		["Marcin", 'Jeszcze Ci powiem, że w trakcie rysowania połączeń, jeśli naciśniesz przycisk [R] to wtedy "obracasz" połączenie do drugiego rogu w siatce.'],
-		["Marcin", 'A kiedy naciśniesz przycisk [F] to wtedy twórz Ci punkt z które możesz kontynuować rysowanie.'],
+		["Marcin", "Dobra. Podstawy podstaw masz ogarnięte."],
+		["Marcin", "Zapomnieliśmy to dodać w programie, więc słuchaj uważnie:"],
+		["Marcin", "Każde z tych spójników ma wiązanie."],
+		["Marcin", "Negacja wiąże najmocniej. Koniunkcja słabiej, a Dysjunkcja wiąże najsłabiej."],
+		["Marcin", "Możesz to porównać jak do kolejności wykonywania działań."],
+		["Marcin", "Dysjunkcję możesz potraktować jak dodawanie/odejmowanie. Koniunkcję jak mnożenie/dzielenie, a negację jak potęgowanie."],
+		["Marcin", "Czyli, jeśli masz dysjunkcję i negację w działaniu. To negacja jest pierwsza w wykonywaniu działania. Oczywiście można to zmienić przy pomocy nawiasów."],
+		["Marcin", "Zobaczę jak Ci pójdzie."],
 	],
 	[
-		["Marcin", "Świetnie Ci poszło z tymi zadaniami. Spróbuj teraz je trochę rozwinąć."],
-		["Marcin", "Większy multiplekser może zająć trochę czasu. Pamiętaj, że nie musisz się spieszyć i możesz wrócić do zadania w każdej chwili."],
+		["Marcin", "No, no! Poznałeś właśnie działanie wszystkich bramek!"],
+		["Marcin", "Teraz pora na więcej zadań aby utrwawiła Ci się ta wiedza."],
 	],
 	[
-		["Marcin", "Ładnie wykonana robota! Świetnie sobie poradziłeś ze wszystkim."],
-		["Marcin", "Na dzisiaj skończyły mi się rzeczy, które mogę Ci dać do zrobienia."],
-		["Marcin", "Choć do kawiarni. Pokażę Ci jakie przysmaki tam mają."],
+		["Marcin", "Świetnie sobie ze wszystkim poradziłeś!"],
+		["Marcin", "Jest już późno więc lepiej się już zbierajmy."],
+		["Marcin", "Pamiętaj, że w każdej chwili możesz skorzystać z trybu piaskownicy w naszym programie. Masz tam największą swobodę i możesz robić co chcesz. Eksperymentować, czy spróbować zoptymalizować jakis obwód."],
 	]
 ]
 # Dialogue_X, sentences
@@ -54,22 +71,17 @@ var lesson_selected: int = 0
 @export var lessonExplanation: RichTextLabel
 @export var proceedButton: Button
 
-@onready var lesson_button_2: Button = %LessonButton2
-@onready var lesson_button_3: Button = %LessonButton3
-@onready var lesson_button_4: Button = %LessonButton4
-@onready var lesson_button_5: Button = %LessonButton5
-@onready var lesson_button_6: Button = %LessonButton6
-@onready var lesson_button_7: Button = %LessonButton7
-@onready var lesson_button_8: Button = %LessonButton8
-@onready var lesson_button_9: Button = %LessonButton9
-@onready var lesson_button_10: Button = %LessonButton10
-@onready var lesson_button_11: Button = %LessonButton11
-@onready var lesson_button_12: Button = %LessonButton12
-@onready var lesson_button_13: Button = %LessonButton13
-@onready var lesson_button_14: Button = %LessonButton14
+@onready var level_button_101: Button = %LevelButton101
+@onready var level_button_102: Button = %LevelButton102
+@onready var level_button_103: Button = %LevelButton103
+@onready var level_button_104: Button = %LevelButton104
+@onready var level_button_105: Button = %LevelButton105
+@onready var level_button_106: Button = %LevelButton106
+@onready var learn_button_3: Button = %LearnButton3
+@onready var learn_button_4: Button = %LearnButton4
 @onready var dialogue_button_2: Button = %DialogueButton2
 @onready var dialogue_button_3: Button = %DialogueButton3
-@onready var dialogue_button_4: Button = %DialogueButton4
+
 
 @onready var speaker_name: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer2/SpeakerName
 @onready var speaker_text: RichTextLabel = $DialogueBox/ColorRect/MarginContainer/VBoxContainer/MarginContainer/SpeakerText
@@ -126,105 +138,120 @@ func _on_back_pressed() -> void:
 	proceedButton.visible = false
 
 
-func _on_lesson_button_1_pressed() -> void:
+func _on_learn_button_1_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Witaj w poziomie wprowadzającym![/center][/font_size]
+[font_size=28][center]Algebra Boole'a[/center][/font_size]
 [hr]
-Na sam początek przypomnimy w skrócie algebrę Boole'a.
-[ul]Dana zmienna (np. [i]a[/i]) może mieć tylko jedną z dwóch wartości: 0 lub 1.[/ul]
-[ul]1 jest prawdą, 0 jest fałszem.[/ul]
-Każda operacja będzie dokładniej wyjaśniona w swoich lekcjach. Jest to niezwykle ważny temat, który jest nieodzłączną częścią układów.
+Na sam początek przypomnijmy w skrócie algebrę Boole'a.
 
-W tej lekcji zostanie wytłumaczone odczytywanie tablic prawdy, oraz jak wygląda tworzenie połączeń pomiędzy złączeniami.
+[ul]Dana zmienna (np. [i]x[/i]) może mieć tylko jedną z dwóch wartości:
+[ul]1 - inaczej prawda (oznaczone kolorem białym wzdłuż połączenia)[/ul]
+[ul]0 - inaczej fałsz (oznaczone kolorem ciemnoszarym wzdłuż połączenia)[/ul]
+[/ul]
 
-Tablica prawdy składa się z trzech elementów, które mogą (nie muszą) pojawić się wielokrotnie:
+[center][img]res://assets/resources/textures/dialogue_images/dialogue_1_1.png[/img][/center]"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = false
 
-[center][table=6,center]
-[cell border=white padding=1,0,1,5][b]zmienna[/b][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]zmienna[/color][/cell]
-[cell border=white padding=1,0,1,5][b]wyrażenie[/b][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]wyrażenie[/color][/cell]
-[cell border=white padding=1,0,1,5][b]wartość[/b][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]...[/color][/cell]
-[cell border=white padding=1,0,1,5][color=dim_gray]wartość[/color][/cell]
+	play_ui_sound.emit()
+
+
+func _on_level_button_101_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Koniunkcja[/center][/font_size]
+[hr]
+Koniunkcja (i, iloczyn logiczny) jest spójnikiem dwuargumentowym.
+[font_size=40][center]x ∧ y[/center][/font_size]
+Oznacza to, że wyjście jest 1 (prawda) tylko i wyłącznie, jeśli obydwa wejścia też są 1 (prawda).
+W przeciwnym wypadku wyjście jest 0 (fałsz).
+
+Bramka AND [img=48]res://assets/resources/textures/gates/and_gate.png[/img] wykonuje tę operację.
+
+Można przedstawić następująco:
+0 ∧ 0 = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_1.png[/img]
+0 ∧ 1 = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_2.png[/img]
+1 ∧ 0 = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_3.png[/img]
+1 ∧ 1 = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_4.png[/img]
+
+Więc biorąc te rzeczy pod uwagę można stworzyć tablicę prawdy:
+
+[center][table=3]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]x ∧ y[/b] [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
 [/table][/center]
 
-zmienna [char=2014] reprezentuje dany symbol. Np. a.
-wyrażenie [char=2014] reprezentuje pewne działanie. Np. a[char=2227]b.
-wartość [char=2014] reprezentuje 0 lub 1.
+Sprawdzisz bramkę w praktyce.
 
-Przykłady poprawnych tablic będą zaprezentowane w nastepnych lekcjach (oraz prostsza wersja w tej lekcji). Teraz pora na odrobinę praktyki.
-[hr]
-W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (koniec) układu. Na planszy będą się znajdować obydwa zakończenia. Wystarczy je połączyć!"""
+
+
+
+"""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
-	lesson_selected = 1
+	lesson_selected = 101
 
 	play_ui_sound.emit()
 
 
-func _on_lesson_button_10_pressed() -> void:
+func _on_lesson_button_102_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Układ nie składa się tylko z jednego połączenia[/center][/font_size]
+[font_size=28][center]Dysjunkcja[/center][/font_size]
 [hr]
-W układzie może znajdować się wiele połączeń, które robią inne rzeczy. Mogą się krzyżować lub rozdzielać.
+Dysjunkcja (lub, suma logiczna) jest spójnikiem dwuargumentowym.
+[font_size=40][center]x ∨ y[/center][/font_size]
+Oznacza to, że wyjście jest 1 (prawda), jeśli chociaż jedno wejście jest 1 (prawda).
+W przeciwnym wypadku wyjście jest 0 (fałsz).
 
-Rozwidlenie oznaczone kropką: [img=64]res://assets/resources/textures/crossing.png[/img]. Skrzyżowanie bez kropki: [img]res://assets/resources/textures/crossing_no.png[/img]
+Bramka AND [img=48]res://assets/resources/textures/gates/or_gate.png[/img] wykonuje tę operację.
 
-[hr]
-W tym zadaniu połączysz ze sobą konkretne złączenia, według tablicy prawdy:
+Można przedstawić następująco:
+0 ∨ 0 = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_5.png[/img]
+0 ∨ 1 = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_6.png[/img]
+1 ∨ 0 = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_7.png[/img]
+1 ∨ 1 = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_8.png[/img]
 
-[center][table=4,center]
-[cell border=white padding=1,0,1,5][b] A [/b][/cell]
-[cell border=white padding=1,0,1,5][b] B [/b][/cell]
-[cell border=white padding=1,0,1,5][b] Y [/b][/cell]
-[cell border=white padding=1,0,1,5][b] Z [/b][/cell]
-[cell border=white padding=1,0,1,5]0[/cell]
-[cell border=white padding=1,0,1,5]0[/cell]
-[cell border=white padding=1,0,1,5]0[/cell]
-[cell border=white padding=1,0,1,5]0[/cell]
-[cell border=white padding=1,0,1,5]1[/cell]
-[cell border=white padding=1,0,1,5]0[/cell]
-[cell border=white padding=1,0,1,5]0[/cell]
-[cell border=white padding=1,0,1,5]1[/cell]
-[cell border=white padding=1,0,1,5]0[/cell]
-[cell border=white padding=1,0,1,5]1[/cell]
-[cell border=white padding=1,0,1,5]1[/cell]
-[cell border=white padding=1,0,1,5]0[/cell]
-[cell border=white padding=1,0,1,5]1[/cell]
-[cell border=white padding=1,0,1,5]1[/cell]
-[cell border=white padding=1,0,1,5]1[/cell]
-[cell border=white padding=1,0,1,5]1[/cell]
-[/table][/center]"""
+Więc biorąc te rzeczy pod uwagę można stworzyć tablicę prawdy:
+
+[center][table=3]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]x ∨ y[/b] [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[/table][/center]
+
+Sprawdzisz bramkę w praktyce.
+
+
+
+
+"""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
-	lesson_selected = 10
-
-	play_ui_sound.emit()
-
-
-func _on_lesson_button_11_pressed() -> void:
-	lessonExplanation.text = """
-[font_size=28][center]Rozwidlenia[/center][/font_size]
-[hr]
-Tutaj będzie poruszona ta sama kwestia. Tylko teraz jedno wyjście będzie rozprowadzone do kilku wyjść.
-
-[hr]
-Połącz jedno wejście do kilku konkretnych wyjść."""
-	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	proceedButton.visible = true
-	lesson_selected = 11
+	lesson_selected = 102
 
 	play_ui_sound.emit()
 
@@ -548,14 +575,8 @@ func _on_dialogue_button_2_pressed() -> void:
 	start_conversation(&"dialogue_2")
 	SaveProgress.dialogue_2 = true
 	SaveProgress.update_save_file()
-	lesson_button_2.disabled = not SaveProgress.dialogue_2
-	lesson_button_3.disabled = not SaveProgress.dialogue_2
-	lesson_button_4.disabled = not SaveProgress.dialogue_2
-	lesson_button_5.disabled = not SaveProgress.dialogue_2
-	lesson_button_6.disabled = not SaveProgress.dialogue_2
-	lesson_button_7.disabled = not SaveProgress.dialogue_2
-	lesson_button_8.disabled = not SaveProgress.dialogue_2
-	lesson_button_9.disabled = not SaveProgress.dialogue_2
+
+	level_button_104.disabled = false
 
 
 func _on_lesson_button_12_pressed() -> void:
@@ -647,14 +668,277 @@ Zbuduj multiplekser 2x1"""
 	play_ui_sound.emit()
 
 
+func _on_learn_button_2_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Tablice prawdy[/center][/font_size]
+[hr]
+Tablice prawdy działają w bardzo prosty sposób.
+Dla prostych układów, można podstawić wszystkie możliwości danej funkcji. Funkcje, które można zapisać zamiast dla skróconego pisma w wielu odwołaniach.
+f(x, y, z) = x ∧ ¬y ∨ z
+O tym co te symbole oznaczają, będzie w późniejszych krokach.
+
+Przykładowy zapis tablicy prawdy z dwoma zmiennymi bez wyniku:   [table=2,center]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[/table]"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = false
+
+	play_ui_sound.emit()
+
+
+func _on_level_button_103_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Negacja[/center][/font_size]
+[hr]
+Negacja (nie) jest spójnikiem jednoargumentowym.
+[font_size=40][center]¬x[/center][/font_size]
+Oznacza to, że wyjście jest 1 (prawda) tylko jeśli wejście jest 0 (fałsz).
+W przeciwnym wypadku wyjście jest 0 (fałsz).
+
+Bramka AND [img=64]res://assets/resources/textures/not_gate_button.png[/img] wykonuje tę operację.
+
+Można przedstawić następująco:
+¬0 = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_9.png[/img]
+¬1 = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_10.png[/img]
+Co za tym idzie, jeśli podwójnie zanegujesz wartość, to się nie zmieni.
+
+Więc biorąc te rzeczy pod uwagę można stworzyć tablicę prawdy:
+
+[center][table=2]
+[cell border=white] [b]¬x[/b] [/cell]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[/table][/center]
+
+Sprawdzisz bramkę w praktyce.
+
+
+
+
+"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 103
+
+	play_ui_sound.emit()
+
+
+func _on_level_button_104_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Kilka bramek[/center][/font_size]
+[hr]
+Koniunkcja i koniunkcja, albo dysjunkcja. Tak brzmi lepiej.
+
+
+
+W tym zadaniu, z trzech wejść spróbujesz zrobić kombinację koniunkcji i dysjunkcji, aby osiągnąć zamierzony wynik.
+Funkcja będzie podpisana na wyjściu
+
+
+
+
+"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 104
+
+	play_ui_sound.emit()
+
+
+func _on_learn_button_3_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Negowanie wszystkiego[/center][/font_size]
+[hr]
+Każda bramka logiczna może być połączona z negacją w jedną bramkę. W tym programie są na to specjalnie przygotowane osobne bramki.
+Elementem odróżniającym te bramki jest kółko po prawej stronie bramki.
+
+Weźmy na przykład AND
+
+Działanie NAND to bramka AND połączona z NOT.
+
+Zatem biorąc oryginalną tablicę     [table=3,center]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]x ∧ y[/b] [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[/table]     wystarczy odwrócić wynik     [table=3,center]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]x ∧ y[/b] [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[/table]
+
+
+[center][img=300]res://assets/resources/textures/dialogue_images/dialogue_2_1.png[/img]     [img=300]res://assets/resources/textures/dialogue_images/dialogue_2_5.png[/img]
+
+[img=300]res://assets/resources/textures/dialogue_images/dialogue_2_2.png[/img]     [img=300]res://assets/resources/textures/dialogue_images/dialogue_2_6.png[/img]
+
+[img=300]res://assets/resources/textures/dialogue_images/dialogue_2_3.png[/img]     [img=300]res://assets/resources/textures/dialogue_images/dialogue_2_7.png[/img]
+
+[img=300]res://assets/resources/textures/dialogue_images/dialogue_2_4.png[/img]     [img=300]res://assets/resources/textures/dialogue_images/dialogue_2_8.png[/img][/center]
+
+
+To samo się dzieje w przypadku OR na NOR, oraz jeszcze jednej bramki, którą wkrótce poznasz.
+
+"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = false
+
+	play_ui_sound.emit()
+
+
+func _on_level_button_105_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Różne wejścia[/center][/font_size]
+[hr]
+Sprawdźmy teraz jak poradzisz sobie z NORem.
+
+Pamiętaj, że NOR to jest połączenie OR i NOT. Czyli odwrotność zwykłego OR.
+
+Musisz wykonać x ∧ ¬y nie mając do AND. Masz do dyspozycji NOT i NOR. Powodzenia!
+
+
+
+"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 105
+
+	play_ui_sound.emit()
+
+
+func _on_learn_button_4_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Bramka XOR[/center][/font_size]
+[hr]
+Albo inaczej exclusive or
+[font_size=40][center]x ⊻ y[/center][/font_size]
+Oznacza to, że wyjście jest 1 (prawda), jeśli tylko jedno wejście jest 1 (prawda).
+W przeciwnym wypadku wyjście jest 0 (fałsz).
+
+Bramka XOR [img=48]res://assets/resources/textures/gates/xor_gate.png[/img] wykonuje tę operację.
+
+Można przedstawić następująco:
+0 ∨ 0 = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_11.png[/img]
+0 ∨ 1 = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_12.png[/img]
+1 ∨ 0 = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_13.png[/img]
+1 ∨ 1 = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_14.png[/img]
+
+Więc biorąc te rzeczy pod uwagę można stworzyć tablicę prawdy:
+
+[center][table=3]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]x ⊻ y[/b] [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[/table][/center]
+
+Sprawdzisz bramkę w praktyce.
+
+
+
+
+"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = false
+
+	play_ui_sound.emit()
+
+
+func _on_level_button_106_pressed() -> void:
+	lessonExplanation.text = """
+[font_size=28][center]Zrobienie XNOR[/center][/font_size]
+[hr]
+W teorii wiesz jak działa XOR. To teraz go odwróćmy i spróbujesz zrobić układ, który go udaje.
+
+Odwróceniem XOR jest XNOR czyli połączenie XOR i NOT.
+XNOR na wyjściu ma 1 tylko, gdy obydwa wejścia mają tą samą wartość (nie ważne jaką).
+
+Prezentuje się to w taki sposób:
+¬(0 ⊻ 0) = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_11.png[/img]
+¬(0 ⊻ 1) = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_12.png[/img]
+¬(1 ⊻ 0) = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_13.png[/img]
+¬(1 ⊻ 1) = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_14.png[/img]
+
+Można to zaprezentować w taki sposób na tablicy:
+
+[center][table=3]
+[cell border=white] [b]x[/b] [/cell]
+[cell border=white] [b]y[/b] [/cell]
+[cell border=white] [b]¬(x ⊻ y)[/b] [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 0 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[cell border=white] 1 [/cell]
+[/table][/center]
+
+
+
+Odwzorujesz to działanie za pomocą innych bramek.
+
+
+"""
+	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	proceedButton.visible = true
+	lesson_selected = 106
+
+	play_ui_sound.emit()
+
+
 func _on_dialogue_button_3_pressed() -> void:
 	start_conversation(&"dialogue_3")
 	SaveProgress.dialogue_3 = true
-	SaveProgress.update_save_file()
-	lesson_button_12.disabled = not SaveProgress.dialogue_3
-
-
-func _on_dialogue_button_4_pressed() -> void:
-	start_conversation(&"dialogue_4")
-	SaveProgress.dialogue_4 = true
 	SaveProgress.update_save_file()

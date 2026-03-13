@@ -32,22 +32,17 @@ func _on_change_scene_main_menu() -> void:
 
 func _on_change_scene_level_selection() -> void:
 	level_selection.introduction_visibility(not SaveProgress.dialogue_1)
-	level_selection.lesson_button_2.disabled = not SaveProgress.dialogue_2
-	level_selection.lesson_button_3.disabled = not SaveProgress.dialogue_2
-	level_selection.lesson_button_4.disabled = not SaveProgress.dialogue_2
-	level_selection.lesson_button_5.disabled = not SaveProgress.dialogue_2
-	level_selection.lesson_button_6.disabled = not SaveProgress.dialogue_2
-	level_selection.lesson_button_7.disabled = not SaveProgress.dialogue_2
-	level_selection.lesson_button_8.disabled = not SaveProgress.dialogue_2
-	level_selection.lesson_button_9.disabled = not SaveProgress.dialogue_2
-	level_selection.lesson_button_10.disabled = not SaveProgress.level_1
-	level_selection.lesson_button_11.disabled = not SaveProgress.level_10
-	level_selection.dialogue_button_2.disabled = not SaveProgress.level_11
-	level_selection.lesson_button_12.disabled = not SaveProgress.dialogue_3
-	level_selection.lesson_button_13.disabled = not SaveProgress.level_12
-	level_selection.lesson_button_14.disabled = not SaveProgress.level_9
-	level_selection.dialogue_button_3.disabled = not SaveProgress.level_14
-	level_selection.dialogue_button_4.disabled = not SaveProgress.level_13
+	level_selection.level_button_101.disabled = not (SaveProgress.dialogue_1)
+	level_selection.level_button_102.disabled = not (SaveProgress.level_101)
+	level_selection.level_button_103.disabled = not (SaveProgress.level_102)
+	level_selection.dialogue_button_2.disabled = not (SaveProgress.level_103)
+	level_selection.level_button_104.disabled = not (SaveProgress.dialogue_2)
+	level_selection.learn_button_3.disabled = not (SaveProgress.level_104)
+	level_selection.level_button_105.disabled = not (SaveProgress.level_104)
+	level_selection.learn_button_4.disabled = not (SaveProgress.level_105)
+	level_selection.level_button_106.disabled = not (SaveProgress.level_105)
+	level_selection.dialogue_button_3.disabled = not (SaveProgress.level_106)
+
 	_change_scene(level_selection)
 
 

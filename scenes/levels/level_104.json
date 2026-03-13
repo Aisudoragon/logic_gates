@@ -1,0 +1,66 @@
+{
+	"gates": {
+		"1": {
+			"gate": 7,
+			"inputs": [],
+			"name": "x",
+			"outputs": [
+				"(-2, -3)"
+			]
+		},
+		"2": {
+			"gate": 7,
+			"inputs": [],
+			"name": "y",
+			"outputs": [
+				"(-2, -1)"
+			]
+		},
+		"3": {
+			"gate": 7,
+			"inputs": [],
+			"name": "z",
+			"outputs": [
+				"(-2, 1)"
+			]
+		},
+		"5": {
+			"gate": 8,
+			"inputs": [
+				"(8, -1)"
+			],
+			"name": "x ∨ y ∧ z",
+			"outputs": []
+		}
+	},
+	"placement": {
+		"(-2, -3)": {
+			"gate": 1,
+			"wires": {
+				"direction": 1,
+				"state": false
+			}
+		},
+		"(-2, -1)": {
+			"gate": 2,
+			"wires": {
+				"direction": 1,
+				"state": false
+			}
+		},
+		"(-2, 1)": {
+			"gate": 3,
+			"wires": {
+				"direction": 1,
+				"state": false
+			}
+		},
+		"(8, -1)": {
+			"gate": 5,
+			"wires": {
+				"direction": 4,
+				"state": false
+			}
+		}
+	}
+}
