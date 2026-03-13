@@ -1,7 +1,6 @@
 class_name DoubleLinkedListCallable extends RefCounted
 ## Double linked list implementation for Callable type.
 
-
 var _first: Item
 var _last: Item
 var _size: int

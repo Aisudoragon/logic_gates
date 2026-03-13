@@ -45,15 +45,8 @@ func _process(_delta: float) -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	var event_key := event as InputEventKey
-	# TODO Handle keyboard input here
 	if event_key.is_action_pressed(&"special"):
 		_add_checkpoint_to_wire()
-
-
-func _unhandled_input(_event: InputEvent) -> void:
-	# TODO Handle input only for itself, if input is handled: mark it as such
-	# Maybe input of highlight layer should be handled here?
-	pass
 
 
 func _draw() -> void:
@@ -512,7 +505,10 @@ func _spread_wire_logic(grid_position: Vector2i, state: bool, update_id: int) ->
 		if _wire_tiles.has(next_tile_position):
 			if _wire_tiles[next_tile_position].update_id >= update_id:
 				continue
-			if _gate_tiles.has(next_tile_position) and _wire_tiles[next_tile_position].direction == 1 and not _wire_tiles[next_tile_position].state == state:
+			if (
+					_gate_tiles.has(next_tile_position) and _wire_tiles[next_tile_position].direction == 1 and
+					not _wire_tiles[next_tile_position].state == state
+				):
 				_wire_tiles.erase(grid_position)
 				wire_layer.erase_cell(grid_position)
 				_update_neighboring_wires(grid_position)
@@ -586,7 +582,8 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 		if not _custom_gate_tiles.has(grid_position):
 			return
 		var the_gate: CustomGate = _custom_gate_tiles[grid_position].inner_workings
-		the_gate._spread_wire_logic(_custom_gate_tiles[grid_position].swap_coordinate, _wire_tiles[grid_position].state, _logic_update_id)
+		the_gate._spread_wire_logic(_custom_gate_tiles[grid_position].swap_coordinate,
+				_wire_tiles[grid_position].state, _logic_update_id)
 		return
 
 	for index in outputs.size():
@@ -594,7 +591,7 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 			output_coordinates[index], outputs[index], _logic_update_id))
 
 
-func load_file(path: String) -> bool:
+func load_file(path: String) -> void:
 	var everything_dictionary: Dictionary = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
 
 	var placement_dictionary: Dictionary = everything_dictionary["placement"]
@@ -645,8 +642,6 @@ func load_file(path: String) -> bool:
 		_gates[gate_id] = new_gate
 
 		if gate_type == EditorMode.Gate.CUSTOM:
-			# TODO Load up custom gate from file
-
 			var gate_path: String = "%s/%s.circuit" % [Filepaths.custom_gates_directory, gates_dictionary[gate]["name"]]
 			load_custom_gate(gate_path)
 
@@ -664,11 +659,14 @@ func load_file(path: String) -> bool:
 			custom_outputs.sort_custom(sort_by_y_first)
 
 			for input_index in range(custom_inputs.size()):
-				_custom_gate_tiles[str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][input_index])] = CustomGateTile.new(gate_path, _custom_gates[-1], custom_inputs[input_index])
-				_custom_gates_input_pins_names[str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][input_index])] = _custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[custom_inputs[input_index]]].display_name
+				_custom_gate_tiles[str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][input_index])] = CustomGateTile.new(
+						gate_path, _custom_gates[-1], custom_inputs[input_index])
+				_custom_gates_input_pins_names[str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][input_index])] = _custom_gates[
+						-1]._gates[_custom_gates[-1]._gate_tiles[custom_inputs[input_index]]].display_name
 			for output_index in range(custom_outputs.size()):
 				_custom_gates[-1].exits[custom_outputs[output_index]] = str_to_var("Vector2i" + gates_dictionary[gate]["outputs"][output_index])
-				_custom_gates_output_pins_names[str_to_var("Vector2i" + gates_dictionary[gate]["outputs"][output_index])] = _custom_gates[-1]._gates[_custom_gates[-1]._gate_tiles[custom_outputs[output_index]]].display_name
+				_custom_gates_output_pins_names[str_to_var("Vector2i" + gates_dictionary[gate]["outputs"][output_index])] = _custom_gates[
+						-1]._gates[_custom_gates[-1]._gate_tiles[custom_outputs[output_index]]].display_name
 
 			var gate_center_place: Vector2i = str_to_var("Vector2i" + gates_dictionary[gate]["inputs"][0])
 			_custom_gates_names[gate_center_place] = gates_dictionary[gate]["name"]
@@ -730,8 +728,6 @@ func load_file(path: String) -> bool:
 			_gates[gate_id].set_element(inputs[0], _wire_tiles[inputs[0]].state)
 			_gates[gate_id].set_name(_gates[gate_id].display_name)
 	update_save_preview()
-	return true
-	# TODO return false in case of failure
 
 
 func create_custom_gate_from_dict() -> void:
@@ -821,7 +817,6 @@ func load_custom_gate(path: String) -> void:
 		elif gate["gate"] == 8:
 			outputs = outputs + 1
 	highlight_layer._custom_gate_pins = Vector2i(inputs, outputs)
-	# TODO włożyć gdzieś te wejścia/wyjścia
 
 
 func sort_by_y_first(a: Vector2i, b: Vector2i) -> bool:
@@ -837,7 +832,6 @@ func place_custom_gate(path: String) -> void:
 	new_custom_gate.parent = self
 	_custom_gates.append(new_custom_gate)
 
-	var gates_ids: Array[int]
 	var placement_dictionary: Dictionary = _custom_gate_dict["placement"]
 	# Place grid inside the gate.
 	for tile_string: String in placement_dictionary:
