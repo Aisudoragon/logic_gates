@@ -136,11 +136,11 @@ func load_level(id: int, reset: bool = false) -> void:
 			help_message[0] = """[center][font_size=28]Proste połączenie[/font_size][/center]
 
 [font_size=14]Tutaj będą wypisane zadania, które należe spełnić:
-[ul][color=%s]Połącz oba końce w jeden kabel[/color][/ul]
+[ul][color=%s]Połącz oba końce jednym połączeniem[/color][/ul]
 
 Tutaj pojawi się streszczenie zadania. Po naciśnięciu "Wypróbuj rozwiązanie" pojawi się tablica prawdy, która wskaże jak zostało wykonane zadanie.
 Poniżej znajduje się również przycisk "Pomoc", który bardziej wprost wskaże co należy zrobić."""
-			helpful_text.text = """[font_size=14]Kliknij przycisk "KABEL", przytrzymaj lewy przycisk myszy na jednym końcu i przeciągnij do drugiego końca.[/font_size]"""
+			helpful_text.text = """[font_size=14]Kliknij przycisk "POŁĄCZENIE", przytrzymaj lewy przycisk myszy na jednym końcu i przeciągnij do drugiego końca.[/font_size]"""
 		2:
 			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(7, 1))
 			wires_interface.enable_buttons(0b1100_0100_0000)
@@ -205,12 +205,12 @@ Kolejność bramek ma znaczenie![/font_size]"""
 		10:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(7, 0))
 			wires_interface.enable_buttons(0b1100_0000_0000)
-			help_message[0] = """[center][font_size=28]Wiele kabli[/font_size][/center]
+			help_message[0] = """[center][font_size=28]Wiele połączeń[/font_size][/center]
 
 [font_size=14][ul][color=%s]Połącz A do Z[/color][/ul]
 [ul][color=%s]Połącz B do Y[/color][/ul]
 
-Skrzyżuj kable tak, aby na siebie nie wpływały.[/font_size]"""
+Skrzyżuj połączenia tak, aby na siebie nie wpływały.[/font_size]"""
 			helpful_text.text = """[font_size=14]Jeśli przypadkowo stworzysz rozwidlenie do 3 kierunków. Nie musisz usuwać i rysować ponownie. Wystarczy, że naciśniesz na nie a zamieni się w skrzyżowanie i vice versa![/font_size]"""
 		11:
 			wires.level_dimension_limiter(Vector2i(-1, -3), Vector2i(6, 1))
@@ -224,7 +224,7 @@ Skrzyżuj kable tak, aby na siebie nie wpływały.[/font_size]"""
 [b]NIE[/b] łącz Wejścia do:
 [ul][color=%s]Wyjścia B[/color][/ul]
 [ul][color=%s]Wyjścia E[/color][/ul][/font_size]"""
-			helpful_text.text = """[font_size=14]Kable w sąsiedztwie z wejściem/wyjściem automatycznie się połączą.
+			helpful_text.text = """[font_size=14]Połączenia w sąsiedztwie z wejściem/wyjściem automatycznie się połączą.
 Jeśli chcesz aby to się nie stało, to daj im trochę odstępu.[/font_size]"""
 		12:
 			wires.level_dimension_limiter(Vector2i(-4, -6), Vector2i(18, 7))

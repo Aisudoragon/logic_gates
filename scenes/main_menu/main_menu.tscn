@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bqjqp3bx6wejp"]
 
 [ext_resource type="Script" uid="uid://hnth455chur7" path="res://scenes/main_menu/main_menu.gd" id="1_fsom3"]
-[ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://my_button_theme.tres" id="2_0ebjn"]
+[ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://assets/resources/themes/my_button_theme.tres" id="2_0ebjn"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("sandbox_button", "NewBoardButton", "LoadBoardButton")]
 layout_mode = 3
@@ -50,7 +50,7 @@ size_flags_vertical = 4
 layout_mode = 2
 theme = ExtResource("2_0ebjn")
 theme_override_font_sizes/font_size = 48
-text = "Zadania"
+text = "Nauka"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainButtons"]
 layout_mode = 2
@@ -102,9 +102,23 @@ access = 1
 root_subfolder = "customs"
 filters = PackedStringArray("*.circuit")
 hidden_files_toggle_enabled = false
+file_filter_toggle_enabled = false
+file_sort_options_enabled = false
 folder_creation_enabled = false
 favorites_enabled = false
 recent_list_enabled = false
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -37.0
+offset_right = 181.0
+offset_bottom = -14.0
+grow_vertical = 0
+text = "Autor: Krystian Dziura"
 
 [connection signal="pressed" from="MainButtons/LessonsButton" to="." method="_on_lessons_button_pressed"]
 [connection signal="pressed" from="MainButtons/HBoxContainer/SandboxButton" to="." method="_on_sandbox_button_pressed"]

@@ -28,7 +28,7 @@ var sentences: Array[Array] = [
 		["Marcin", "Masz tutaj jeszcze materiały tłumaczące działanie każdej bramki. Każdy pracownik takie dostaje."],
 		["Marcin", "Dobra, to ty działaj. A ja lecę na kolejne spotkanie."],
 		["Marcin", "Możesz powtórzyć każde zadanie w każdej chwili. Będzie wyświetlone poprzednie poprawne rozwiązanie, jeśli chcesz tylko rzucić na coś okiem."],
-		["Marcin", 'Jeszcze Ci powiem, że w trakcie rysowania kabli, jeśli naciśniesz przycisk [R] to wtedy "obracasz" kabel do drugiego rogu.'],
+		["Marcin", 'Jeszcze Ci powiem, że w trakcie rysowania połączeń, jeśli naciśniesz przycisk [R] to wtedy "obracasz" połączenie do drugiego rogu w siatce.'],
 		["Marcin", 'A kiedy naciśniesz przycisk [F] to wtedy twórz Ci punkt z które możesz kontynuować rysowanie.'],
 	],
 	[
@@ -135,7 +135,7 @@ Na sam początek przypomnimy w skrócie algebrę Boole'a.
 [ul]1 jest prawdą, 0 jest fałszem.[/ul]
 Każda operacja będzie dokładniej wyjaśniona w swoich lekcjach. Jest to niezwykle ważny temat, który jest nieodzłączną częścią układów.
 
-W tej lekcji zostanie wytłumaczone odczytywanie tablic prawdy, oraz jak wygląda tworzenie kabli pomiędzy złączeniami.
+W tej lekcji zostanie wytłumaczone odczytywanie tablic prawdy, oraz jak wygląda tworzenie połączeń pomiędzy złączeniami.
 
 Tablica prawdy składa się z trzech elementów, które mogą (nie muszą) pojawić się wielokrotnie:
 
@@ -166,7 +166,7 @@ wartość [char=2014] reprezentuje 0 lub 1.
 
 Przykłady poprawnych tablic będą zaprezentowane w nastepnych lekcjach (oraz prostsza wersja w tej lekcji). Teraz pora na odrobinę praktyki.
 [hr]
-W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (koniec) układu. Na planszy będą się znajdować obydwa zakończenia. Wystarczy je połączyć kablem!"""
+W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (koniec) układu. Na planszy będą się znajdować obydwa zakończenia. Wystarczy je połączyć!"""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 1
@@ -176,9 +176,9 @@ W tym zadaniu musisz połączyć ze sobą wejście (początek) i wyjście (konie
 
 func _on_lesson_button_10_pressed() -> void:
 	lessonExplanation.text = """
-[font_size=28][center]Układ nie składa się tylko z jednego kabla[/center][/font_size]
+[font_size=28][center]Układ nie składa się tylko z jednego połączenia[/center][/font_size]
 [hr]
-W układzie może znajdować się wiele kabli, które robią inne rzeczy. Mogą się krzyżować lub rozdzielać.
+W układzie może znajdować się wiele połączeń, które robią inne rzeczy. Mogą się krzyżować lub rozdzielać.
 
 Rozwidlenie oznaczone kropką: [img=64]res://assets/resources/textures/crossing.png[/img]. Skrzyżowanie bez kropki: [img]res://assets/resources/textures/crossing_no.png[/img]
 
@@ -320,7 +320,7 @@ Nazwa NAND jest połączeniem [b]N[/b]OT, oraz [b]AND[/b]. Z tej nazwy można wy
 [/table][/center]
 
 [hr]
-Tutaj połączysz bramki ze sobą kablem. Takie połączenia będą rosnąć z kolejnymi poziomami."""
+Tutaj połączysz ze sobą bramki. Takie połączenia będą rosnąć z kolejnymi poziomami."""
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	proceedButton.visible = true
 	lesson_selected = 4

@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ba0bl16fuws1s" path="res://scenes/interfaces/wires_interface.tscn" id="7_dhyt4"]
 [ext_resource type="Script" uid="uid://d1utmmnuycrv6" path="res://scenes/levels/playground/save_buttons.gd" id="9_k3bpp"]
 [ext_resource type="Script" uid="uid://djeigehoc35yq" path="res://scenes/levels/playground/gate_name_window.gd" id="10_4wjdm"]
-[ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://my_button_theme.tres" id="10_xv8nk"]
+[ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://assets/resources/themes/my_button_theme.tres" id="10_xv8nk"]
 [ext_resource type="AudioStream" uid="uid://dtn05s8a8igqv" path="res://assets/Sounds/confirmation_002.ogg" id="12_rsso6"]
 
 [node name="Playground" type="Node2D" node_paths=PackedStringArray("wire_layer", "highlight_layer", "wires", "wires_interface", "objective_text", "helpful_text", "finish_button", "camera")]

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://csitk4tag8uya" path="res://scenes/interfaces/wires_interface.gd" id="1_ayhpq"]
 [ext_resource type="Texture2D" uid="uid://fhjnqem02rdj" path="res://assets/resources/textures/cursor.png" id="1_q7lvh"]
 [ext_resource type="Texture2D" uid="uid://mlshv5b0su4p" path="res://assets/resources/textures/wire_icon.png" id="2_4grtn"]
-[ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://my_button_theme.tres" id="2_khbjm"]
+[ext_resource type="Theme" uid="uid://isngf7aqjghk" path="res://assets/resources/themes/my_button_theme.tres" id="2_khbjm"]
 [ext_resource type="Texture2D" uid="uid://bbg8fvon1wmeu" path="res://assets/resources/textures/gates/start.png" id="4_gaxxl"]
 [ext_resource type="Texture2D" uid="uid://civjxmdflhuur" path="res://assets/resources/textures/gates/stop.png" id="5_nc38x"]
 [ext_resource type="Texture2D" uid="uid://cm8d2wqkbw8k4" path="res://assets/resources/textures/gates/and_gate.png" id="6_0w0iy"]
@@ -85,7 +85,8 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/DrawWire/VBoxContainer"]
 layout_mode = 2
-text = "KABEL"
+theme_override_font_sizes/font_size = 14
+text = "POŁĄCZENIE"
 horizontal_alignment = 1
 
 [node name="PlaceStart" type="Button" parent="HBoxContainer"]
@@ -359,6 +360,7 @@ text = "WŁASNA"
 horizontal_alignment = 1
 
 [node name="DebugCoordinates" type="Label" parent="."]
+visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
