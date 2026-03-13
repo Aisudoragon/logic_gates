@@ -30,6 +30,12 @@ func _ready() -> void:
 	else:
 		print("Fail")
 
+	wires._wire_tiles.clear()
+	wires._gate_tiles.clear()
+	wires._gates.clear()
+
+	get_tree().quit()
+
 
 func test_signal_spread() -> bool:
 	wires._wire_tiles[Vector2i.ZERO] = wires.WireTile.new(
@@ -58,20 +64,34 @@ func test_signal_spread() -> bool:
 func test_signal_crossing() -> bool:
 	wires._wire_tiles[Vector2i.RIGHT] = wires.WireTile.new(EditorMode.Direction.LEFT)
 	wires._wire_tiles[Vector2i.LEFT] = wires.WireTile.new(EditorMode.Direction.RIGHT)
+	wires._wire_tiles[Vector2i.DOWN] = wires.WireTile.new(EditorMode.Direction.UP)
+	wires._wire_tiles[Vector2i.UP] = wires.WireTile.new(EditorMode.Direction.DOWN)
 	wires._wire_crossing_tiles[Vector2i.ZERO] = wires.WireCrossing.new()
 
 	wires._callable_queue.push_back(Callable(wires, &"_spread_wire_logic").bind(Vector2i.LEFT, true, 1))
-
 	await get_tree().create_timer(0.1).timeout
 
 	if (
 			wires._wire_tiles[Vector2i.RIGHT].state == true
 			and wires._wire_tiles[Vector2i.LEFT].state == true
+			and wires._wire_tiles[Vector2i.DOWN].state == false
+			and wires._wire_tiles[Vector2i.UP].state == false
 			and wires._wire_crossing_tiles[Vector2i.ZERO].horizontal_wire.state == true
 	):
-		return true
-	else:
-		return false
+
+		wires._callable_queue.push_back(Callable(wires, &"_spread_wire_logic").bind(Vector2i.LEFT, false, 2))
+		wires._callable_queue.push_back(Callable(wires, &"_spread_wire_logic").bind(Vector2i.DOWN, true, 3))
+		await get_tree().create_timer(0.1).timeout
+
+		if (
+			wires._wire_tiles[Vector2i.DOWN].state == true
+			and wires._wire_tiles[Vector2i.UP].state == true
+			and wires._wire_tiles[Vector2i.RIGHT].state == false
+			and wires._wire_tiles[Vector2i.LEFT].state == false
+			and wires._wire_crossing_tiles[Vector2i.ZERO].vertical_wire.state == true
+		):
+			return true
+	return false
 
 
 func test_through_gate() -> bool:
