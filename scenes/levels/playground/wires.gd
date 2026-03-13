@@ -88,12 +88,12 @@ func _draw() -> void:
 					grid_position * 64 + Vector2i(32, 1),
 				]
 				(green_lines if wire_state else red_lines).append_array(two_points)
-			draw_circle(grid_position * 64 + Vector2i(32, 32), 3.5, Color.GREEN if wire_state else Color.DARK_RED)
+			draw_circle(grid_position * 64 + Vector2i(32, 32), 3.5, Color.WHITE if wire_state else Color(0.22, 0.22, 0.22))
 			if (
 				wire_direction == 7 or wire_direction == 11 or wire_direction == 13
 				or wire_direction == 14 or wire_direction == 15
 			):
-				draw_circle(grid_position * 64 + Vector2i(32, 32), 12, Color.GREEN if wire_state else Color.DARK_RED)
+				draw_circle(grid_position * 64 + Vector2i(32, 32), 12, Color.WHITE if wire_state else Color(0.22, 0.22, 0.22))
 	for grid_position in _wire_crossing_tiles:
 		var points: PackedVector2Array = [
 			grid_position * 64 + Vector2i(0, 32),
@@ -128,10 +128,10 @@ func _draw() -> void:
 			]
 			if _wire_tiles[grid_position].state:
 				green_lines.append_array(points)
-				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color.GREEN)
+				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color.WHITE)
 			else:
 				red_lines.append_array(points)
-				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color.DARK_RED)
+				draw_circle(grid_position * 64 + Vector2i(58, 32), 3.5, Color(0.22, 0.22, 0.22))
 		# Output
 		if _wire_tiles[grid_position].direction == EditorMode.Direction.LEFT:
 			points = [
@@ -140,14 +140,14 @@ func _draw() -> void:
 			]
 			if _wire_tiles[grid_position].state:
 				green_lines.append_array(points)
-				draw_circle(grid_position * 64 + Vector2i(28, 32), 3.5, Color.GREEN)
+				draw_circle(grid_position * 64 + Vector2i(28, 32), 3.5, Color.WHITE)
 			else:
 				red_lines.append_array(points)
-				draw_circle(grid_position * 64 + Vector2i(28, 32), 3.5, Color.DARK_RED)
+				draw_circle(grid_position * 64 + Vector2i(28, 32), 3.5, Color(0.22, 0.22, 0.22))
 
 		if _gates[_gate_tiles[grid_position]].gate == EditorMode.Gate.START:
 			draw_circle(grid_position * 64 + Vector2i(32, 32), 12,
-				Color.GREEN if _wire_tiles[grid_position].state else Color.DARK_RED)
+				Color.WHITE if _wire_tiles[grid_position].state else Color(0.22, 0.22, 0.22))
 			var two_points: PackedVector2Array = [
 				grid_position * 64 + Vector2i(32, 32),
 				grid_position * 64 + Vector2i(64, 32),
@@ -157,7 +157,7 @@ func _draw() -> void:
 			gates[grid_position] = _gates[_gate_tiles[grid_position]]
 		if _gates[_gate_tiles[grid_position]].gate == EditorMode.Gate.STOP:
 			draw_circle(grid_position * 64 + Vector2i(32, 32), 12,
-				Color.GREEN if _wire_tiles[grid_position].state else Color.DARK_RED)
+				Color.WHITE if _wire_tiles[grid_position].state else Color(0.22, 0.22, 0.22))
 			var two_points: PackedVector2Array = [
 				grid_position * 64 + Vector2i(32, 32),
 				grid_position * 64 + Vector2i(0, 32),
@@ -167,9 +167,9 @@ func _draw() -> void:
 			gates[grid_position] = _gates[_gate_tiles[grid_position]]
 
 	if not red_lines.is_empty():
-		draw_multiline(red_lines, Color.DARK_RED, 7)
+		draw_multiline(red_lines, Color(0.22, 0.22, 0.22), 7)
 	if not green_lines.is_empty():
-		draw_multiline(green_lines, Color.GREEN, 7)
+		draw_multiline(green_lines, Color.WHITE, 7)
 
 	if not is_sandbox:
 		var high_number := 15000
@@ -179,67 +179,67 @@ func _draw() -> void:
 		draw_rect(Rect2i(
 			Vector2i(-high_number, -high_number),
 			Vector2i(high_number, high_number) - upper_left.abs()),
-			Color(Color.BLACK, 0.2))
+			Color(Color(0.22, 0.22, 0.22), 0.2))
 		# Up shadow
 		draw_rect(Rect2i(
 			Vector2i(upper_left.x, -high_number),
 			Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number - absi(upper_left.y))),
-			Color(Color.BLACK, 0.2))
+			Color(Color(0.22, 0.22, 0.22), 0.2))
 		# Upper right shadow
 		draw_rect(Rect2i(
 			Vector2i(bottom_right.x + 64, -high_number),
 			Vector2i(high_number, high_number - absi(upper_left.y))),
-			Color(Color.BLACK, 0.2))
+			Color(Color(0.22, 0.22, 0.22), 0.2))
 		# Right shadow
 		draw_rect(Rect2i(
 			Vector2i(bottom_right.x + 64, upper_left.y),
 			Vector2i(high_number, absi(upper_left.y) + absi(bottom_right.y) + 64)),
-			Color(Color.BLACK, 0.2))
+			Color(Color(0.22, 0.22, 0.22), 0.2))
 		# Bottom right shadow
 		draw_rect(Rect2i(
 			(bottom_right + Vector2i(64, 64)),
 			Vector2i(high_number, high_number)),
-			Color(Color.BLACK, 0.2))
+			Color(Color(0.22, 0.22, 0.22), 0.2))
 		# Down shadow
 		draw_rect(Rect2i(
 			Vector2i(upper_left.x, bottom_right.y + 64),
 			Vector2i(absi(upper_left.x) + absi(bottom_right.x) + 64, high_number)),
-			Color(Color.BLACK, 0.2))
+			Color(Color(0.22, 0.22, 0.22), 0.2))
 		# Bottom left shadow
 		draw_rect(Rect2i(
 			Vector2i(-high_number, bottom_right.y + 64),
 			Vector2i(high_number - absi(upper_left.x), high_number)),
-			Color(Color.BLACK, 0.2))
+			Color(Color(0.22, 0.22, 0.22), 0.2))
 		# Left shadow
 		draw_rect(Rect2i(
 			Vector2i(-high_number, upper_left.y),
 			Vector2i(high_number - absi(upper_left.x), (absi(upper_left.y) + absi(bottom_right.y) + 64))),
-			Color(Color.BLACK, 0.2))
+			Color(Color(0.22, 0.22, 0.22), 0.2))
 
 	for gate in gates:
 		if gates[gate].gate == EditorMode.Gate.START:
 			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
 				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
-				Color.BLACK)
+				Color(0.22, 0.22, 0.22))
 			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(-110, 36),
 				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_RIGHT, 100)
 		else:
 			draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
 				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
-				Color.BLACK)
+				Color(0.22, 0.22, 0.22))
 			draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(70, 36),
 				_gates[_gate_tiles[gate]].display_name, HORIZONTAL_ALIGNMENT_LEFT, 100)
 
 	for gate in _custom_gates_input_pins_names:
 		draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(-83, 14),
 			_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100, 16, 15,
-			Color.BLACK)
+			Color(0.22, 0.22, 0.22))
 		draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(-83, 14),
 			_custom_gates_input_pins_names[gate], HORIZONTAL_ALIGNMENT_RIGHT, 100)
 	for gate in _custom_gates_output_pins_names:
 		draw_string_outline(ThemeDB.fallback_font, (gate * 64) + Vector2i(43, 14),
 			_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15,
-			Color.BLACK)
+			Color(0.22, 0.22, 0.22))
 		draw_string(ThemeDB.fallback_font, (gate * 64) + Vector2i(43, 14),
 			_custom_gates_output_pins_names[gate], HORIZONTAL_ALIGNMENT_LEFT, 100)
 
@@ -247,7 +247,7 @@ func _draw() -> void:
 	for placement in _custom_gates_names:
 		var rotated_adjusted_placement: Vector2i = (Vector2i(placement.y, -placement.x) + Vector2i.UP) * 64 + Vector2i(30, 5)
 		draw_string_outline(ThemeDB.fallback_font, rotated_adjusted_placement,
-			_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15, Color.BLACK)
+			_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100, 16, 15, Color(0.22, 0.22, 0.22))
 		draw_string(ThemeDB.fallback_font, rotated_adjusted_placement,
 			_custom_gates_names[placement], HORIZONTAL_ALIGNMENT_LEFT, 100)
 
