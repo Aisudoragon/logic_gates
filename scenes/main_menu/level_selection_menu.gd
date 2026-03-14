@@ -80,6 +80,7 @@ var lesson_selected: int = 0
 @onready var level_button_107: Button = %LevelButton107
 @onready var level_button_108: Button = %LevelButton108
 @onready var level_button_109: Button = %LevelButton109
+@onready var level_button_110: Button = %LevelButton110
 
 @onready var learn_button_3: Button = %LearnButton3
 @onready var learn_button_4: Button = %LearnButton4
@@ -506,7 +507,8 @@ Sprawdzisz bramkę w praktyce.
 
 """
 	lessonExplanation.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	proceedButton.visible = false
+	proceedButton.visible = true
+	lesson_selected = 110
 
 	play_ui_sound.emit()
 
@@ -521,10 +523,10 @@ Odwróceniem XOR jest XNOR czyli połączenie XOR i NOT.
 XNOR na wyjściu ma 1 tylko, gdy obydwa wejścia mają tą samą wartość (nie ważne jaką).
 
 Prezentuje się to w taki sposób:
-¬(0 ⊻ 0) = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_11.png[/img]
-¬(0 ⊻ 1) = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_12.png[/img]
-¬(1 ⊻ 0) = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_13.png[/img]
-¬(1 ⊻ 1) = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_14.png[/img]
+¬(0 ⊻ 0) = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_15.png[/img]
+¬(0 ⊻ 1) = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_16.png[/img]
+¬(1 ⊻ 0) = 0     [img=250]res://assets/resources/textures/dialogue_images/learn_17.png[/img]
+¬(1 ⊻ 1) = 1     [img=250]res://assets/resources/textures/dialogue_images/learn_18.png[/img]
 
 Można to zaprezentować w taki sposób na tablicy:
 

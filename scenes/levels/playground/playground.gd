@@ -326,6 +326,15 @@ Gdy x i y mają 0, po złączeniu ma być 1. Gdy x i y mają 1, po złączeniu r
 [cell border=white]0[/cell]
 [/table][/center][/font_size]"""
 			helpful_text.text = """[font_size=14]Na wyjściu jest 1 kiedy wszystkie wejścia mają 0.[/font_size]"""
+		110:
+			wires.level_dimension_limiter(Vector2i(-3, -3), Vector2i(6, 1))
+			wires_interface.enable_buttons(0b1100_0000_0100)
+			help_message[0] = """[center][font_size=28]Bramka XOR[/font_size][/center]
+
+[font_size=14][ul][color=%s]Dokończ układ[/color][/ul]
+
+Należy wstawić nie tylko samą bramkę, ale również dokończyć połączenia.[/font_size]"""
+			helpful_text.text = """[font_size=14]Jeśli chcesz wstawić dany element. Kliknij przycisk myszy na któryś przycisk na dole. Następnie naciśnij w dostępnym miejscu na siatce. W przypadku przwodu: przeciągnij i puść lewy przycisk myszy.[/font_size]"""
 		_:
 			print("Invalid level selected. How?")
 			wires.level_dimension_limiter(Vector2i.ZERO, Vector2i.ZERO)
@@ -455,10 +464,11 @@ func _on_finish_button_pressed() -> void:
 	help_message[2] = ""
 
 	for start in range(2 ** start_gates.size()):
-		if level_selected == 13:
+		if level_selected == 101 or level_selected == 102 or level_selected == 103 or level_selected == 110:
 			await get_tree().create_timer(0.1).timeout
-		else:
-			await get_tree().create_timer(0.85).timeout
+			wires._queue_executes_per_frame = 1
+
+		await get_tree().create_timer(0.85).timeout
 
 		for gate in range(start_gates.size()):
 			wires.set_output(start_gates[gate], start >> gate & 1)
@@ -579,6 +589,17 @@ func _on_finish_button_pressed() -> void:
 			else:
 				finish_button.text = "Wypróbuj rozwiązanie        ▶"
 				objective_text.text = buffer_objective % "red"
+		110:
+			if not guesses[0] and guesses[1] and guesses[2] and not guesses[3]:
+				finish_button.text = "Ukończono!"
+				objective_text.text = buffer_objective % "green"
+				SaveProgress.level_110 = true
+				SaveProgress.update_save_file()
+				SaveProgress.ensure_directory_available()
+				wires.save_circuit(Filepaths.levels_dir_path(110))
+			else:
+				finish_button.text = "Wypróbuj rozwiązanie        ▶"
+				objective_text.text = buffer_objective % "red"
 		_:
 			print("Trying to finish invalid level. How?")
 			finish_button.text = "Wypróbuj rozwiązanie        ▶"
@@ -590,12 +611,14 @@ func _on_finish_button_pressed() -> void:
 			await wires.queue_cleared
 
 		finish_button.disabled = false
+		wires._queue_executes_per_frame = 500
 		return
 	else:
 		$LevelObjectiveAudioPlayer.stream = AudioStreamOggVorbis.load_from_file("res://assets/Sounds/confirmation_002.ogg")
 		$LevelObjectiveAudioPlayer.play()
 
 	finish_button.disabled = false
+	wires._queue_executes_per_frame = 500
 
 
 func send_signal_for_ui_sound() -> void:

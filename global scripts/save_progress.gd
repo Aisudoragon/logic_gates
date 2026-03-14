@@ -13,6 +13,7 @@ static var level_106 := false
 static var level_107 := false
 static var level_108 := false
 static var level_109 := false
+static var level_110 := false
 
 
 static func update_save_file() -> void:
@@ -30,6 +31,7 @@ static func update_save_file() -> void:
 		"level_107": level_107,
 		"level_108": level_108,
 		"level_109": level_109,
+		"level_110": level_110,
 	}
 	var save_file := FileAccess.open(Filepaths.save_progress, FileAccess.WRITE)
 	var success: bool = save_file.store_string(JSON.stringify(progress_dict, "\t"))
@@ -67,7 +69,9 @@ static func load_save() -> bool:
 	level_105 = progress_dict.get("level_105", false)
 	level_106 = progress_dict.get("level_106", false)
 	level_107 = progress_dict.get("level_107", false)
+	level_108 = progress_dict.get("level_108", false)
 	level_109 = progress_dict.get("level_109", false)
+	level_110 = progress_dict.get("level_110", false)
 
 	return true
 

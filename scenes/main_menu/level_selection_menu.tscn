@@ -347,13 +347,13 @@ bbcode_enabled = true
 text = "[font_size=22][color=orange]Różne wejścia[/color][/font_size]"
 vertical_alignment = 1
 
-[node name="LearnButton4" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="LevelButton110" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = ExtResource("2_hvryv")
 
-[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LearnButton4"]
+[node name="MarginContainer" type="MarginContainer" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton110"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -365,12 +365,12 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LearnButton4/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton110/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "[font_size=22]Bramka XOR[/font_size]"
+text = "[font_size=22][color=orange]Bramka XOR[/color][/font_size]"
 vertical_alignment = 1
 
 [node name="LevelButton106" type="Button" parent="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
@@ -757,7 +757,7 @@ text = "Zrozumiano"
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton104" to="." method="_on_level_button_104_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LearnButton3" to="." method="_on_learn_button_3_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton105" to="." method="_on_level_button_105_pressed"]
-[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LearnButton4" to="." method="_on_learn_button_4_pressed"]
+[connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton110" to="." method="_on_learn_button_4_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton106" to="." method="_on_level_button_106_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DialogueButton3" to="." method="_on_dialogue_button_3_pressed"]
 [connection signal="pressed" from="LevelSelection/PanelContainer2/HBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelButton107" to="." method="_on_level_button_107_pressed"]
