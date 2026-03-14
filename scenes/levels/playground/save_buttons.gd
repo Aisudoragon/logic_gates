@@ -5,6 +5,11 @@ signal play_ui_sound()
 var save_path: String
 
 
+func _ready() -> void:
+	SaveProgress.open_customs_directory()
+	$SaveDialog.root_subfolder = "customs"
+
+
 func _on_save_button_pressed() -> void:
 	play_ui_sound.emit()
 
