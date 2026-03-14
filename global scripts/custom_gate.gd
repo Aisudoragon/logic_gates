@@ -114,6 +114,7 @@ func _get_into_gate(grid_position: Vector2i) -> void:
 			return
 		var the_gate: CustomGate = _custom_gate_tiles[grid_position].inner_workings
 		the_gate._spread_wire_logic(_custom_gate_tiles[grid_position].swap_coordinate, _wire_tiles[grid_position].state, _top_layer._logic_update_id)
+		return
 
 	for index in outputs.size():
 		_callable_queue.push_back(Callable(self, &"_spread_wire_logic").bind(
