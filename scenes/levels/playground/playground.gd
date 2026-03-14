@@ -31,6 +31,11 @@ var zoomMax: float = 2.0
 var dragSensitivity: float = 1.0
 
 
+func _ready() -> void:
+	SaveProgress.open_customs_directory()
+	$WiresInterface/SaveButtons/SaveDialog.root_subfolder = "customs"
+
+
 func _process(delta: float) -> void:
 	wires_interface.update_queue_size(wires._callable_queue.size())
 	wires_interface.visible = visible

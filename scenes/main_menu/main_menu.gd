@@ -10,6 +10,11 @@ signal change_scene_playground(path: String)
 signal play_ui_sound()
 
 
+func _ready() -> void:
+	SaveProgress.open_customs_directory()
+	$LoadBoardDialog.root_subfolder = "customs"
+
+
 func _on_lessons_button_pressed() -> void:
 	change_scene_level_selection.emit()
 
